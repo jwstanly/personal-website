@@ -11,23 +11,33 @@
         "@types/node": "^12.0.0",
         "@types/react": "^16.9.53",
         "@types/react-dom": "^16.9.8",
+        "env-cmd": "10.0.1",
         "react": "^17.0.1",
         "react-bootstrap": "^1.4.0",
         "react-dom": "^17.0.1",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.1",
+        "shelljs": "^0.8.3",
         "typescript": "^4.0.3",
         "web-vitals": "^0.2.4"
     },
     "devDependencies": {
-        "jest": "^26.6.3"
+        "jest": "^26.6.3",
+        "eslint": "6.6.0",
+        "eslint-plugin-react": "7.16.0"
     },
     "scripts": {
-        "test-sam": "jest",
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test-react": "react-scripts test",
-        "eject": "react-scripts eject"
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+
+        "sam-build": "env-cmd -e production node ./scripts/sam_build",
+        "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
+        "cf-provision": "env-cmd -e production node ./scripts/cloud_formation_provision",
+
+        "upload": "env-cmd -e production node ./scripts/upload_bucket",
+        "deploy": "yarn run build && yarn run upload"
     },
     "eslintConfig": {
         "extends": [
