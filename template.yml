@@ -75,8 +75,8 @@ Resources:
       ContentUri: lambda-lib/.
       CompatibleRuntimes:
         - nodejs14.x
-      Metadata:
-        BuildMethod: nodejs14.x
+      # Metadata:
+      #   BuildMethod: nodejs14.x
 
   Bucket:
     Type: AWS::S3::Bucket
