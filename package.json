@@ -32,6 +32,7 @@
         "eject": "react-scripts eject",
 
         "sam-build": "env-cmd -e production node ./scripts/sam_build",
+        "sam-package": "env-cmd -e production node ./scripts/sam_package",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
         "provision": "yarn run sam-build && yarn run sam-deploy",
 

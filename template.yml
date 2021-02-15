@@ -29,6 +29,24 @@ Parameters:
     AllowedPattern: "arn:aws:acm:.*"
 
 Resources:
+
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        ApiKeyRequired: true
+      Cors:
+        AllowMethods: "'DELETE,GET,OPTIONS,POST'"
+        AllowHeaders: "'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For'"
+        AllowOrigin: "'*'"
+        # MaxAge: "'600'"
+        # AllowCredentials: True
+      Domain:
+        DomainName: api.jwstanly.com
+        CertificateArn: !Ref AcmCertificateArn
+        EndpointConfiguration: EDGE
+
   helloFromLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -40,6 +58,13 @@ Resources:
       Policies:
         # Give Lambda basic execution Permission to the helloFromLambda
         - AWSLambdaBasicExecutionRole
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MyApi
+            Path: /helloWorld
+            Method: GET
 
   Bucket:
     Type: AWS::S3::Bucket
