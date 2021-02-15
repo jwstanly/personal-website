@@ -62,8 +62,8 @@ Resources:
     Properties:
       Layers:
         - !Ref LambdaLibs
-      CodeUri: sam/handlers
-      Handler: hello-from-lambda.helloFromLambdaHandler
+      CodeUri: sam/.
+      Handler: handlers/hello-from-lambda.helloFromLambdaHandler
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
