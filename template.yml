@@ -118,8 +118,8 @@ Resources:
         HttpVersion: 'http2'
         DefaultRootObject: index.html
         Aliases:
-        - !Join ['', ['*', !Ref 'DomainName', .com]]
-        # - !Join ['', [!Ref 'FullDomainName', .com]] # route "www" version of domain to cloudfront as well
+          - !Ref 'DomainName'
+          - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
         DefaultCacheBehavior: # some defaults, not too important
           AllowedMethods:
           - GET
@@ -131,7 +131,7 @@ Resources:
             Cookies:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
-        PriceClass: PriceClass_All
+        PriceClass: PriceClass_100
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmCertificateArn # allow https
           SslSupportMethod: sni-only
@@ -153,15 +153,15 @@ Resources:
           DNSName: !GetAtt [CloudFrontDistribution, DomainName]
 
   DNSWithWWW: # allow access to React app via <FullDomainName>
-      Type: AWS::Route53::RecordSetGroup
-      Properties:
-        HostedZoneName: !Join ['', [!Ref 'DomainName', .]]
-        RecordSets:
-        - Name: !Ref 'FullDomainName'
-          Type: A
-          AliasTarget:
-            HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
-            DNSName: !GetAtt [CloudFrontDistribution, DomainName]
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneName: !Join ['', [!Ref 'DomainName', .]]
+      RecordSets:
+      - Name: !Ref 'FullDomainName'
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+          DNSName: !GetAtt [CloudFrontDistribution, DomainName]
 
 Outputs:
   WebsiteURL:
