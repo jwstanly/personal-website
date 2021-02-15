@@ -105,8 +105,8 @@ Resources:
         HttpVersion: 'http2'
         DefaultRootObject: index.html
         Aliases:
-        - !Ref 'DomainName'
-        - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
+        - !Join ['', ['*', !Ref 'DomainName', .com]]
+        # - !Join ['', [!Ref 'FullDomainName', .com]] # route "www" version of domain to cloudfront as well
         DefaultCacheBehavior: # some defaults, not too important
           AllowedMethods:
           - GET
