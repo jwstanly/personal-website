@@ -29,7 +29,6 @@ Parameters:
     AllowedPattern: "arn:aws:acm:.*"
 
 Resources:
-
   MyApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -65,6 +64,19 @@ Resources:
             RestApiId: !Ref MyApi
             Path: /helloWorld
             Method: GET
+      Layers:
+        - !Ref LambdaLibs
+
+  LambdaLibs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: lambda-layer-lib
+      Description: Dependencies for the lambda functions, seperate from the react frontend
+      ContentUri: lambda-lib/.
+      CompatibleRuntimes:
+        - nodejs14.x
+      Metadata:
+        BuildMethod: nodejs14.x
 
   Bucket:
     Type: AWS::S3::Bucket
