@@ -1,0 +1,120 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-body {
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: #222222;
+}
+
+p {
+  text-align:center;
+}
+
+h2 {
+  text-align:center;
+}
+
+.animated-1 {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+}
+
+.animated-05 {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both
+}
+
+.animation-delay-350 {
+    animation-delay: 350ms;
+}
+
+.animation-delay-450 {
+    animation-delay: 450ms;
+}
+
+.fadeInUp {
+    opacity: 0;
+    animation-name: fadeInUp;
+    animation-timing-function: ease;
+    -webkit-animation-name: fadeInUp;
+}
+
+.fadeInUpFar {
+    opacity: 0;
+    animation-name: fadeInUpFar;
+    animation-timing-function: ease;
+    -webkit-animation-name: fadeInUpFar;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translate3d(0,50px,0)
+  }
+
+  to {
+    transform: translate3d(0,0,0);
+    opacity: 1
+  }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        transform: translate3d(0,50px,0)
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+@keyframes fadeInUpFar {
+  from {
+    transform: translate3d(0,100px,0)
+  }
+
+  to {
+    transform: translate3d(0,0,0);
+    opacity: 1
+  }
+}
+
+@-webkit-keyframes fadeInUpFar {
+    from {
+        transform: translate3d(0,100px,0)
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
