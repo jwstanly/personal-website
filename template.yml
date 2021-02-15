@@ -46,22 +46,22 @@ Resources:
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
 
-  LambdaLibs:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: lambda-layer-lib
-      Description: Dependencies for the lambda functions, seperate from the react frontend
-      ContentUri: lambda-lib/.
-      CompatibleRuntimes:
-        - nodejs14.x
-    Metadata:
-      BuildMethod: makefile
+  # LambdaLibs:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Properties:
+  #     LayerName: lambda-layer-lib
+  #     Description: Dependencies for the lambda functions, seperate from the react frontend
+  #     ContentUri: lambda-lib/.
+  #     CompatibleRuntimes:
+  #       - nodejs14.x
+  #   Metadata:
+  #     BuildMethod: makefile
 
   helloFromLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Layers:
-        - !Ref LambdaLibs
+      # Layers:
+      #   - !Ref LambdaLibs
       CodeUri: sam/.
       Handler: handlers/hello-from-lambda.helloFromLambdaHandler
       Runtime: nodejs14.x
@@ -117,9 +117,9 @@ Resources:
         Enabled: true # deploy the distribution
         HttpVersion: 'http2'
         DefaultRootObject: index.html
-        Aliases:
-          - !Ref 'DomainName'
-          - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
+        # Aliases:
+        #   - !Ref 'DomainName'
+        #   - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
         DefaultCacheBehavior: # some defaults, not too important
           AllowedMethods:
           - GET
@@ -141,10 +141,17 @@ Resources:
           ResponseCode: 200
           ResponsePagePath: /index.html
 
+  HostedZone: 
+    Type: AWS::Route53::HostedZone
+    Properties: 
+      HostedZoneConfig: 
+        Comment: 'Hosted zone for my personal website and blog'
+      Name: !Ref DomainName
+
   DNS: # allow access to React app via <DomainName>
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneName: !Join ['', [!Ref 'DomainName', .]]
+      HostedZoneId: !Ref HostedZone
       RecordSets:
       - Name: !Ref 'DomainName'
         Type: A
@@ -155,7 +162,7 @@ Resources:
   DNSWithWWW: # allow access to React app via <FullDomainName>
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneName: !Join ['', [!Ref 'DomainName', .]]
+      HostedZoneId: !Ref HostedZone
       RecordSets:
       - Name: !Ref 'FullDomainName'
         Type: A
