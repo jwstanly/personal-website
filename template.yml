@@ -117,9 +117,9 @@ Resources:
         Enabled: true # deploy the distribution
         HttpVersion: 'http2'
         DefaultRootObject: index.html
-        # Aliases:
-        #   - !Ref 'DomainName'
-        #   - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
+        Aliases:
+          - !Ref 'DomainName'
+          - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
         DefaultCacheBehavior: # some defaults, not too important
           AllowedMethods:
           - GET
