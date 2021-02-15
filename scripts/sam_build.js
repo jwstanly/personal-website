@@ -7,6 +7,6 @@ Create an S3 Bucket and CloudFront Distribution that serves up a React app at a 
 (function() {
    sh.echo(`Building a Bucket and SAM distribution hosted at "${BUCKET_NAME}"`);
    sh.exec(
-      `sam build --template-file ./template.yml --parameter-overrides DomainName=${BUCKET_NAME} FullDomainName=www.${BUCKET_NAME} AcmCertificateArn=${ACM_CERT_ARN}`
+      `sam build --parameter-overrides DomainName=${BUCKET_NAME} FullDomainName=www.${BUCKET_NAME} AcmCertificateArn=${ACM_CERT_ARN}`
    );
 })();
