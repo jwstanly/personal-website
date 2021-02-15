@@ -33,7 +33,6 @@
 
         "sam-build": "env-cmd -e production node ./scripts/sam_build",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
-        "cf-provision": "env-cmd -e production node ./scripts/cloud_formation_provision",
 
         "upload": "env-cmd -e production node ./scripts/upload_bucket",
         "deploy": "yarn run build && yarn run upload"
