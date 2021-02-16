@@ -42,7 +42,7 @@ Resources:
         # MaxAge: "'600'"
         # AllowCredentials: True
       Domain:
-        DomainName: api.jwstanly.com
+        DomainName: !Join ['', [api, !Ref DomainName]]
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
 
