@@ -1,133 +1,38 @@
-# website
+# Personal Website
 
-This project contains source code and supporting files for a serverless application that you can deploy with the AWS Serverless Application Model (AWS SAM) command line interface (CLI). It includes the following files and folders:
+This repo contains the full tech stack for my personal website, [jwstanly.com](jwstanly.com). 
 
-- `src` - Code for the application's Lambda function.
-- `events` - Invocation events that you can use to invoke the function.
-- `__tests__` - Unit tests for the application code. 
-- `template.yml` - A template that defines the application's AWS resources.
+The frontend was built using ReactJS with TypeScript. The backend was built on AWS SAM. Both the frontend and backend are deployed using CloudFormation.
 
-Resources for this project are defined in the `template.yml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
+## Project structure
 
-If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.  
-The AWS Toolkit is an open-source plugin for popular IDEs that uses the AWS SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds step-through debugging for Lambda function code. 
+- `/__tests__` - Unit tests for the SAM lambda functions. 
+- `/build` - Production ready react code. Gitignored, but will populate upon running `yarn run build`.
+- `/lambda-lib` - Contains a node makefile for building lambda deployment packages. 
+- `/public` - Stores the react page template `public/index.html`. Only files inside public can be used from `public/index.html`.  
+- `/sam` - Root directory for all SAM lambda functions. Noticeably, this folder contains a seperate `package.json`. All lambda deployment packages are are built with `sam/package.json` instead of the `package.json`. This `sam/package.json` contains many less modules. This reduces the size of the deployed lambda functions, and ensures react modules do not contribute to lambda bloat. 
+- `/scripts` - ShellJS scripts to help with provisioning, building, and deploying. 
+- `.env-cmdrc.sample.js` - A sample env-cmd rc file. Enables different staging environments. If you would like to use this repo, you must fill in your own ACM Certificate ARN and CloudFront Distribution ID. Once you've populated your own AWS configuration, rename the file to `.env-cmdrc.js`. More setup details below.
+- `buildspec.yml` - Commands for SAM to run.
+- `package.json` - The project wide package file. This stores all the react modules. Noticeably, this is different than `sam/package.json`. 
+- `template.yml` - A CloudFormation template that defines the application's AWS resources. Uses a SAM transform to include serverless resources. 
+- `tsconfig.json` - TypeScript compiler options for this project. 
 
-To get started, see the following:
+## Stack
 
-* [PyCharm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [IntelliJ](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
-* [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
+![personal website stack diagram](https://i.imgur.com/Tmc1Mxc.png "Personal Website Stack Diagram")
 
-## Deploy the sample application
+## Setup
 
-The AWS SAM CLI is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
-
-To use the AWS SAM CLI, you need the following tools:
-
-* AWS SAM CLI - [Install the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html).
-* Node.js - [Install Node.js 14](https://nodejs.org/en/), including the npm package management tool.
-* Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community).
-
-To build and deploy your application for the first time, run the following in your shell:
-
-```bash
-sam build
-sam deploy --guided
-```
-
-The first command will build the source of your application. The second command will package and deploy your application to AWS, with a series of prompts:
-
-* **Stack Name**: The name of the stack to deploy to CloudFormation. This should be unique to your account and region, and a good starting point would be something matching your project name.
-* **AWS Region**: The AWS region you want to deploy your app to.
-* **Confirm changes before deploy**: If set to yes, any change sets will be shown to you before execution for manual review. If set to no, the AWS SAM CLI will automatically deploy application changes.
-* **Allow SAM CLI IAM role creation**: Many AWS SAM templates, including this example, create AWS IAM roles required for the AWS Lambda function(s) included to access AWS services. By default, these are scoped down to minimum required permissions. To deploy an AWS CloudFormation stack which creates or modified IAM roles, the `CAPABILITY_IAM` value for `capabilities` must be provided. If permission isn't provided through this prompt, to deploy this example you must explicitly pass `--capabilities CAPABILITY_IAM` to the `sam deploy` command.
-* **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
-
-## Use the AWS SAM CLI to build and test locally
-
-Build your application by using the `sam build` command.
-
-```bash
-my-application$ sam build
-```
-
-The AWS SAM CLI installs dependencies that are defined in `package.json`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
-
-Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
-
-Run functions locally and invoke them with the `sam local invoke` command.
-
-```bash
-my-application$ sam local invoke helloFromLambdaFunction --no-event
-```
-
-## Add a resource to your application
-
-The application template uses AWS SAM to define application resources. AWS SAM is an extension of AWS CloudFormation with a simpler syntax for configuring common serverless application resources, such as functions, triggers, and APIs. For resources that aren't included in the [AWS SAM specification](https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md), you can use the standard [AWS CloudFormation resource types](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html).
-
-Update `template.yml` to add a dead-letter queue to your application. In the **Resources** section, add a resource named **MyQueue** with the type **AWS::SQS::Queue**. Then add a property to the **AWS::Serverless::Function** resource named **DeadLetterQueue** that targets the queue's Amazon Resource Name (ARN), and a policy that grants the function permission to access the queue.
-
-```
-Resources:
-  MyQueue:
-    Type: AWS::SQS::Queue
-  helloFromLambdaFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/hello-from-lambda.helloFromLambdaHandler
-      Runtime: nodejs14.x
-      DeadLetterQueue:
-        Type: SQS
-        TargetArn: !GetAtt MyQueue.Arn
-      Policies:
-        - SQSSendMessagePolicy:
-            QueueName: !GetAtt MyQueue.QueueName
-```
-
-The dead-letter queue is a location for Lambda to send events that could not be processed. It's only used if you invoke your function asynchronously, but it's useful here to show how you can modify your application's resources and function configuration.
-
-Deploy the updated application.
-
-```bash
-my-application$ sam deploy
-```
-
-Open the [**Applications**](https://console.aws.amazon.com/lambda/home#/applications) page of the Lambda console, and choose your application. When the deployment completes, view the application resources on the **Overview** tab to see the new resource. Then, choose the function to see the updated configuration that specifies the dead-letter queue.
-
-## Fetch, tail, and filter Lambda function logs
-
-To simplify troubleshooting, the AWS SAM CLI has a command called `sam logs`. `sam logs` lets you fetch logs that are generated by your Lambda function from the command line. In addition to printing the logs on the terminal, this command has several nifty features to help you quickly find the bug.
-
-**NOTE:** This command works for all Lambda functions, not just the ones you deploy using AWS SAM.
-
-```bash
-my-application$ sam logs -n helloFromLambdaFunction --stack-name sam-app --tail
-```
-
-**NOTE:** This uses the logical name of the function within the stack. This is the correct name to use when searching logs inside an AWS Lambda function within a CloudFormation stack, even if the deployed function name varies due to CloudFormation's unique resource name generation.
-
-You can find more information and examples about filtering Lambda function logs in the [AWS SAM CLI documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
-
-## Unit tests
-
-Tests are defined in the `__tests__` folder in this project. Use `npm` to install the [Jest test framework](https://jestjs.io/) and run unit tests.
-
-```bash
-my-application$ npm install
-my-application$ npm run test
-```
-
-## Cleanup
-
-To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
-
-```bash
-aws cloudformation delete-stack --stack-name website
-```
-
-## Resources
-
-For an introduction to the AWS SAM specification, the AWS SAM CLI, and serverless application concepts, see the [AWS SAM Developer Guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html).
-
-Next, you can use the AWS Serverless Application Repository to deploy ready-to-use apps that go beyond Hello World samples and learn how authors developed their applications. For more information, see the [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/) and the [AWS Serverless Application Repository Developer Guide](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/what-is-serverlessrepo.html).
+- Ensure you have an AWS account. Make sure you do this through an IAM user and not root. 
+- Install and configure your AWS CLI and SAM CLI. If you have multiple AWS CLI profiles, you will need to select one to deploy with. 
+- `yarn install`. Includes React, TypeScript, ShellJS, env-cmd, and the AWS node SDK, among others. 
+- Congiure your env-cmd rc file. I've included a sample `env-cmdrc.sample.js`. Replace the URL, AWS CLI profile, S3 bucket name, and ACM Certificate with your own, then rename the rc file to `env-cmdrc.js`. Before executing any of the following steps, you must submit your ACM Certificate ARN ahead of time. The ACM Certificate is NOT created by the CloudFormation template; you must do this independently. Your ACM Certificate should include base domain as well as `www` and `api` subdomains (YourWebsite.com, www.YourWebsite.com, api.YourWebsite.com). Once you have the ARM, paste it into your `env-cmdrc.js`. However, the CloudFormation template will create a CloudFront Distribution ID for you, so you can wait to paste this into your `env-cmdrc.js` after you've initially created your CloudFormation stack. The CloudFormation stack will output your CloudFront Distribution ID. 
+- `yarn start` will launch your local react server
+- `yarn sam-build` runs SAM build with your prodcution environement params. AWS SAM CLI installs dependencies that are defined in `sam/package.json`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
+- `yarn sam-deploy` runs SAM deploy with your production environement params. This packages and deploys your application to AWS. Noticeably, many of the resources defined in `template.yml` are not SAM derived and are standard CloudFormation resources. Because SAM is just a CloudFormation transform, we are still able to deploy typical CloudFormation resources. Upon `yarn sam-deploy` completing successfully, your website's CloudFormation stack will be deployed; however, you still need to actually upload your website contents to the stack. Additionally, take note of the CloudFront Distribution ID. You can use this in the following steps. 
+- (In the future you can run `sam-build` and `sam-deploy` together with `yarn provision`)
+- `yarn build` builds the react project into production ready code. Builds to `/build` 
+- `yarn upload` uploads your react project to the S3 bucket for CloudFront to use. If you have pasted your CloudFront Distribution ID into the env-cmd rc file, this command will invalidate and remove previous builds sent to this distributions.
+- (In the future you can run `build` and `upload` together with `yarn deploy`)
+- You can now view your website on the auto generated URLs! For connecting your domain to the website, you will need to visit the Route 53 online console. Grab your autogenered NS records in the generated hosted zone. If your domain is with AWS, I'd image this is automated for you. However, if your domain was not bought on AWS, change your Nameservers on your own domain service to these four NS records generated by Route 53. For example, I bought my domain with GoDaddy, so I did this through GoDaddy's website. Some domain services will throw errors if you include the trailing `.` in the NS records. If this is the case, you can remove them from the NS records Route 53 gave you. Also, note that these DNS changes can take 24-48 hours to take effect. 
