@@ -12,6 +12,8 @@ Description: >-
 Transform:
 - AWS::Serverless-2016-10-31
 
+# Huge thanks to Ryan Yost. Check out his repo...
+# https://github.com/ryanjyost/react-spa-starter
 Parameters:
   DomainName:
     Type: String

@@ -1,6 +1,6 @@
 # Personal Website
 
-This repo contains the full tech stack for my personal website, [jwstanly.com](jwstanly.com). 
+This repo contains the full tech stack for my personal website, [jwstanly.com](https://www.jwstanly.com). 
 
 The frontend was built using ReactJS with TypeScript. The backend was built on AWS SAM. Both the frontend and backend are deployed using CloudFormation.
 
@@ -22,7 +22,15 @@ The frontend was built using ReactJS with TypeScript. The backend was built on A
 
 ![personal website stack diagram](https://i.imgur.com/Tmc1Mxc.png "Personal Website Stack Diagram")
 
-## Setup
+## Credit
+
+Huge thanks to Ryan Yost and his [React Single Page Application Starter](https://github.com/ryanjyost/react-spa-starter)! This repo defined the CloudFormation resources for S3, CloudFront, and Route53. I also took inspiration from this repo to use ShellJS and env-cmd together for some nice staging environement aware scripts.
+
+## Replication
+
+Anyone is free to use this repo to build their own website. Follow the steps below...
+
+## Replication Setup
 
 - Ensure you have an AWS account. Make sure you do this through an IAM user and not root. 
 - Install and configure your AWS CLI and SAM CLI. If you have multiple AWS CLI profiles, you will need to select one to deploy with. 
