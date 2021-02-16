@@ -20,7 +20,7 @@ The frontend was built using ReactJS with TypeScript. The backend was built on A
 
 ## Stack
 
-![personal website stack diagram](https://i.imgur.com/KH9zOjJ.png "Personal Website Stack Diagram")
+![personal website stack diagram](https://i.imgur.com/iKWYYP4.png "Personal Website Stack Diagram")
 
 ## Credit
 
