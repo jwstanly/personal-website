@@ -1,14 +1,16 @@
 const env = {
    production: {
       REACT_APP_ENV: 'PRODUCTION',
-      REACT_APP_ClientUrl: 'www.jwstanly.com',
-      BUCKET_NAME: 'jwstanly.com',
-      ACM_CERT_ARN: 'REPLACE_ME',
-      CF_DISTRIBUTION_ID: 'REPLACE_ME',
+      REACT_APP_ClientUrl: 'www.YourWebsite.com',
+      AWS_CLI_PROFILE: 'default',
+      BUCKET_NAME: 'YourWebsite.com',
+      ACM_CERT_ARN: 'YourACMCertificateARN',
+      CF_DISTRIBUTION_ID: 'YourCloudFrontDistributionID',
    },
    local: {
       REACT_APP_ENV: 'LOCAL',
-      REACT_APP_ClientUrl: 'http://localhost:3000'
+      REACT_APP_ClientUrl: 'http://localhost:3000',
+      AWS_CLI_PROFILE: 'default',
    },
 };
 

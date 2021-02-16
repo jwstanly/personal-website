@@ -1,5 +1,5 @@
 const sh = require('shelljs');
-const { BUCKET_NAME, ACM_CERT_ARN } = process.env;
+const { AWS_CLI_PROFILE, BUCKET_NAME, ACM_CERT_ARN } = process.env;
 
 /*
 Create an S3 Bucket and CloudFront Distribution that serves up a React app at a custom domain
@@ -7,6 +7,6 @@ Create an S3 Bucket and CloudFront Distribution that serves up a React app at a 
 (function() {
    sh.echo(`Building a Bucket and SAM distribution hosted at "${BUCKET_NAME}"`);
    sh.exec(
-      `sam build --parameter-overrides DomainName=${BUCKET_NAME} FullDomainName=www.${BUCKET_NAME} AcmCertificateArn=${ACM_CERT_ARN} --profile JohnWright`
+      `sam build --parameter-overrides DomainName=${BUCKET_NAME} FullDomainName=www.${BUCKET_NAME} AcmCertificateArn=${ACM_CERT_ARN} --profile ${AWS_CLI_PROFILE}`
    );
 })();
