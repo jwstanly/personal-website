@@ -10,7 +10,7 @@ let bucket = BUCKET_NAME,
 
 (function() {
    sh.echo(`Deploying the ${REACT_APP_ENV} build to Bucket ${bucket}`);
-   sh.exec(`aws s3 sync build/ s3://${bucket} --delete`);
+   sh.exec(`aws s3 sync out s3://${bucket} --delete --profile ${AWS_CLI_PROFILE}`);
 
    if (distribution) {
       sh.exec(`aws cloudfront create-invalidation --distribution-id ${distribution} --paths "/*" --profile ${AWS_CLI_PROFILE}`);
