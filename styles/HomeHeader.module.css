@@ -1,0 +1,39 @@
+.header {
+  background-color: #F1F1F1;
+  height: 30vw;
+  display: flex;
+  flex-direction: row;
+}
+
+.greyGradientText {
+  background-color: #f3ec78;
+  background-image: linear-gradient(45deg, #acacac, #f0f0f0);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}
+
+.colorGradientText {
+  background-color: #f3ec78;
+  background-image: linear-gradient(45deg, #3b3db6, #68f0d9);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}
+
+.headerFirstLineText {
+  margin-left: 5vw;
+  font-size: 5vw;
+  font-weight: bold;
+  margin-block-end: 0.0em;
+}
+
+.headerSecondLineText {
+  margin-left: 5vw;
+  font-weight: bold;
+  font-size: 8vw;
+}
