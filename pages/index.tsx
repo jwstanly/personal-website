@@ -17,15 +17,19 @@ export default function Home() {
     <>
       <Head>
         <title>John Wright Stanly</title>
+        <meta property="og:title" content="John Wright Stanly's Personal Website" />
+        <meta property="og:description" content="Home of John Wright Stanly's website and blog" />
+        <meta property="og:image" content="/images/profileClipped.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <div id="home" />
       <Navbar 
         color="#FFF"
         options={[
-          {label: "Contact", href: "#contact"},
+          {label: "Contact", href: "/#contact"},
           {label: "Blog", href: "/blog"},
-          {label: "Home", href: "#home"},
+          {label: "Home", href: "/#home"},
         ]}
       />
 

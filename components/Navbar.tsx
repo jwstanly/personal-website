@@ -21,7 +21,7 @@ export default function Navbar(props: NavbarTypes){
           <h4 className={`${styles.navbarItem} ${styles.navbarBrand}`}>jwstanly.com</h4>
           {props.options.map(option => {
             return (
-              <li className={styles.navbarItem}>
+              <li className={styles.navbarItem} key={option.href}>
                 <Link href={option.href} passHref>
                   <a className={styles.navbarLink}>
                     {option.label}

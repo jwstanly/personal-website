@@ -8,7 +8,7 @@ interface TitleProps {
   header: string;
   subheader: string;
   codeTags?: string[];
-  content: string[];
+  content: string | string[];
 }
 
 export function Card(props: TitleProps){
@@ -24,7 +24,9 @@ export function Card(props: TitleProps){
           </div> 
         : <></>}
        <div style={{padding:2}}/>
-      {props.content.map(content => {return <Text style={{marginBottom: 15}}>{content}</Text>;})}
+      {Array.isArray(props.content)
+        ? props.content.map(content => {return <Text style={{marginBottom: 15}}>{content}</Text>;})
+        : <Text style={{marginBottom: 15}}>{props.content}</Text>}
     </div>
   );
 }
