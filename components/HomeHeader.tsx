@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from '../styles/HomeHeader.module.css';
 
 export default function HomeHeader(){
@@ -11,7 +12,7 @@ export default function HomeHeader(){
           John Wright
         </h1>
       </div>
-      <div style={{flex:1.5}}>
+      <div style={{flex:1.2}}>
         <img
           style={{width: '20vw', height: '20vw', marginTop: '5vw', marginLeft: '10vw'}}
           src="/images/profileClipped.png" 
