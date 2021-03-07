@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/Navbar.module.css';
 
@@ -21,9 +22,11 @@ export default function Navbar(props: NavbarTypes){
           {props.options.map(option => {
             return (
               <li className={styles.navbarItem}>
-                <a className={styles.navbarLink} href={option.href}>
-                  {option.label}
-                </a>
+                <Link href={option.href} passHref>
+                  <a className={styles.navbarLink}>
+                    {option.label}
+                  </a>
+                </Link>
               </li>
             );
           })}

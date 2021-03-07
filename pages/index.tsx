@@ -24,7 +24,7 @@ export default function Home() {
         color="#FFF"
         options={[
           {label: "Contact", href: "#contact"},
-          {label: "Blog", href: "#blog"},
+          {label: "Blog", href: "/blog"},
           {label: "Home", href: "#home"},
         ]}
       />
