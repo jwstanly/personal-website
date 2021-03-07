@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from '../components/Titles';
 import { ExperienceCard } from '../components/ExperienceCard';
+import Link from 'next/link';
 
 export default function Home() {
 
@@ -30,13 +31,13 @@ export default function Home() {
 
       <HomeHeader />
 
-      <div style={{padding: '20px'}}/>
+      <div style={{padding: '15px'}}/>
 
       <Container>
         <Row className="justify-content-center">
           <Col xs={12} md={9}>
             <p className={styles.headerContentText}>
-              I'm a software engineer out of Jacksonville, Florida. 
+              I'm John Wright Stanly, a software engineer out of Jacksonville, Florida. 
             </p>
             <p className={styles.headerContentText}>
               I graduated from Stanton College Prep in May 2020. 
@@ -52,9 +53,11 @@ export default function Home() {
         </Row>
       </Container>
 
-      <div style={{padding: '20px'}}/>
+      <div style={{padding: '10px'}}/>
 
       <H1>Experience</H1>
+
+      <div style={{padding: '5px'}}/>
       
       <ExperienceCard
         header='Winsight'
@@ -92,7 +95,23 @@ export default function Home() {
         imageAlt="Winsight logo"
       />
 
-      <div style={{padding: '5vw'}}/>
+      <div style={{padding: '20px'}}/>
+
+      <H1 id="contact">Contact Me</H1>
+
+      <p className={styles.headerContentText} style={{marginRight: 15, marginLeft: 15}}>
+        I'm always down to chat. Send me an email at jwstanly[at]gmail.com
+      </p>
+
+      <div style={{padding: '3vw'}}/>
+
+      <footer>
+        <Link href='https://github.com/jwstanly/personal-website' passHref>
+          <p className={styles.footerContent}>
+            Designed, built, and deployed by John Wright Stanly
+          </p>
+        </Link>
+      </footer>
     </>
   )
 }

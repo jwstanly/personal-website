@@ -2,6 +2,7 @@ import React, { ObjectHTMLAttributes } from 'react';
 import styles from '../styles/Home.module.css';
 
 interface TitleProps {
+  id?: string;
   children: string;
   style?: object;
 }
@@ -9,7 +10,7 @@ interface TitleProps {
 export function H1(props: TitleProps){
 
   return (
-    <h1 className={styles.title}>
+    <h1 id={props.id} className={styles.title}>
       {props.children}
     </h1>
   );
