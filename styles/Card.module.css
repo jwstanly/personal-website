@@ -1,0 +1,20 @@
+.cardContainer {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.cardTextContainer {
+  margin-left: 30px;
+}
+
+@media only screen and (max-device-width: 480px){
+  .cardContainer {
+    display: inline;
+  }
+
+  .cardTextContainer {
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+}
