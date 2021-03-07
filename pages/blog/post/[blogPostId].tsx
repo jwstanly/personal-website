@@ -7,21 +7,12 @@ import HomeHeader from '../../../components/HomeHeader'
 import Navbar from '../../../components/Navbar'
 
 import { Col, Container, Row } from 'react-bootstrap'
-import { Code, H1, H2, H3, Text } from '../../../components/Titles';
+import { Code, H1, H2, H3, H6, Text } from '../../../components/Titles';
 import { ExperienceCard } from '../../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../../components/Card';
-
-interface BlogPostTypes {
-  id: string;
-  title: string;
-  subheader: string;
-  image: string;
-  tags: string[];
-  content: string;
-  createdAt: number;
-  lastModifiedAt: number;
-}
+import { BlogMarkdown } from '../../../components/BlogMarkdown';
+import { BlogPost } from '../../../lib/Types';
 
 export async function getStaticPaths() {
   return {
@@ -35,21 +26,27 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  return {
-    props: {
-      id: "00001",
-      title: "How to Build a Full Stack Blog",
-      subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
-      image: "/images/profileClipped.png",
-      tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-      createdAt: Date.now(),
-      lastModifiedAt: Date.now(),
-    }
+  
+  const blogPost: BlogPost = {
+    id: "00001",
+    title: "How to Build a Full Stack Blog",
+    subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
+    image: "/images/profileClipped.png",
+    tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
+    content: 
+      `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      # Big Title
+      Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem.
+      ## Smaller Title
+      Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam`,
+    createdAt: Date.now(),
+    lastModifiedAt: Date.now(),
   }
+  
+  return { props: blogPost }
 }
 
-export default function Blog(props: BlogPostTypes) {
+export default function Blog(props: BlogPost) {
 
   console.log(props);
 
@@ -81,8 +78,16 @@ export default function Blog(props: BlogPostTypes) {
               header={props.title}
               subheader={props.subheader}
               codeTags={props.tags}
-              content={["Bruh"]}
+              content={[]}
             />
+          </Col>
+        </Row>
+        <div style={{marginTop: 50}} />
+        <Row className="justify-content-center">
+          <Col xs={12} md={10} lg={9} xl={8}>
+            <BlogMarkdown>  
+              {props.content}
+            </BlogMarkdown>
           </Col>
         </Row>
       </Container>

@@ -11,21 +11,11 @@ import { Code, H1, H2, H3, Text } from '../../components/Titles';
 import { ExperienceCard } from '../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../components/Card';
+import { BlogPost } from '../../lib/Types';
 
 export default function Blog() {
 
-  interface BlogPostTypes {
-    id: string;
-    title: string;
-    subheader: string;
-    image: string;
-    tags: string[];
-    content: string;
-    createdAt: number;
-    lastModifiedAt: number;
-  }
-
-  const posts: BlogPostTypes[] = [
+  const posts: BlogPost[] = [
     {
       id: "00001",
       title: "How to Build a Full Stack Blog",
@@ -80,7 +70,7 @@ export default function Blog() {
       <div style={{marginTop: 40}}/>
       <H1>Recent Articles</H1>
 
-      {posts.map((post: BlogPostTypes) => {
+      {posts.map((post: BlogPost) => {
         return (
           <Container key={post.id}>
             <Row className="justify-content-center">
