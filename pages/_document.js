@@ -20,6 +20,16 @@ class MyDocument extends Document {
           rel='stylesheet'
           type='text/css'
         />
+        <link 
+          href='https://fonts.googleapis.com/css?family=Inter:thin,extra-light,light,100,200,300,400,500,600,700,800'
+          rel='stylesheet'
+          type='text/css'
+        />
+        <link 
+          href='https://fonts.googleapis.com/css?family=IBM+Plex+Mono'
+          rel='stylesheet'
+          type='text/css'
+        />
 
         <body>
           <Main />
