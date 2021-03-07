@@ -68,7 +68,7 @@ export default function Home() {
           "I've developed the mobile app and website. I've also helped deploy our websites, APIs, and servers to AWS."
         ]}
         imageUrl="https://is2-ssl.mzstatic.com/image/thumb/Purple124/v4/79/f5/86/79f5861c-ea2d-122d-7774-5b7bf93ddc69/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp"
-        alt="Winsight logo"
+        imageAlt="Winsight logo"
       />
 
       <ExperienceCard
@@ -80,7 +80,7 @@ export default function Home() {
           "I've operated the JavaScript and Liquid codebase for TheWMarketplace, an e-commerce website for women entrepreneurs. I wrote an augmented reality game that takes players on a scavenger hunt accross Jacksonville. I also connected smartwatch API's to Synergy's healthcare app, Project One."
         ]}
         imageUrl="https://media-exp1.licdn.com/dms/image/C4D0BAQHx7gtEoMobMQ/company-logo_200_200/0/1603997222550?e=2159024400&v=beta&t=g9nNgT-Pwn890yhcK3IGUZwb6FvzZeBJPlvVkv5GgLk"
-        imageAlt="Winsight logo"
+        imageAlt="Synergy Technologies logo"
       />
 
       <ExperienceCard
@@ -92,7 +92,7 @@ export default function Home() {
           "I developed parts of the NLP pipeline, like adding speaker diarization and minimizing API calls with IBM Watson. I also helped with biz-dev with things like writing an email scraper and talking to YouTubers like Minute Physics and 3Blue1Brown"
         ]}
         imageUrl="https://i.imgur.com/ITWU7N2.png"
-        imageAlt="Winsight logo"
+        imageAlt="Audiodub logo"
       />
 
       <div style={{padding: '20px'}}/>
