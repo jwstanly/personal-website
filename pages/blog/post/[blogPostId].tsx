@@ -30,6 +30,7 @@ export async function getStaticProps(context) {
   const blogPost: BlogPost = {
     id: "00001",
     title: "How to Build a Full Stack Blog",
+    urlEncodedTitle: "How+to+Build+a+Full+Stack+Blog",
     subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
     image: "/images/profileClipped.png",
     tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
