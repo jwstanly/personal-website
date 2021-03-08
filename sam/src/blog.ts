@@ -2,18 +2,15 @@ import {
   APIGatewayProxyEvent, 
   APIGatewayProxyResult 
 } from "aws-lambda";
-import { BlogPost } from "../../lib/Types";
+import dynamodb from 'aws-sdk/clients/dynamodb';
+import Util, { BlogArticle } from './util';
 
 const blogTable = process.env.SAMPLE_TABLE
-
-// Create a DocumentClient that represents the query to add an item
-const dynamodb = require('aws-sdk/clients/dynamodb');
-const common = require('./util/common');
 
 const docClient = new dynamodb.DocumentClient();
 
 
-export const getArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (event.httpMethod !== 'GET') {
     throw new Error(`Must call getArticle with GET, not: ${event.httpMethod}`);
   }
@@ -33,10 +30,10 @@ export const getArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewa
     }
   }
 
-  const article: BlogPost = await docClient.query(params).promise();
+  const articleRes = await docClient.query(params).promise();
 
-  const response = common.getHeaders({
-    body: JSON.stringify(article)
+  const response = Util.getHeaders({
+    body: JSON.stringify(articleRes)
   })
 
   console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
@@ -49,7 +46,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
     throw new Error(`Must call upsertArticle with POST, not: ${event.httpMethod}`)
   }
 
-  const articleSubmission: BlogPost = JSON.parse(event.body);
+  const articleSubmission: BlogArticle = JSON.parse(event.body);
 
   const errorMessages: string[] = [];
   if(!articleSubmission) errorMessages.push('No article uploaded');
@@ -68,7 +65,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
     return errorResponse;
   }
 
-  const article: BlogPost = {
+  const article: BlogArticle = {
     id: articleSubmission.id || (String)(Date.now()),
     createdAt: articleSubmission.createdAt || Date.now(),
     lastModifiedAt: articleSubmission.lastModifiedAt || Date.now(),
@@ -86,7 +83,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   const res = await docClient.put(params).promise();
 
   
-  const response = common.getHeaders({
+  const response = Util.getHeaders({
     body: JSON.stringify(res)
   })
 

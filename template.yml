@@ -48,6 +48,20 @@ Resources:
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
 
+  PersonalWebsiteTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: PersonalWebsite
+      AttributeDefinitions:
+        - AttributeName: PartitionKey
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PartitionKey
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
   # LambdaLibs:
   #   Type: AWS::Serverless::LayerVersion
   #   Properties:

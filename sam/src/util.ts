@@ -1,4 +1,8 @@
-export const getHeaders = function (res: object) {
+export default {
+  getHeaders: getHeaders
+}
+
+function getHeaders(res: {body: string}) {
   return {
     statusCode: 200,
     headers: {
@@ -8,4 +12,16 @@ export const getHeaders = function (res: object) {
     },
     ...res
   }
+}
+
+export interface BlogArticle {
+  id: string;
+  title: string;
+  urlEncodedTitle: string;
+  subheader: string;
+  image?: string;
+  tags: string[];
+  createdAt: number;
+  lastModifiedAt: number;
+  content: string;
 }
