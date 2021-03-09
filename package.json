@@ -24,7 +24,7 @@
         "build": "next build",
         "start": "next start",
         "export": "next export",
-        "compile-lambdas": "node ./scripts/compile_lambdas",
+        "compile-lambdas": "tsc -p sam/tsconfig.sam.json",
         "sam-build": "env-cmd -e production node ./scripts/sam_build",
         "sam-package": "env-cmd -e production node ./scripts/sam_package",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
