@@ -1,13 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
-    getHeaders: getHeaders
+    getSuccessRes: getSuccessRes,
+    getErrorRes: getErrorRes,
 };
-function getHeaders(res) {
-    return Object.assign({ statusCode: 200, headers: {
+function getSuccessRes(body) {
+    return Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: 200, body: JSON.stringify(body) });
+}
+function getErrorRes(statusCode, message) {
+    return Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: statusCode, body: JSON.stringify({
+            message: message
+        }) });
+}
+function getCommonHeaders() {
+    return {
+        headers: {
             'Access-Control-Allow-Headers': 'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For',
             'Access-Control-Allow-Methods': 'DELETE,GET,OPTIONS,POST',
             'Access-Control-Allow-Origin': '*'
-        } }, res);
+        }
+    };
 }
 //# sourceMappingURL=lambdaUtils.js.map

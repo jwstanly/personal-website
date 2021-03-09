@@ -1,27 +1,45 @@
+import { APIGatewayProxyResult } from "aws-lambda";
+
 export default {
-  getHeaders: getHeaders
+  getSuccessRes: getSuccessRes,
+  getErrorRes: getErrorRes,
 }
 
-function getHeaders(res: {body: string}) {
+function getSuccessRes(body: object | string): APIGatewayProxyResult {
   return {
+    ...getCommonHeaders(),
     statusCode: 200,
+    body: JSON.stringify(body)
+  }
+}
+
+function getErrorRes(statusCode: number, message: string): APIGatewayProxyResult {
+  return {
+    ...getCommonHeaders(),
+    statusCode: statusCode,
+    body: JSON.stringify({ 
+      message: message 
+    })
+  }
+}
+
+function getCommonHeaders() {
+  return {
     headers: {
       'Access-Control-Allow-Headers': 'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For',
       'Access-Control-Allow-Methods': 'DELETE,GET,OPTIONS,POST',
       'Access-Control-Allow-Origin': '*'
-    },
-    ...res
+    }
   }
 }
 
 export interface BlogArticle {
-  id: string;
+  id?: string;
   title: string;
-  urlEncodedTitle: string;
   subheader: string;
   image?: string;
   tags: string[];
-  createdAt: number;
-  lastModifiedAt: number;
+  createdAt?: number;
+  lastModifiedAt?: number;
   content: string;
 }

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.upsertArticle = exports.getArticleByTitle = void 0;
+exports.deleteArticle = exports.upsertArticle = exports.getArticleByTitle = void 0;
 const dynamodb_1 = __importDefault(require("aws-sdk/clients/dynamodb"));
 const lambdaUtils_1 = __importDefault(require("./lambdaUtils"));
 const blogTable = process.env.BLOG_TABLE;
@@ -12,23 +12,27 @@ const getArticleByTitle = async (event) => {
     if (event.httpMethod !== 'GET') {
         throw new Error(`Must call getArticle with GET, not: ${event.httpMethod}`);
     }
-    const { urlEncodedTitle } = event.queryStringParameters;
-    if (!urlEncodedTitle) {
-        throw new Error(`No urlEncodedTitle included in the query parameters`);
+    if (!event.queryStringParameters || !event.queryStringParameters.title) {
+        const errorResponse = lambdaUtils_1.default.getErrorRes(400, "Missing param: title");
+        console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
+        return errorResponse;
     }
+    const { title } = event.queryStringParameters;
     const params = {
         TableName: blogTable,
-        KeyConditionExpression: 'PartitionKey = :hashkey',
-        Limit: 1,
-        ExpressionAttributeValues: {
-            ':hashkey': `BlogArticle|${urlEncodedTitle}`
+        Key: {
+            "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
         }
     };
-    const articleRes = await docClient.query(params).promise();
-    const response = lambdaUtils_1.default.getHeaders({
-        body: JSON.stringify(articleRes)
-    });
-    console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+    const articleRes = await docClient.get(params).promise();
+    if (Object.keys(articleRes).length === 0) {
+        const errorResponse = lambdaUtils_1.default.getErrorRes(404, "No article found");
+        console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
+        return errorResponse;
+    }
+    console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articleRes)}`);
+    const response = lambdaUtils_1.default.getSuccessRes(articleRes);
+    console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
     return response;
 };
 exports.getArticleByTitle = getArticleByTitle;
@@ -37,38 +41,53 @@ const upsertArticle = async (event) => {
         throw new Error(`Must call upsertArticle with POST, not: ${event.httpMethod}`);
     }
     const articleSubmission = JSON.parse(event.body);
-    const errorMessages = [];
+    const missingAttributes = [];
     if (!articleSubmission)
-        errorMessages.push('No article uploaded');
+        missingAttributes.push('No article uploaded');
     if (!articleSubmission.title)
-        errorMessages.push('No article title uploaded');
-    if (!articleSubmission.urlEncodedTitle)
-        errorMessages.push('No article URL encoded title uploaded');
+        missingAttributes.push('title');
     if (!articleSubmission.subheader)
-        errorMessages.push('No article subheader uploaded');
+        missingAttributes.push('subheader');
     if (!articleSubmission.tags)
-        errorMessages.push('No article tags uploaded');
+        missingAttributes.push('tags');
     if (!articleSubmission.content)
-        errorMessages.push('No article content uploaded');
-    if (errorMessages.length !== 0) {
-        const errorResponse = {
-            statusCode: 400,
-            body: JSON.stringify({ message: errorMessages.join(' ') })
-        };
-        console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} body: ${errorResponse.body}`);
+        missingAttributes.push('content');
+    if (missingAttributes.length !== 0) {
+        const errorResponse = lambdaUtils_1.default.getErrorRes(400, `Missing attributes: ${missingAttributes.join(', ')}`);
+        console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
         return errorResponse;
     }
     const article = Object.assign({ id: articleSubmission.id || (String)(Date.now()), createdAt: articleSubmission.createdAt || Date.now(), lastModifiedAt: articleSubmission.lastModifiedAt || Date.now() }, articleSubmission);
     const params = {
         TableName: blogTable,
-        Item: Object.assign({ PartitionKey: `BlogArticle|${article.urlEncodedTitle}` }, article)
+        Item: Object.assign({ "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}` }, article)
     };
     const res = await docClient.put(params).promise();
-    const response = lambdaUtils_1.default.getHeaders({
-        body: JSON.stringify(res)
-    });
-    console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+    const response = lambdaUtils_1.default.getSuccessRes(res);
+    console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
     return response;
 };
 exports.upsertArticle = upsertArticle;
+const deleteArticle = async (event) => {
+    if (event.httpMethod !== 'DELETE') {
+        throw new Error(`delete only accepts DELETE method, you tried: ${event.httpMethod}`);
+    }
+    if (!event.queryStringParameters || !event.queryStringParameters.title) {
+        const errorResponse = lambdaUtils_1.default.getErrorRes(400, "Missing param: title");
+        console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
+        return errorResponse;
+    }
+    const { title } = event.queryStringParameters;
+    const params = {
+        TableName: blogTable,
+        Key: {
+            "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
+        },
+    };
+    const res = await docClient.delete(params).promise();
+    const response = lambdaUtils_1.default.getSuccessRes(res);
+    console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
+    return response;
+};
+exports.deleteArticle = deleteArticle;
 //# sourceMappingURL=blogLambdas.js.map

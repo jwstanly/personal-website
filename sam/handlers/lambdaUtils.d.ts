@@ -1,22 +1,14 @@
+import { APIGatewayProxyResult } from "aws-lambda";
 declare const _default: {
-    getHeaders: typeof getHeaders;
+    getSuccessRes: typeof getSuccessRes;
+    getErrorRes: typeof getErrorRes;
 };
 export default _default;
-declare function getHeaders(res: {
-    body: string;
-}): {
-    body: string;
-    statusCode: number;
-    headers: {
-        'Access-Control-Allow-Headers': string;
-        'Access-Control-Allow-Methods': string;
-        'Access-Control-Allow-Origin': string;
-    };
-};
+declare function getSuccessRes(body: object | string): APIGatewayProxyResult;
+declare function getErrorRes(statusCode: number, message: string): APIGatewayProxyResult;
 export interface BlogArticle {
     id: string;
     title: string;
-    urlEncodedTitle: string;
     subheader: string;
     image?: string;
     tags: string[];

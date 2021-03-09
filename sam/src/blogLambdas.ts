@@ -14,28 +14,40 @@ export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<AP
     throw new Error(`Must call getArticle with GET, not: ${event.httpMethod}`);
   }
   
-  const { urlEncodedTitle } = event.queryStringParameters;
-  
-  if (!urlEncodedTitle) {
-    throw new Error(`No urlEncodedTitle included in the query parameters`);
+  if (!event.queryStringParameters || !event.queryStringParameters.title) {
+    const errorResponse = Util.getErrorRes(
+      400,
+      "Missing param: title"
+    );
+    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
+    return errorResponse;
   }
+
+  const { title } = event.queryStringParameters;
 
   const params = {
     TableName: blogTable,
-    KeyConditionExpression: 'PartitionKey = :hashkey',
-    Limit: 1,
-    ExpressionAttributeValues: {
-      ':hashkey': `BlogArticle|${urlEncodedTitle}`
+    Key: {
+      "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
     }
   }
 
-  const articleRes = await docClient.query(params).promise();
+  const articleRes = await docClient.get(params).promise();
 
-  const response = Util.getHeaders({
-    body: JSON.stringify(articleRes)
-  })
+  if (Object.keys(articleRes).length === 0) {
+    const errorResponse = Util.getErrorRes(
+      404,
+      "No article found"
+    );
+    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
+    return errorResponse;
+  }
 
-  console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+  console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articleRes)}`);
+
+  const response = Util.getSuccessRes(articleRes);
+
+  console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
   return response;
 }
 
@@ -47,20 +59,19 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
 
   const articleSubmission: BlogArticle = JSON.parse(event.body);
 
-  const errorMessages: string[] = [];
-  if(!articleSubmission) errorMessages.push('No article uploaded');
-  if(!articleSubmission.title) errorMessages.push('No article title uploaded');
-  if(!articleSubmission.urlEncodedTitle) errorMessages.push('No article URL encoded title uploaded');
-  if(!articleSubmission.subheader) errorMessages.push('No article subheader uploaded');
-  if(!articleSubmission.tags) errorMessages.push('No article tags uploaded');
-  if(!articleSubmission.content) errorMessages.push('No article content uploaded');
+  const missingAttributes: string[] = [];
+  if(!articleSubmission) missingAttributes.push('No article uploaded');
+  if(!articleSubmission.title) missingAttributes.push('title');
+  if(!articleSubmission.subheader) missingAttributes.push('subheader');
+  if(!articleSubmission.tags) missingAttributes.push('tags');
+  if(!articleSubmission.content) missingAttributes.push('content');
   
-  if (errorMessages.length !== 0) {
-    const errorResponse = {
-      statusCode: 400,
-      body: JSON.stringify({ message: errorMessages.join(' ') })
-    };
-    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} body: ${errorResponse.body}`);
+  if (missingAttributes.length !== 0) {
+    const errorResponse = Util.getErrorRes(
+      400, 
+      `Missing attributes: ${missingAttributes.join(', ')}`
+    );
+    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
     return errorResponse;
   }
 
@@ -74,7 +85,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   const params = {
     TableName: blogTable,
     Item: {
-      PartitionKey: `BlogArticle|${article.urlEncodedTitle}`,
+      "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}`,
       ...article,
     }
   }
@@ -82,10 +93,39 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   const res = await docClient.put(params).promise();
 
   
-  const response = Util.getHeaders({
-    body: JSON.stringify(res)
-  })
+  const response = Util.getSuccessRes(res);
 
-  console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`)
+  console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`)
+  return response;
+}
+
+export const deleteArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  if (event.httpMethod !== 'DELETE') {
+    throw new Error(`delete only accepts DELETE method, you tried: ${event.httpMethod}`);
+  }
+
+  if (!event.queryStringParameters || !event.queryStringParameters.title) {
+    const errorResponse = Util.getErrorRes(
+      400,
+      "Missing param: title"
+    );
+    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
+    return errorResponse;
+  }
+
+  const { title } = event.queryStringParameters;
+
+  const params = {
+    TableName: blogTable,
+    Key: {
+      "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
+    },
+  };
+
+  const res = await docClient.delete(params).promise();
+
+  const response = Util.getSuccessRes(res);
+
+  console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
   return response;
 }
