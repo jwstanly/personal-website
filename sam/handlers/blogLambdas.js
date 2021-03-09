@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.upsertArticle = exports.getArticleByTitle = void 0;
 const dynamodb_1 = __importDefault(require("aws-sdk/clients/dynamodb"));
-const util_1 = __importDefault(require("./util"));
-const blogTable = process.env.SAMPLE_TABLE;
+const lambdaUtils_1 = __importDefault(require("./lambdaUtils"));
+const blogTable = process.env.BLOG_TABLE;
 const docClient = new dynamodb_1.default.DocumentClient();
-exports.getArticleByTitle = async (event) => {
+const getArticleByTitle = async (event) => {
     if (event.httpMethod !== 'GET') {
         throw new Error(`Must call getArticle with GET, not: ${event.httpMethod}`);
     }
@@ -25,13 +25,14 @@ exports.getArticleByTitle = async (event) => {
         }
     };
     const articleRes = await docClient.query(params).promise();
-    const response = util_1.default.getHeaders({
+    const response = lambdaUtils_1.default.getHeaders({
         body: JSON.stringify(articleRes)
     });
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
     return response;
 };
-exports.upsertArticle = async (event) => {
+exports.getArticleByTitle = getArticleByTitle;
+const upsertArticle = async (event) => {
     if (event.httpMethod !== 'POST') {
         throw new Error(`Must call upsertArticle with POST, not: ${event.httpMethod}`);
     }
@@ -63,10 +64,11 @@ exports.upsertArticle = async (event) => {
         Item: Object.assign({ PartitionKey: `BlogArticle|${article.urlEncodedTitle}` }, article)
     };
     const res = await docClient.put(params).promise();
-    const response = util_1.default.getHeaders({
+    const response = lambdaUtils_1.default.getHeaders({
         body: JSON.stringify(res)
     });
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
     return response;
 };
-//# sourceMappingURL=blog.js.map
+exports.upsertArticle = upsertArticle;
+//# sourceMappingURL=blogLambdas.js.map

@@ -3,10 +3,9 @@ import {
   APIGatewayProxyResult 
 } from "aws-lambda";
 import dynamodb from 'aws-sdk/clients/dynamodb';
-import Util, { BlogArticle } from './util';
+import Util, { BlogArticle } from './lambdaUtils';
 
-const blogTable = process.env.SAMPLE_TABLE
-
+const blogTable = process.env.BLOG_TABLE;
 const docClient = new dynamodb.DocumentClient();
 
 

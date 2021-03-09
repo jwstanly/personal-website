@@ -10,4 +10,4 @@ function getHeaders(res) {
             'Access-Control-Allow-Origin': '*'
         } }, res);
 }
-//# sourceMappingURL=util.js.map
+//# sourceMappingURL=lambdaUtils.js.map
