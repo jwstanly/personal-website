@@ -20,8 +20,8 @@ function getKeyParams() {
   };
 }
 
-async function getArticleByTitle(urlEncodedTitle: string): Promise<BlogPost> {
-  const url = `${API_URL}/blog?urlEncodedTitle=${urlEncodedTitle}`;
+async function getArticleByTitle(title: string): Promise<BlogPost> {
+  const url = `${API_URL}/blog?title=${title.replaceAll(" ", "+")}`;
   return fetch(url, getKeyParams())
     .then((res) => res.json())
     .then((data) => {

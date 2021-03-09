@@ -31,7 +31,6 @@ export async function getStaticProps(context) {
   const blogPost: BlogPost = {
     id: "00001",
     title: "How to Build a Full Stack Blog",
-    urlEncodedTitle: "How+to+Build+a+Full+Stack+Blog",
     subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
     image: "/images/profileClipped.png",
     tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
@@ -54,7 +53,7 @@ export default function Blog(props: BlogPost) {
 
   async function getBlogArticle() {
     console.log("API RAN");
-    API.getArticleByTitle(props.urlEncodedTitle).then(
+    API.getArticleByTitle(props.title).then(
       res => console.log("SUCCESS", res)
     ).catch(
       error => console.log("ERROR:", error)

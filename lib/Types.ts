@@ -1,7 +1,6 @@
 export interface BlogPost {
   id: string;
   title: string;
-  urlEncodedTitle: string;
   subheader: string;
   image?: string;
   tags: string[];
