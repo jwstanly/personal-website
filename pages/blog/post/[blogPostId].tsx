@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { Card } from '../../../components/Card';
 import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogPost } from '../../../lib/Types';
+import API from '../../../lib/Api';
 
 export async function getStaticPaths() {
   return {
@@ -50,6 +51,17 @@ export async function getStaticProps(context) {
 export default function Blog(props: BlogPost) {
 
   console.log(props);
+
+  async function getBlogArticle() {
+    console.log("API RAN");
+    API.getArticleByTitle(props.urlEncodedTitle).then(
+      res => console.log("SUCCESS", res)
+    ).catch(
+      error => console.log("ERROR:", error)
+    )
+  }
+
+  React.useEffect(() => getBlogArticle(), []);
 
   return (
     <>
