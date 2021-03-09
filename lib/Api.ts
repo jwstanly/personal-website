@@ -8,7 +8,7 @@ export default {
 }
 
 function getKeyParams() {
-  const key = "11IksBwBib6krjrXvZdmw3Topbi6heEj5wQCkjrY"
+  const key = "6Zk02gWWMS4bWkiK1b3u57FQx8XPQfRf4IjI8wYE"
   return {
     method: 'GET',
     headers: {

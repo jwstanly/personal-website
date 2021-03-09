@@ -20,23 +20,24 @@ Parameters:
     Description: The DNS name of an existing Amazon Route 53 hosted zone e.g. react-spa-starter.com
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
     ConstraintDescription: must be a valid DNS zone name.
-  FullDomainName:
-    Type: String
-    Description: The full domain name e.g. www.react-spa-starter.com
-    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
-    ConstraintDescription: must be a valid DNS zone name.
   AcmCertificateArn:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
     AllowedPattern: "arn:aws:acm:.*"
 
 Resources:
-  MyApi:
+  PersonalWebsiteApi:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
       Auth:
         ApiKeyRequired: true
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          Description: The default usage plan for this API
+          Throttle:
+            BurstLimit: 100
+            RateLimit: 50
       Cors:
         AllowMethods: "'DELETE,GET,OPTIONS,POST'"
         AllowHeaders: "'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For'"
@@ -44,7 +45,7 @@ Resources:
         # MaxAge: "'600'"
         # AllowCredentials: True
       Domain:
-        DomainName: !Join ['', [api, !Ref DomainName]]
+        DomainName: !Join ['.', [api, !Ref DomainName]]
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
 
@@ -73,27 +74,57 @@ Resources:
   #   Metadata:
   #     BuildMethod: makefile
 
-  helloFromLambdaFunction:
+  GetArticleByTitleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       # Layers:
       #   - !Ref LambdaLibs
       CodeUri: sam/.
-      Handler: handlers/hello-from-lambda.helloFromLambdaHandler
+      Handler: handlers/blogLambdas.getArticleByTitle
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
-      Description: A Lambda function that returns a static string.
+      Description: Get the blog article given its URL encoded title
       Policies:
-        # Give Lambda basic execution Permission to the helloFromLambda
         - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Environment:
+        Variables:
+          BLOG_TABLE: !Ref PersonalWebsiteTable
       Events:
         Api:
           Type: Api
           Properties:
-            RestApiId: !Ref MyApi
-            Path: /helloWorld
-            Method: GET 
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog
+            Method: GET
+  
+  UpsertArticleLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      CodeUri: sam/.
+      Handler: handlers/blogLambdas.upsertArticle
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 100
+      Description: Upsert a blog article
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Environment:
+        Variables:
+          BLOG_TABLE: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog
+            Method: POST 
 
   Bucket:
     Type: AWS::S3::Bucket
@@ -135,7 +166,7 @@ Resources:
         DefaultRootObject: index.html
         Aliases:
           - !Ref 'DomainName'
-          - !Ref 'FullDomainName' # route "www" version of domain to cloudfront as well
+          - !Join ['.', [www, !Ref DomainName]] # route "www" version of domain to cloudfront as well
         DefaultCacheBehavior: # some defaults, not too important
           AllowedMethods:
           - GET
@@ -180,7 +211,7 @@ Resources:
     Properties:
       HostedZoneId: !Ref HostedZone
       RecordSets:
-      - Name: !Ref 'FullDomainName'
+      - Name: !Join ['.', [www, !Ref DomainName]]
         Type: A
         AliasTarget:
           HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
@@ -191,10 +222,19 @@ Outputs:
     Value: !GetAtt
       - Bucket
       - WebsiteURL
-    Description: URL for website hosted on S3
+    Description: The URL for the S3 bucket.
   CloudFrontDistributionEndpoint:
       Value: !GetAtt [CloudFrontDistribution, DomainName]
-      Description: Endpoint for Cloudfront distribution
+      Description: The DomainName for CloudFront distribution. This is NOT the CloudFront distribution ID. Use this DomainName to find the distribution ID in the CloudFormation or CloudFront console.
+  Domain:
+    Value: !Ref DomainName
+    Description: The custom domain.
   FullDomain:
-    Value: !Ref 'FullDomainName'
-    Description: Full DomainName
+    Value: !Join ['.', [www, !Ref DomainName]]
+    Description: The custom full domain.
+  ApiDomain:
+    Value: !Join ['.', [api, !Ref DomainName]]
+    Description: The custom API domain.
+  APIKey:
+    Value: !GetAtt [PersonalWebsiteApiApiKey , APIKeyId]
+    Description: The resource ID for the API Key. This is NOT the actual API key. Use this ID to find the key in the CloudFormation or API Gateway console.
