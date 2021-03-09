@@ -20,12 +20,12 @@ export function Card(props: TitleProps){
       <div style={{padding:10}}/>
       {props.codeTags
         ? <div style={{display: 'inline-block'}}>
-            {props.codeTags.map(tag => {return <Code>{tag}</Code>;})}
+            {props.codeTags.map(tag => {return <Code key={tag}>{tag}</Code>;})}
           </div> 
         : <></>}
        <div style={{padding:2}}/>
       {Array.isArray(props.content)
-        ? props.content.map(content => {return <Text style={{marginBottom: 15}}>{content}</Text>;})
+        ? props.content.map(content => {return <Text key={content} style={{marginBottom: 15}}>{content}</Text>;})
         : <Text style={{marginBottom: 15}}>{props.content}</Text>}
     </div>
   );
