@@ -25,6 +25,16 @@ Parameters:
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
     AllowedPattern: "arn:aws:acm:.*"
 
+Globals:
+  Function:
+    CodeUri: sam/.
+    Runtime: nodejs14.x
+    MemorySize: 128
+    Timeout: 180
+    Environment:
+      Variables:
+        BLOG_TABLE: !Ref PersonalWebsiteTable
+
 Resources:
   PersonalWebsiteApi:
     Type: AWS::Serverless::Api
@@ -79,19 +89,12 @@ Resources:
     Properties:
       # Layers:
       #   - !Ref LambdaLibs
-      CodeUri: sam/.
       Handler: handlers/blogLambdas.getArticleByTitle
-      Runtime: nodejs14.x
-      MemorySize: 128
-      Timeout: 100
       Description: Get the blog article given its URL encoded title
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
             TableName: !Ref PersonalWebsiteTable
-      Environment:
-        Variables:
-          BLOG_TABLE: !Ref PersonalWebsiteTable
       Events:
         Api:
           Type: Api
@@ -105,26 +108,38 @@ Resources:
     Properties:
       # Layers:
       #   - !Ref LambdaLibs
-      CodeUri: sam/.
       Handler: handlers/blogLambdas.upsertArticle
-      Runtime: nodejs14.x
-      MemorySize: 128
-      Timeout: 100
       Description: Upsert a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
             TableName: !Ref PersonalWebsiteTable
-      Environment:
-        Variables:
-          BLOG_TABLE: !Ref PersonalWebsiteTable
       Events:
         Api:
           Type: Api
           Properties:
             RestApiId: !Ref PersonalWebsiteApi
             Path: /blog
-            Method: POST 
+            Method: POST
+  
+  DeleteArticleLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      Handler: handlers/blogLambdas.deleteArticle
+      Description: Delete the blog article
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog
+            Method: DELETE 
 
   Bucket:
     Type: AWS::S3::Bucket
