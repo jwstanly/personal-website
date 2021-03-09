@@ -11,16 +11,11 @@ const docClient = new dynamodb.DocumentClient();
 
 export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (event.httpMethod !== 'GET') {
-    throw new Error(`Must call getArticle with GET, not: ${event.httpMethod}`);
+    return Util.getErrorRes(event, 405, `Must call getArticle with GET, not: ${event.httpMethod}`);
   }
   
   if (!event.queryStringParameters || !event.queryStringParameters.title) {
-    const errorResponse = Util.getErrorRes(
-      400,
-      "Missing param: title"
-    );
-    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
-    return errorResponse;
+    return Util.getErrorRes(event, 400, "Missing param: title");
   }
 
   const { title } = event.queryStringParameters;
@@ -35,44 +30,34 @@ export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<AP
   const articleRes = await docClient.get(params).promise();
 
   if (Object.keys(articleRes).length === 0) {
-    const errorResponse = Util.getErrorRes(
-      404,
-      "No article found"
-    );
-    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
-    return errorResponse;
+    return Util.getErrorRes(event, 404, "No article found");
   }
 
   console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articleRes)}`);
 
-  const response = Util.getSuccessRes(articleRes);
-
-  console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
-  return response;
+  return Util.getSuccessRes(event, articleRes);
 }
 
 
 export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (event.httpMethod !== 'POST') {
-    throw new Error(`Must call upsertArticle with POST, not: ${event.httpMethod}`)
+    return Util.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
   }
 
   const articleSubmission: BlogArticle = JSON.parse(event.body);
 
+  if (!articleSubmission) {
+    return Util.getErrorRes(event, 400, 'No article posted');
+  }
+
   const missingAttributes: string[] = [];
-  if(!articleSubmission) missingAttributes.push('No article uploaded');
   if(!articleSubmission.title) missingAttributes.push('title');
   if(!articleSubmission.subheader) missingAttributes.push('subheader');
   if(!articleSubmission.tags) missingAttributes.push('tags');
   if(!articleSubmission.content) missingAttributes.push('content');
   
   if (missingAttributes.length !== 0) {
-    const errorResponse = Util.getErrorRes(
-      400, 
-      `Missing attributes: ${missingAttributes.join(', ')}`
-    );
-    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
-    return errorResponse;
+    return Util.getErrorRes(event, 400, `Missing attributes: ${missingAttributes.join(', ')}`);
   }
 
   const article: BlogArticle = {
@@ -93,24 +78,16 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   const res = await docClient.put(params).promise();
 
   
-  const response = Util.getSuccessRes(res);
-
-  console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`)
-  return response;
+  return Util.getSuccessRes(event, res);
 }
 
 export const deleteArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (event.httpMethod !== 'DELETE') {
-    throw new Error(`delete only accepts DELETE method, you tried: ${event.httpMethod}`);
+    return Util.getErrorRes(event, 405, `Must call deleteArticle with DELETE, not: ${event.httpMethod}`);
   }
 
   if (!event.queryStringParameters || !event.queryStringParameters.title) {
-    const errorResponse = Util.getErrorRes(
-      400,
-      "Missing param: title"
-    );
-    console.info(`response from: ${event.path} statusCode: ${errorResponse.statusCode} response: ${JSON.stringify(errorResponse)}`);
-    return errorResponse;
+    return Util.getErrorRes(event, 400, "Missing param: title");
   }
 
   const { title } = event.queryStringParameters;
@@ -124,8 +101,5 @@ export const deleteArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
 
   const res = await docClient.delete(params).promise();
 
-  const response = Util.getSuccessRes(res);
-
-  console.info(`response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
-  return response;
+  return Util.getSuccessRes(event, res);
 }

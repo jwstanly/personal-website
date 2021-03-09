@@ -1,26 +1,32 @@
-import { APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 export default {
   getSuccessRes: getSuccessRes,
   getErrorRes: getErrorRes,
 }
 
-function getSuccessRes(body: object | string): APIGatewayProxyResult {
-  return {
+function getSuccessRes(event: APIGatewayProxyEvent, body: object | string): APIGatewayProxyResult {
+  const response = {
     ...getCommonHeaders(),
     statusCode: 200,
     body: JSON.stringify(body)
   }
+  // Prints in CloudWatch
+  console.info(`SUCCESS: response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
+  return response;
 }
 
-function getErrorRes(statusCode: number, message: string): APIGatewayProxyResult {
-  return {
+function getErrorRes(event: APIGatewayProxyEvent, statusCode: number, message: string): APIGatewayProxyResult {
+  const response = {
     ...getCommonHeaders(),
     statusCode: statusCode,
     body: JSON.stringify({ 
-      message: message 
+      error: message 
     })
   }
+  // Prints in CloudWatch
+  console.info(`ERROR: response from: ${event.path} statusCode: ${statusCode} response: ${JSON.stringify(response)}`);
+  return response;
 }
 
 function getCommonHeaders() {

@@ -4,13 +4,19 @@ exports.default = {
     getSuccessRes: getSuccessRes,
     getErrorRes: getErrorRes,
 };
-function getSuccessRes(body) {
-    return Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: 200, body: JSON.stringify(body) });
+function getSuccessRes(event, body) {
+    const response = Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: 200, body: JSON.stringify(body) });
+    // Prints in CloudWatch
+    console.info(`SUCCESS: response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
+    return response;
 }
-function getErrorRes(statusCode, message) {
-    return Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: statusCode, body: JSON.stringify({
-            message: message
+function getErrorRes(event, statusCode, message) {
+    const response = Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: statusCode, body: JSON.stringify({
+            error: message
         }) });
+    // Prints in CloudWatch
+    console.info(`ERROR: response from: ${event.path} statusCode: ${statusCode} response: ${JSON.stringify(response)}`);
+    return response;
 }
 function getCommonHeaders() {
     return {
