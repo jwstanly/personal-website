@@ -1,6 +1,6 @@
 import { BlogPost } from "./Types";
 
-const API_URL = "https://d2scyoxl9axuyg.cloudfront.net" //"https://api.jwstanly.com";
+const API_URL = "https://api.jwstanly.com";
 
 export default {
   getArticleByTitle: getArticleByTitle,

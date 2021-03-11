@@ -49,18 +49,16 @@ export async function getStaticProps(context) {
 
 export default function Blog(props: BlogPost) {
 
-  console.log(props);
+  console.log("SSG PROPS", props);
 
-  async function getBlogArticle() {
+  React.useEffect(() => {
     console.log("API RAN");
-    API.getArticleByTitle(props.title).then(
-      res => console.log("SUCCESS", res)
+    API.getArticleByTitle("Sample Blog Post").then(
+      res => console.log("API SUCCESS", res)
     ).catch(
-      error => console.log("ERROR:", error)
+      error => console.log("API ERROR:", error)
     )
-  }
-
-  React.useEffect(() => getBlogArticle(), []);
+  }, []);
 
   return (
     <>
