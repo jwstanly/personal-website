@@ -148,7 +148,7 @@ Resources:
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
-        ErrorDocument: index.html
+        ErrorDocument: 404.html
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -170,24 +170,24 @@ Resources:
     - Bucket # don't create cf distribution until S3 Bucket has been created
     Properties:
       DistributionConfig:
-        Comment: Cloudfront Distribution pointing to S3 bucket
+        Comment: Cloudfront Distribution pointing to S3 website
         Origins:
-        - DomainName: !Join ['', [!Ref DomainName, .s3.amazonaws.com]]
-          Id: S3Origin
-          S3OriginConfig:
-              OriginAccessIdentity: ''
-        Enabled: true # deploy the distribution
+        - DomainName: !Join ['', [!Ref DomainName, .s3-website.us-east-1.amazonaws.com]] 
+          Id: CustomS3WebsiteOrigin
+          CustomOriginConfig:
+            OriginProtocolPolicy: http-only  # S3 buckets configured as a website can't use HTTPS
+        Enabled: true
         HttpVersion: 'http2'
         DefaultRootObject: index.html
         Aliases:
           - !Ref 'DomainName'
-          - !Join ['.', [www, !Ref DomainName]] # route "www" version of domain to cloudfront as well
+          - !Join ['.', [www, !Ref DomainName]]
         DefaultCacheBehavior: # some defaults, not too important
           AllowedMethods:
           - GET
           - HEAD
           Compress: true
-          TargetOriginId: S3Origin
+          TargetOriginId: CustomS3WebsiteOrigin
           ForwardedValues:
             QueryString: true
             Cookies:
@@ -197,11 +197,11 @@ Resources:
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmCertificateArn # allow https
           SslSupportMethod: sni-only
-        CustomErrorResponses: # want to direct any CF Distribution traffic to the S3 Bucket/React app
-        - ErrorCachingMinTTL: 300
-          ErrorCode: 404
-          ResponseCode: 200
-          ResponsePagePath: /index.html
+        # CustomErrorResponses: # redirects any CF Distribution traffic to S3 Bucket
+        # - ErrorCachingMinTTL: 300
+        #   ErrorCode: 404
+        #   ResponseCode: 200
+        #   ResponsePagePath: /index.html
 
   HostedZone: 
     Type: AWS::Route53::HostedZone
