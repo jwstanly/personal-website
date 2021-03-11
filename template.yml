@@ -17,14 +17,21 @@ Transform:
 Parameters:
   DomainName:
     Type: String
-    Description: The DNS name of an existing Amazon Route 53 hosted zone e.g. react-spa-starter.com
+    Description: The domain name including the TLD. Example = YourWebsite.com
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
-    ConstraintDescription: must be a valid DNS zone name.
+    ConstraintDescription: Must be a domain name including the TLD.
   AcmCertificateArn:
     Type: String
-    Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
+    Description: The Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate. Example = arn:aws:acm:[resource_id_here]
     AllowedPattern: "arn:aws:acm:.*"
-
+    ConstraintDescription: Must be the ARN for the ACM certificate.
+  AWSRegion:
+    Type: String
+    Default: us-east-1
+    Description: The AWS Region Code for the AWS Region where resources will be provisioned. Example = us-east-1
+    AllowedPattern: (us(-gov)?|ap|ca|cn|eu|sa)-(central|(north|south)?(east|west)?)-\d
+    ConstraintDescription: Must be an AWS Region Code
+    
 Globals:
   Function:
     CodeUri: sam/.
@@ -174,7 +181,7 @@ Resources:
       DistributionConfig:
         Comment: Cloudfront Distribution pointing to S3 website
         Origins:
-        - DomainName: !Join ['', [!Ref DomainName, .s3-website.us-east-1.amazonaws.com]] 
+        - DomainName: !Join ['', [!Ref DomainName, .s3-website., !Ref AWSRegion, .amazonaws.com]] 
           Id: CustomS3WebsiteOrigin
           CustomOriginConfig:
             OriginProtocolPolicy: http-only  # S3 buckets configured as a website can't use HTTPS
