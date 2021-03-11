@@ -58,6 +58,8 @@ Resources:
         DomainName: !Join ['.', [api, !Ref DomainName]]
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
+        Route53: 
+          HostedZoneId: !Ref HostedZone
 
   PersonalWebsiteTable:
     Type: AWS::DynamoDB::Table
@@ -210,7 +212,7 @@ Resources:
         Comment: 'Hosted zone for my personal website and blog'
       Name: !Ref DomainName
 
-  DNS: # allow access to React app via <DomainName>
+  DNS:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneId: !Ref HostedZone
@@ -221,7 +223,7 @@ Resources:
           HostedZoneId: Z2FDTNDATAQYW2 #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
           DNSName: !GetAtt [CloudFrontDistribution, DomainName]
 
-  DNSWithWWW: # allow access to React app via <FullDomainName>
+  DNSWithWWW:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneId: !Ref HostedZone
