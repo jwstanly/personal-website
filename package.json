@@ -15,6 +15,7 @@
         "@types/node": "^12.0.0",
         "@types/react": "^16.9.53",
         "@types/react-dom": "^16.9.8",
+        "@types/shelljs": "^0.8.8",
         "env-cmd": "10.0.1",
         "shelljs": "^0.8.3",
         "typescript": "^4.2.2"
@@ -24,13 +25,14 @@
         "build": "next build",
         "start": "next start",
         "export": "next export",
+        "index-html": "node ./scripts/index_html",
         "compile-lambdas": "tsc -p sam/tsconfig.sam.json",
         "sam-build": "env-cmd -e production node ./scripts/sam_build",
         "sam-package": "env-cmd -e production node ./scripts/sam_package",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
         "provision": "yarn run compile-lambdas && yarn run sam-build && yarn run sam-deploy",
         "upload": "env-cmd -e production node ./scripts/upload_bucket",
-        "deploy": "yarn run build && yarn run export && yarn run upload"
+        "deploy": "yarn run build && yarn run export && yarn run index-html && yarn run upload"
     },
     "eslintConfig": {
         "extends": [
