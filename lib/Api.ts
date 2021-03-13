@@ -1,4 +1,5 @@
 import { BlogArticle } from "./Types";
+import Util from "./Util";
 
 const API_URL = "https://api.jwstanly.com";
 
@@ -34,12 +35,12 @@ async function getAllArticles(): Promise<BlogArticle[]> {
 }
 
 async function getArticleByTitle(title: string): Promise<BlogArticle> {
-  const url = `${API_URL}/blog?title=${title.replaceAll(" ", "+")}`;
+  const url = `${API_URL}/blog?title=${Util.serializeTitle(title)}`;
   return fetch(url, getKeyParams())
     .then((res) => res.json())
     .then((data) => {
       // console.log(url, data);
-      return data;
+      return data.Item;
     })
     .catch((error) => {
       console.error(error);

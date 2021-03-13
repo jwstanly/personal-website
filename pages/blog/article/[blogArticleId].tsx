@@ -13,50 +13,41 @@ import Link from 'next/link';
 import { Card } from '../../../components/Card';
 import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogArticle } from '../../../lib/Types';
+import Util from '../../../lib/Util';
+import API from '../../../lib/Api';
 
 export async function getStaticPaths() {
+
+  const paths = await Util.getBlogArticlePaths();
+
   return {
-    paths: [
-      {params: { blogArticleId: "00001" } },
-      {params: { blogArticleId: "00002" } },
-      {params: { blogArticleId: "00003" } },
-    ],
+    paths: paths,
     fallback: false
   };
 }
 
 export async function getStaticProps(context) {
   
-  const article: BlogArticle = {
-    id: "00001",
-    title: "How to Build a Full Stack Blog",
-    subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
-    image: "/images/profileClipped.png",
-    tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
-    content: 
-      `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      # Big Title
-      Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem.
-      ## Smaller Title
-      Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam`,
-    createdAt: Date.now(),
-    lastModifiedAt: Date.now(),
-  }
+  const article: BlogArticle = await API.getArticleByTitle(context.params.blogArticleId);
   
-  return { props: article }
+  return { 
+    props: {
+      article: article
+    } 
+  }
 }
 
-export default function Blog(props: BlogArticle) {
+export default function Blog({article}: {article: BlogArticle}) {
 
-  console.log("SSG PROPS", props);
+  console.log("SSG PROPS", article);
 
   return (
     <>
       <Head>
         <title>John Wright Stanly</title>
-        <meta property="og:title" content={props.title} />
-        <meta property="og:description" content={props.subheader}  />
-        <meta property="og:image" content={props.image} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.subheader}  />
+        <meta property="og:image" content={article.image} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -75,9 +66,9 @@ export default function Blog(props: BlogArticle) {
         <Row className="justify-content-center">
           <Col xs={12} md={10} lg={9} xl={8}>
             <Card
-              header={props.title}
-              subheader={props.subheader}
-              codeTags={props.tags}
+              header={article.title}
+              subheader={article.subheader}
+              codeTags={article.tags}
               content={[]}
             />
           </Col>
@@ -86,7 +77,7 @@ export default function Blog(props: BlogArticle) {
         <Row className="justify-content-center">
           <Col xs={12} md={10} lg={9} xl={8}>
             <BlogMarkdown>  
-              {props.content}
+              {article.content}
             </BlogMarkdown>
           </Col>
         </Row>

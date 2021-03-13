@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
 import API from '../../lib/Api';
+import Util from '../../lib/Util';
 
 export async function getStaticProps(context) {
   
@@ -54,7 +55,7 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
           <Container key={article.id}>
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={9} xl={8}>
-                <Link href={`/blog/article/${article.id}`} passHref>
+                <Link href={`/blog/article/${Util.serializeTitle(article.title)}`} passHref>
                   <div className={styles.blogCard}>
                     <Card
                       header={article.title}
