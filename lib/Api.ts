@@ -1,4 +1,4 @@
-import { BlogPost } from "./Types";
+import { BlogArticle } from "./Types";
 
 const API_URL = "https://api.jwstanly.com";
 
@@ -19,7 +19,7 @@ function getKeyParams() {
   };
 }
 
-async function getArticleByTitle(title: string): Promise<BlogPost> {
+async function getArticleByTitle(title: string): Promise<BlogArticle> {
   const url = `${API_URL}/blog?title=${title.replaceAll(" ", "+")}`;
   return fetch(url, getKeyParams())
     .then((res) => res.json())
@@ -32,13 +32,13 @@ async function getArticleByTitle(title: string): Promise<BlogPost> {
     });
 }
 
-async function upsertArticle(blogPost: BlogPost): Promise<any> {
+async function upsertArticle(article: BlogArticle): Promise<any> {
   const url = `${API_URL}/blog`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
     method: "POST",
-    body: JSON.stringify(blogPost),
+    body: JSON.stringify(article),
   })
     .then((res) => res.json())
     .then((data) => {

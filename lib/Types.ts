@@ -1,4 +1,4 @@
-export interface BlogPost {
+export interface BlogArticle {
   id: string;
   title: string;
   subheader: string;

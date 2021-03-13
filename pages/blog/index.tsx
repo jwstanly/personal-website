@@ -11,11 +11,12 @@ import { Code, H1, H2, H3, Text } from '../../components/Titles';
 import { ExperienceCard } from '../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../components/Card';
-import { BlogPost } from '../../lib/Types';
+import { BlogArticle } from '../../lib/Types';
 
 export default function Blog() {
 
-  const posts: BlogPost[] = [
+
+  const articles: BlogArticle[] = [
     {
       id: "00001",
       title: "How to Build a Full Stack Blog",
@@ -70,18 +71,18 @@ export default function Blog() {
       <div style={{marginTop: 40}}/>
       <H1>Recent Articles</H1>
 
-      {posts.map((post: BlogPost) => {
+      {articles.map((article: BlogArticle) => {
         return (
-          <Container key={post.id}>
+          <Container key={article.id}>
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={9} xl={8}>
-                <Link href={`/blog/post/${post.id}`} passHref>
+                <Link href={`/blog/article/${article.id}`} passHref>
                   <div className={styles.blogCard}>
                     <Card
-                      header={post.title}
-                      subheader={post.subheader}
-                      codeTags={post.tags}
-                      content={post.content}
+                      header={article.title}
+                      subheader={article.subheader}
+                      codeTags={article.tags}
+                      content={article.content}
                     />
                   </div>
                 </Link>

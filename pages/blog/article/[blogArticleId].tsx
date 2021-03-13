@@ -12,15 +12,15 @@ import { ExperienceCard } from '../../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../../components/Card';
 import { BlogMarkdown } from '../../../components/BlogMarkdown';
-import { BlogPost } from '../../../lib/Types';
+import { BlogArticle } from '../../../lib/Types';
 import API from '../../../lib/Api';
 
 export async function getStaticPaths() {
   return {
     paths: [
-      {params: { blogPostId: "00001" } },
-      {params: { blogPostId: "00002" } },
-      {params: { blogPostId: "00003" } },
+      {params: { blogArticleId: "00001" } },
+      {params: { blogArticleId: "00002" } },
+      {params: { blogArticleId: "00003" } },
     ],
     fallback: false
   };
@@ -28,7 +28,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   
-  const blogPost: BlogPost = {
+  const article: BlogArticle = {
     id: "00001",
     title: "How to Build a Full Stack Blog",
     subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
@@ -44,21 +44,12 @@ export async function getStaticProps(context) {
     lastModifiedAt: Date.now(),
   }
   
-  return { props: blogPost }
+  return { props: article }
 }
 
-export default function Blog(props: BlogPost) {
+export default function Blog(props: BlogArticle) {
 
   console.log("SSG PROPS", props);
-
-  React.useEffect(() => {
-    console.log("API RAN");
-    API.getArticleByTitle("Sample Blog Post").then(
-      res => console.log("API SUCCESS", res)
-    ).catch(
-      error => console.log("API ERROR:", error)
-    )
-  }, []);
 
   return (
     <>
