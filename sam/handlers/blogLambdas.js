@@ -34,7 +34,13 @@ const upsertArticle = async (event) => {
     if (event.httpMethod !== 'POST') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
     }
-    const articleSubmission = JSON.parse(event.body);
+    let articleSubmission;
+    try {
+        articleSubmission = JSON.parse(event.body);
+    }
+    catch (error) {
+        return lambdaUtils_1.default.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
+    }
     if (!articleSubmission) {
         return lambdaUtils_1.default.getErrorRes(event, 400, 'No article posted');
     }

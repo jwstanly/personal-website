@@ -44,7 +44,13 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
     return Util.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
   }
 
-  const articleSubmission: BlogArticle = JSON.parse(event.body);
+  let articleSubmission: BlogArticle;
+
+  try {
+    articleSubmission = JSON.parse(event.body);
+  } catch (error) {
+    return Util.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
+  }
 
   if (!articleSubmission) {
     return Util.getErrorRes(event, 400, 'No article posted');
