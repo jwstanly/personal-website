@@ -3,11 +3,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteArticle = exports.upsertArticle = exports.getArticleByTitle = void 0;
+exports.deleteArticle = exports.upsertArticle = exports.getArticleByTitle = exports.getAllArticles = void 0;
 const dynamodb_1 = __importDefault(require("aws-sdk/clients/dynamodb"));
 const lambdaUtils_1 = __importDefault(require("./lambdaUtils"));
 const blogTable = process.env.BLOG_TABLE;
 const docClient = new dynamodb_1.default.DocumentClient();
+async function getAllArticles(event) {
+    if (event.httpMethod !== 'GET') {
+        return lambdaUtils_1.default.getErrorRes(event, 405, `Must call getArticle with GET, not: ${event.httpMethod}`);
+    }
+    const params = {
+        TableName: blogTable,
+    };
+    const articlesRes = await docClient.scan(params).promise();
+    if (Object.keys(articlesRes).length === 0) {
+        return lambdaUtils_1.default.getErrorRes(event, 404, "No articles found");
+    }
+    console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articlesRes)}`);
+    return lambdaUtils_1.default.getSuccessRes(event, articlesRes);
+}
+exports.getAllArticles = getAllArticles;
 const getArticleByTitle = async (event) => {
     if (event.httpMethod !== 'GET') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call getArticle with GET, not: ${event.httpMethod}`);

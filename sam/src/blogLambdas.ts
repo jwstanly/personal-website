@@ -8,6 +8,25 @@ import Util, { BlogArticle } from './lambdaUtils';
 const blogTable = process.env.BLOG_TABLE;
 const docClient = new dynamodb.DocumentClient();
 
+export async function getAllArticles(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  if (event.httpMethod !== 'GET') {
+    return Util.getErrorRes(event, 405, `Must call getAllArticles with GET, not: ${event.httpMethod}`);
+  }
+
+  const params: dynamodb.DocumentClient.ScanInput = {
+    TableName: blogTable,
+  }
+
+  const articlesRes = await docClient.scan(params).promise();
+
+  if (Object.keys(articlesRes).length === 0) {
+    return Util.getErrorRes(event, 404, "No articles found");
+  }
+
+  console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articlesRes)}`);
+
+  return Util.getSuccessRes(event, articlesRes);
+}
 
 export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (event.httpMethod !== 'GET') {

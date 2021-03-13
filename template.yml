@@ -97,6 +97,27 @@ Resources:
   #   Metadata:
   #     BuildMethod: makefile
 
+  GetAllArticlesLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      Handler: handlers/blogLambdas.getAllArticles
+      Description: Get all the blog articles
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/all
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+
   GetArticleByTitleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
