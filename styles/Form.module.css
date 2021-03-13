@@ -1,0 +1,43 @@
+.formRow {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+.formInput input[type=text], .formInput input[type=email], .formInput input[type=password] {
+  padding: 0.5rem;
+  border: 1px solid #dddddd;
+  background: #fff;
+  border-radius: 4px;
+  width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  outline:#222;
+}
+
+.textAreaInput {
+  padding: 0.5rem;
+  border: 1px solid #dddddd;
+  background: #fff;
+  border-radius: 4px;
+  width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.textAreaComment {
+  float: left;
+  width: 100%;
+  height: auto;
+}
+
+.textAreaInput {
+  float: left;
+  width: 100%;
+  min-height: 75px;
+  outline: none;
+  resize: none;
+  border: 1px solid #dddddd;
+  margin-bottom: 1.5rem;
+}

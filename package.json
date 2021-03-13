@@ -21,7 +21,6 @@
         "typescript": "^4.2.2"
     },
     "scripts": {
-
         "dev": "NODE_OPTIONS='--inspect' next dev",
         "build": "next build",
         "start": "next start",
@@ -36,7 +35,6 @@
         "sam-package": "env-cmd -e production node ./scripts/sam_package",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
         "provision": "yarn run compile-lambdas && yarn run sam-build && yarn run sam-deploy"
-        
     },
     "eslintConfig": {
         "extends": [

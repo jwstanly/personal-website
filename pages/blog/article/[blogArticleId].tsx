@@ -7,7 +7,7 @@ import HomeHeader from '../../../components/HomeHeader'
 import Navbar from '../../../components/Navbar'
 
 import { Col, Container, Row } from 'react-bootstrap'
-import { Code, H1, H2, H3, H6, Text } from '../../../components/Titles';
+import { Code, H1, H2, H3, H4, H5, H6, Text } from '../../../components/Titles';
 import { ExperienceCard } from '../../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../../components/Card';
@@ -15,6 +15,10 @@ import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogArticle } from '../../../lib/Types';
 import Util from '../../../lib/Util';
 import API from '../../../lib/Api';
+import TextField from '../../../components/TextField';
+import TextArea from '../../../components/TextArea';
+import CenteredContent from '../../../components/CenteredContent';
+import CommentForm from '../../../components/CommentForm';
 
 export async function getStaticPaths() {
 
@@ -39,15 +43,13 @@ export async function getStaticProps(context) {
 
 export default function Blog({article}: {article: BlogArticle}) {
 
-  console.log("SSG PROPS", article);
-
   return (
     <>
       <Head>
-        <title>John Wright Stanly</title>
+        <title>{article.title}</title>
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.subheader}  />
-        <meta property="og:image" content={article.image} />
+        {article.image ? <meta property="og:image" content={article.image} /> : <></>}
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -81,6 +83,13 @@ export default function Blog({article}: {article: BlogArticle}) {
             </BlogMarkdown>
           </Col>
         </Row>
+        <div style={{marginTop: 50}} />
+        <CenteredContent>
+          <CommentForm
+            title="Add Comment"
+            buttonText="Post"
+          />
+        </CenteredContent>
       </Container>
     </>
   );
