@@ -12,42 +12,20 @@ import { ExperienceCard } from '../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
+import API from '../../lib/Api';
 
-export default function Blog() {
+export async function getStaticProps(context) {
+  
+  const articles: BlogArticle[] = await API.getAllArticles();
+  
+  return { 
+    props: {
+      articles: articles
+    } 
+  }
+}
 
-
-  const articles: BlogArticle[] = [
-    {
-      id: "00001",
-      title: "How to Build a Full Stack Blog",
-      subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
-      image: "/images/profileClipped.png",
-      tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-      createdAt: Date.now(),
-      lastModifiedAt: Date.now(),
-    },
-    {
-      id: "00002",
-      title: "How to Build a Full Stack Blog",
-      subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
-      image: "/images/profileClipped.png",
-      tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-      createdAt: Date.now(),
-      lastModifiedAt: Date.now(),
-    },
-    {
-      id: "00003",
-      title: "How to Build a Full Stack Blog",
-      subheader: "Deisgn, build, deploy, and own your website's entire tech stack",
-      image: "/images/profileClipped.png",
-      tags: ["Next.js", "AWS", "CloudFormation", "React", "HTML/CSS"],
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-      createdAt: Date.now(),
-      lastModifiedAt: Date.now(),
-    },
-  ]
+export default function Blog({articles}: {articles: BlogArticle[]}) {
 
   return (
     <>
@@ -71,7 +49,7 @@ export default function Blog() {
       <div style={{marginTop: 40}}/>
       <H1>Recent Articles</H1>
 
-      {articles.map((article: BlogArticle) => {
+      {articles && articles.map((article: BlogArticle) => {
         return (
           <Container key={article.id}>
             <Row className="justify-content-center">

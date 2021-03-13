@@ -3,6 +3,7 @@ import { BlogArticle } from "./Types";
 const API_URL = "https://api.jwstanly.com";
 
 export default {
+  getAllArticles: getAllArticles,
   getArticleByTitle: getArticleByTitle,
   upsertArticle: upsertArticle
 }
@@ -17,6 +18,19 @@ function getKeyParams() {
       'Content-Type': 'application/json',
     },
   };
+}
+
+async function getAllArticles(): Promise<BlogArticle[]> {
+  const url = `${API_URL}/blog/all`;
+  return fetch(url, getKeyParams())
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("GET ALL ARTICLES", url, data);
+      return data.Items;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 async function getArticleByTitle(title: string): Promise<BlogArticle> {

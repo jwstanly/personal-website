@@ -13,7 +13,6 @@ import Link from 'next/link';
 import { Card } from '../../../components/Card';
 import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogArticle } from '../../../lib/Types';
-import API from '../../../lib/Api';
 
 export async function getStaticPaths() {
   return {
