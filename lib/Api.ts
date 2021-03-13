@@ -8,13 +8,12 @@ export default {
 }
 
 function getKeyParams() {
-  const key = "6Zk02gWWMS4bWkiK1b3u57FQx8XPQfRf4IjI8wYE"
+  const key = "6Zk02gWWMS4bWkiK1b3u57FQx8XPQfRf4IjI8wYE";
   return {
     method: 'GET',
     headers: {
-      Accept: 'application/json',
-      'X-API-KEY': key,  // per API Gateway documentation when dealing with keys
-      Authorization: `Bearer ${key}`,  // redundant; just in case
+      'Accept': 'application/json',
+      'X-API-KEY': key,
       'Content-Type': 'application/json',
     },
   };

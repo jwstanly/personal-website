@@ -1,8 +1,3 @@
-# This is the SAM template that represents the architecture of your serverless application
-# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
-
-# The AWSTemplateFormatVersion identifies the capabilities of the template
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   website
@@ -48,7 +43,6 @@ Resources:
     Properties:
       StageName: Prod
       Auth:
-        ApiKeyRequired: true
         UsagePlan:
           CreateUsagePlan: PER_API
           Description: The default usage plan for this API
@@ -58,15 +52,22 @@ Resources:
       Cors:
         AllowMethods: "'DELETE,GET,OPTIONS,POST'"
         AllowHeaders: "'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For'"
-        AllowOrigin: "'*'"
-        # MaxAge: "'600'"
-        # AllowCredentials: True
+        AllowOrigin: "'*'" # !Sub
+        #   - "'https://www.${Domain}'"
+        #   - Domain: !Ref DomainName
       Domain:
         DomainName: !Join ['.', [api, !Ref DomainName]]
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
         Route53: 
           HostedZoneId: !Ref HostedZone
+      MethodSettings:
+        - ResourcePath: '/*'
+          HttpMethod: '*'
+          DataTraceEnabled: true
+          LoggingLevel: INFO
+          ThrottlingBurstLimit: 100
+          ThrottlingRateLimit: 50
 
   PersonalWebsiteTable:
     Type: AWS::DynamoDB::Table
@@ -111,6 +112,8 @@ Resources:
             RestApiId: !Ref PersonalWebsiteApi
             Path: /blog
             Method: GET
+            Auth:
+              ApiKeyRequired: true
   
   UpsertArticleLambdaFunction:
     Type: AWS::Serverless::Function
@@ -130,6 +133,8 @@ Resources:
             RestApiId: !Ref PersonalWebsiteApi
             Path: /blog
             Method: POST
+            Auth:
+              ApiKeyRequired: true
   
   DeleteArticleLambdaFunction:
     Type: AWS::Serverless::Function
@@ -149,6 +154,8 @@ Resources:
             RestApiId: !Ref PersonalWebsiteApi
             Path: /blog
             Method: DELETE 
+            Auth:
+              ApiKeyRequired: true
 
   Bucket:
     Type: AWS::S3::Bucket
