@@ -52,7 +52,9 @@ Resources:
       Cors:
         AllowMethods: "'DELETE,GET,OPTIONS,POST'"
         AllowHeaders: "'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For'"
-        AllowOrigin: "'*'" # !Sub
+        AllowOrigin: "'*'" 
+        # Switch AllowOrigin to your custom domain whenever not developing on localhost
+        # !Sub
         #   - "'https://www.${Domain}'"
         #   - Domain: !Ref DomainName
       Domain:
@@ -64,10 +66,11 @@ Resources:
       MethodSettings:
         - ResourcePath: '/*'
           HttpMethod: '*'
-          DataTraceEnabled: true
-          LoggingLevel: INFO
           ThrottlingBurstLimit: 100
           ThrottlingRateLimit: 50
+          # Enable these to get Execution Logs in CloudWatch (you will also need to make an IAM role for this)
+          # DataTraceEnabled: true
+          # LoggingLevel: INFO
 
   PersonalWebsiteTable:
     Type: AWS::DynamoDB::Table
