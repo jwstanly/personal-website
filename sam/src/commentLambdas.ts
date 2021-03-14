@@ -66,6 +66,9 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
       ? existingComment.createdAt
       : inputComment.createdAt || Date.now(),
     lastModifiedAt: Date.now(),
+    replies: existingComment
+      ? existingComment.replies
+      : inputComment.replies || [],
   };
 
   // ...then using the index to upsert that element of the comment list
