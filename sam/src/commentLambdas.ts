@@ -19,53 +19,52 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
     return Util.getErrorRes(event, 400, "Missing param: title");
   }
 
-  let submission: BlogComment;
+  let inputComment: BlogComment;
 
   try {
-    submission = JSON.parse(event.body);
+    inputComment = JSON.parse(event.body);
   } catch (error) {
     return Util.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
   }
 
-  if (!submission.blogComment) {
+  if (!inputComment) {
     return Util.getErrorRes(event, 400, 'No comment posted');
   }
 
   const missingAttributes: string[] = [];
-  if(!submission.title) missingAttributes.push('article title');
-  if(!submission.blogComment.user || typeof submission.blogComment.user !== "object") missingAttributes.push('user object');
-  if(submission.blogComment.user && !submission.blogComment.user.id) missingAttributes.push('user.id');
-  if(!submission.blogComment.comment) missingAttributes.push('comment');
+  if(!inputComment.user || typeof inputComment.user !== "object") missingAttributes.push('user object');
+  if(inputComment.user && !inputComment.user.id) missingAttributes.push('user.id');
+  if(!inputComment.comment) missingAttributes.push('comment');
   
   if (missingAttributes.length !== 0) {
     return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
   }
 
-  if (submission.blogComment.comment.length > 2000) {
-    return Util.getErrorRes(event, 400, `Comments must be under 2000 characters. Comment length submitted: ${submission.blogComment.comment.length}`);
+  if (inputComment.comment.length > 2000) {
+    return Util.getErrorRes(event, 400, `Comments must be under 2000 characters. Comment length submitted: ${inputComment.comment.length}`);
   }
 
   // first retrieve the entire article and find the index of the comment...
   const articleRes = await docClient.get({
     TableName: blogTable,
     Key: {
-      "PartitionKey": `BlogArticle|${submission.title.split(' ').join('+')}`,
+      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
     }
   }).promise();
 
   const existingComment = articleRes.Item.comments
-    ? articleRes.Item.comments.find( ({ id }) => id === submission.blogComment.id )
+    ? articleRes.Item.comments.find( ({ id }) => id === inputComment.id )
     : undefined;
   const existingCommentIndex = articleRes.Item.comments
-    ? articleRes.Item.comments.findIndex( ({ id }) => id === submission.blogComment.id )
+    ? articleRes.Item.comments.findIndex( ({ id }) => id === inputComment.id )
     : -1;
 
-  const comment: BlogComment = {
-    ...submission.blogComment,
-    id: submission.blogComment.id || String(Date.now()),
+  const outputComment: BlogComment = {
+    ...inputComment,
+    id: inputComment.id || String(Date.now()),
     createdAt: existingComment 
       ? existingComment.createdAt
-      : submission.blogComment.createdAt || Date.now(),
+      : inputComment.createdAt || Date.now(),
     lastModifiedAt: Date.now(),
   };
 
@@ -73,7 +72,7 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
   const params: DocumentClient.UpdateItemInput = {
     TableName: blogTable,
     Key: {
-      "PartitionKey": `BlogArticle|${submission.title.split(' ').join('+')}`,
+      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
     },
     ReturnValues: 'ALL_NEW',
     UpdateExpression: existingCommentIndex === -1 
@@ -83,8 +82,8 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
       '#comments': 'comments'
     },
     ExpressionAttributeValues: existingCommentIndex === -1 
-      ? { ':blogComment': [comment], ':newList': [] }
-      : { ':blogComment': comment }
+      ? { ':blogComment': [outputComment], ':newList': [] }
+      : { ':blogComment': outputComment }
   };
 
   try {
