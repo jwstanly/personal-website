@@ -94,6 +94,113 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
   }
 }
 
+export async function upsertCommentReply(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  if (event.httpMethod !== 'POST') {
+    return Util.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
+  }
+
+  if (!event.queryStringParameters) {
+    return Util.getErrorRes(event, 400, "No params included");
+  }
+
+  const missingParams: string[] = [];
+  if(!event.queryStringParameters.title) missingParams.push('article title');
+  if(!event.queryStringParameters.rootCommentId) missingParams.push('root comment ID');
+  
+  if (missingParams.length !== 0) {
+    return Util.getErrorRes(event, 400, `Missing params: ${missingParams.join(', ')}`);
+  }
+
+  let inputCommentReply: BlogCommentReply;
+
+  try {
+    inputCommentReply = JSON.parse(event.body);
+  } catch (error) {
+    return Util.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
+  }
+
+  if (!inputCommentReply) {
+    return Util.getErrorRes(event, 400, 'No comment reply posted');
+  }
+
+  const missingAttributes: string[] = [];
+  if(!inputCommentReply.user || typeof inputCommentReply.user !== "object") missingAttributes.push('user object');
+  if(inputCommentReply.user && !inputCommentReply.user.id) missingAttributes.push('user.id');
+  if(!inputCommentReply.replyToId) missingAttributes.push('reply to ID');
+  if(!inputCommentReply.comment) missingAttributes.push('comment');
+  
+  if (missingAttributes.length !== 0) {
+    return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
+  }
+
+  if (inputCommentReply.comment.length > 2000) {
+    return Util.getErrorRes(event, 400, `Comment replies must be under 2000 characters. Comment reply length submitted: ${inputCommentReply.comment.length}`);
+  }
+
+  // first retrieve the entire article and find the index of the comment...
+  const articleRes = await docClient.get({
+    TableName: blogTable,
+    Key: {
+      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
+    }
+  }).promise();
+
+  const rootComment = articleRes.Item.comments
+    ? articleRes.Item.comments.find( ({ id }) => id === event.queryStringParameters.rootCommentId )
+    : undefined;
+  const rootCommentIndex = articleRes.Item.comments
+    ? articleRes.Item.comments.findIndex( ({ id }) => id === event.queryStringParameters.rootCommentId )
+    : -1;
+
+  if(rootCommentIndex === -1) {
+    return Util.getErrorRes(event, 404, 'No root comment found');
+  }
+
+  // TODO: search `rootComment` for replyToId and send the user an email that someone replied to their comment 
+
+  const existingCommentReply = rootComment.replies && inputCommentReply.id
+    ? rootComment.replies.find( ({ id }) => id === inputCommentReply.id )
+    : undefined;
+  const existingCommentReplyIndex = rootComment.replies && inputCommentReply.id
+    ? rootComment.replies.findIndex( ({ id }) => id === inputCommentReply.id )
+    : -1;
+
+
+  const outputCommentReply: BlogCommentReply = {
+    ...inputCommentReply,
+    id: inputCommentReply.id || String(Date.now()),
+    createdAt: existingCommentReply 
+      ? existingCommentReply.createdAt
+      : inputCommentReply.createdAt || Date.now(),
+    lastModifiedAt: Date.now(),
+  };
+
+  // ...then using the index to upsert that element of the comment list
+  const params: DocumentClient.UpdateItemInput = {
+    TableName: blogTable,
+    Key: {
+      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
+    },
+    ReturnValues: 'ALL_NEW',
+    UpdateExpression: existingCommentReplyIndex === -1 
+      ? `SET #comments[${rootCommentIndex}].replies = list_append(if_not_exists(#comments[${rootCommentIndex}].replies, :newList), :blogCommentReply)`
+      : `SET #comments[${rootCommentIndex}].replies[${existingCommentReplyIndex}] = :blogCommentReply`,
+    ExpressionAttributeNames: {
+      '#comments': 'comments'
+    },
+    ExpressionAttributeValues: existingCommentReplyIndex === -1 
+      ? { ':blogCommentReply': [outputCommentReply], ':newList': [] }
+      : { ':blogCommentReply': outputCommentReply }
+  };
+
+  try {
+    const res = await docClient.update(params).promise();
+    return Util.getSuccessRes(event, res);
+  } catch (error) {
+    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+  }
+}
+
 export async function deleteComment(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   if (event.httpMethod !== 'DELETE') {
     return Util.getErrorRes(event, 405, `Must call deleteArticle with DELETE, not: ${event.httpMethod}`);
