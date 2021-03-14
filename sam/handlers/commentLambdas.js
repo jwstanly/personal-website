@@ -23,8 +23,10 @@ async function upsertComment(event) {
         return lambdaUtils_1.default.getErrorRes(event, 400, 'No comment posted');
     }
     const missingAttributes = [];
-    if (!submission.blogComment.userId)
-        missingAttributes.push('userId');
+    if (!submission.blogComment.user)
+        missingAttributes.push('user');
+    if (submission.blogComment.user && !submission.blogComment.user.id)
+        missingAttributes.push('user.id');
     if (!submission.blogComment.comment)
         missingAttributes.push('comment');
     if (missingAttributes.length !== 0) {

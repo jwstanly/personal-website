@@ -28,7 +28,8 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
   }
 
   const missingAttributes: string[] = [];
-  if(!submission.blogComment.userId) missingAttributes.push('userId');
+  if(!submission.blogComment.user || typeof submission.blogComment.user !== "object") missingAttributes.push('user object');
+  if(submission.blogComment.user && !submission.blogComment.user.id) missingAttributes.push('user.id');
   if(!submission.blogComment.comment) missingAttributes.push('comment');
   
   if (missingAttributes.length !== 0) {

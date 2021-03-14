@@ -21,11 +21,17 @@ export interface BlogVote {
 
 export interface BlogComment {
   id?: string;
-  userId: string;
+  user: BlogUser;
   createdAt?: number;
   lastModifiedAt?: number;
   comment: string;
   replies?: BlogComment[];
+}
+
+export interface BlogUser {
+  id: string;
+  email?: string;
+  name?: string;
 }
 
 // Server Side
