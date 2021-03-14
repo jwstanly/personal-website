@@ -4,7 +4,7 @@ import {
 } from "aws-lambda";
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import Util from './lambdaUtils';
-import { BlogCommentSubmission, BlogComment, BlogArticle } from '../../lib/Types';
+import { BlogComment, BlogArticle, BlogCommentReply } from '../../lib/Types';
 
 const blogTable = process.env.BLOG_TABLE;
 const docClient = new DocumentClient();
@@ -15,7 +15,11 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
     return Util.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
   }
 
-  let submission: BlogCommentSubmission;
+  if (!event.queryStringParameters || !event.queryStringParameters.title) {
+    return Util.getErrorRes(event, 400, "Missing param: title");
+  }
+
+  let submission: BlogComment;
 
   try {
     submission = JSON.parse(event.body);
@@ -28,12 +32,13 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
   }
 
   const missingAttributes: string[] = [];
+  if(!submission.title) missingAttributes.push('article title');
   if(!submission.blogComment.user || typeof submission.blogComment.user !== "object") missingAttributes.push('user object');
   if(submission.blogComment.user && !submission.blogComment.user.id) missingAttributes.push('user.id');
   if(!submission.blogComment.comment) missingAttributes.push('comment');
   
   if (missingAttributes.length !== 0) {
-    return Util.getErrorRes(event, 400, `Missing attributes: ${missingAttributes.join(', ')}`);
+    return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
   }
 
   if (submission.blogComment.comment.length > 2000) {

@@ -25,18 +25,15 @@ export interface BlogComment {
   createdAt?: number;
   lastModifiedAt?: number;
   comment: string;
-  replies?: BlogComment[];
+  replies?: BlogCommentReply[];
+}
+
+export interface BlogCommentReply extends BlogComment {
+  replyToId: string;
 }
 
 export interface BlogUser {
   id: string;
   email?: string;
   name?: string;
-}
-
-// Server Side
-
-export interface BlogCommentSubmission {
-  title: string;
-  blogComment: BlogComment;
 }

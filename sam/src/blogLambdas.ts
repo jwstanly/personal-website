@@ -29,7 +29,7 @@ export async function getAllArticles(event: APIGatewayProxyEvent): Promise<APIGa
   return Util.getSuccessRes(event, articlesRes);
 }
 
-export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export async function getArticleByTitle(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   if (event.httpMethod !== 'GET') {
     return Util.getErrorRes(event, 405, `Must call getArticle with GET, not: ${event.httpMethod}`);
   }
@@ -59,13 +59,16 @@ export const getArticleByTitle = async (event: APIGatewayProxyEvent): Promise<AP
 }
 
 
-export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export async function upsertArticle(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   if (event.httpMethod !== 'POST') {
     return Util.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
   }
+  
+  if (!event.queryStringParameters || !event.queryStringParameters.title) {
+    return Util.getErrorRes(event, 400, "Missing param: title");
+  }
 
   let articleSubmission: BlogArticle;
-
   try {
     articleSubmission = JSON.parse(event.body);
   } catch (error) {
@@ -83,7 +86,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   if(!articleSubmission.content) missingAttributes.push('content');
   
   if (missingAttributes.length !== 0) {
-    return Util.getErrorRes(event, 400, `Missing attributes: ${missingAttributes.join(', ')}`);
+    return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
   }
 
   const article: BlogArticle = {
@@ -96,7 +99,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   const params: DocumentClient.PutItemInput = {
     TableName: blogTable,
     Item: {
-      "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}`,
+      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
       ...article,
     },
     ReturnValues: 'NONE',
@@ -108,7 +111,7 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   return Util.getSuccessRes(event, res);
 }
 
-export const deleteArticle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export async function deleteArticle(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   if (event.httpMethod !== 'DELETE') {
     return Util.getErrorRes(event, 405, `Must call deleteArticle with DELETE, not: ${event.httpMethod}`);
   }
