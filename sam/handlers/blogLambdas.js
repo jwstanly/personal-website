@@ -23,7 +23,7 @@ async function getAllArticles(event) {
     return lambdaUtils_1.default.getSuccessRes(event, articlesRes);
 }
 exports.getAllArticles = getAllArticles;
-const getArticleByTitle = async (event) => {
+async function getArticleByTitle(event) {
     if (event.httpMethod !== 'GET') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call getArticle with GET, not: ${event.httpMethod}`);
     }
@@ -43,45 +43,57 @@ const getArticleByTitle = async (event) => {
     }
     console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articleRes)}`);
     return lambdaUtils_1.default.getSuccessRes(event, articleRes);
-};
+}
 exports.getArticleByTitle = getArticleByTitle;
-const upsertArticle = async (event) => {
+async function upsertArticle(event) {
     if (event.httpMethod !== 'POST') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
     }
-    let articleSubmission;
+    if (!event.queryStringParameters || !event.queryStringParameters.title) {
+        return lambdaUtils_1.default.getErrorRes(event, 400, "Missing param: title");
+    }
+    let inputArticle;
     try {
-        articleSubmission = JSON.parse(event.body);
+        inputArticle = JSON.parse(event.body);
     }
     catch (error) {
         return lambdaUtils_1.default.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
     }
-    if (!articleSubmission) {
+    if (!inputArticle) {
         return lambdaUtils_1.default.getErrorRes(event, 400, 'No article posted');
     }
     const missingAttributes = [];
-    if (!articleSubmission.title)
+    if (!inputArticle.title)
         missingAttributes.push('title');
-    if (!articleSubmission.subheader)
+    if (!inputArticle.subheader)
         missingAttributes.push('subheader');
-    if (!articleSubmission.tags)
+    if (!inputArticle.tags)
         missingAttributes.push('tags');
-    if (!articleSubmission.content)
+    if (!inputArticle.content)
         missingAttributes.push('content');
     if (missingAttributes.length !== 0) {
-        return lambdaUtils_1.default.getErrorRes(event, 400, `Missing attributes: ${missingAttributes.join(', ')}`);
+        return lambdaUtils_1.default.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
     }
-    const article = Object.assign(Object.assign({}, articleSubmission), { id: articleSubmission.id || (String)(Date.now()), createdAt: articleSubmission.createdAt || Date.now(), lastModifiedAt: Date.now() });
+    const existingArticleRes = await docClient.get({
+        TableName: blogTable,
+        Key: {
+            "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
+        }
+    }).promise();
+    const existingArticle = existingArticleRes.Item;
+    const outputArticle = Object.assign(Object.assign({}, inputArticle), { id: inputArticle.id || (String)(Date.now()), createdAt: existingArticle
+            ? existingArticle.createdAt
+            : inputArticle.createdAt || Date.now(), lastModifiedAt: Date.now() });
     const params = {
         TableName: blogTable,
-        Item: Object.assign({ "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}` }, article),
+        Item: Object.assign({ "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}` }, outputArticle),
         ReturnValues: 'NONE',
     };
     const res = await docClient.put(params).promise();
     return lambdaUtils_1.default.getSuccessRes(event, res);
-};
+}
 exports.upsertArticle = upsertArticle;
-const deleteArticle = async (event) => {
+async function deleteArticle(event) {
     if (event.httpMethod !== 'DELETE') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call deleteArticle with DELETE, not: ${event.httpMethod}`);
     }
@@ -97,6 +109,6 @@ const deleteArticle = async (event) => {
     };
     const res = await docClient.delete(params).promise();
     return lambdaUtils_1.default.getSuccessRes(event, res);
-};
+}
 exports.deleteArticle = deleteArticle;
 //# sourceMappingURL=blogLambdas.js.map
