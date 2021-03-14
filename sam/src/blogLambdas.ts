@@ -68,31 +68,41 @@ export async function upsertArticle(event: APIGatewayProxyEvent): Promise<APIGat
     return Util.getErrorRes(event, 400, "Missing param: title");
   }
 
-  let articleSubmission: BlogArticle;
+  let inputArticle: BlogArticle;
   try {
-    articleSubmission = JSON.parse(event.body);
+    inputArticle = JSON.parse(event.body);
   } catch (error) {
     return Util.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
   }
 
-  if (!articleSubmission) {
+  if (!inputArticle) {
     return Util.getErrorRes(event, 400, 'No article posted');
   }
 
   const missingAttributes: string[] = [];
-  if(!articleSubmission.title) missingAttributes.push('title');
-  if(!articleSubmission.subheader) missingAttributes.push('subheader');
-  if(!articleSubmission.tags) missingAttributes.push('tags');
-  if(!articleSubmission.content) missingAttributes.push('content');
+  if(!inputArticle.title) missingAttributes.push('title');
+  if(!inputArticle.subheader) missingAttributes.push('subheader');
+  if(!inputArticle.tags) missingAttributes.push('tags');
+  if(!inputArticle.content) missingAttributes.push('content');
   
   if (missingAttributes.length !== 0) {
     return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
   }
 
-  const article: BlogArticle = {
-    ...articleSubmission,
-    id: articleSubmission.id || (String)(Date.now()),
-    createdAt: articleSubmission.createdAt || Date.now(),
+  const existingArticleRes = await docClient.get({
+    TableName: blogTable,
+    Key: {
+      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
+    }
+  }).promise();
+  const existingArticle: BlogArticle = existingArticleRes.Item as BlogArticle;
+
+  const outputArticle: BlogArticle = {
+    ...inputArticle,
+    id: inputArticle.id || (String)(Date.now()),
+    createdAt: existingArticle
+      ? existingArticle.createdAt
+      : inputArticle.createdAt || Date.now(),
     lastModifiedAt: Date.now(),
   }
 
@@ -100,7 +110,7 @@ export async function upsertArticle(event: APIGatewayProxyEvent): Promise<APIGat
     TableName: blogTable,
     Item: {
       "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
-      ...article,
+      ...outputArticle,
     },
     ReturnValues: 'NONE',
   }
