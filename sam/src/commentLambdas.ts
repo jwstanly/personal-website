@@ -209,8 +209,16 @@ export async function deleteComment(event: APIGatewayProxyEvent): Promise<APIGat
     return Util.getErrorRes(event, 405, `Must call deleteArticle with DELETE, not: ${event.httpMethod}`);
   }
 
-  if (!event.queryStringParameters || !event.queryStringParameters.title || !event.queryStringParameters.commentId) {
-    return Util.getErrorRes(event, 400, "Missing params: title & commentId");
+  if (!event.queryStringParameters) {
+    return Util.getErrorRes(event, 400, "No params included");
+  }
+
+  const missingParams: string[] = [];
+  if(!event.queryStringParameters.title) missingParams.push('article title');
+  if(!event.queryStringParameters.commentId) missingParams.push('comment ID');
+  
+  if (missingParams.length !== 0) {
+    return Util.getErrorRes(event, 400, `Missing params: ${missingParams.join(', ')}`);
   }
 
   const { title, commentId } = event.queryStringParameters;
@@ -243,6 +251,72 @@ export async function deleteComment(event: APIGatewayProxyEvent): Promise<APIGat
     },
     ExpressionAttributeValues: {
       ":commentId": commentId
+    }
+  }
+
+  try {
+    const res = await docClient.update(params).promise();
+    return Util.getSuccessRes(event, res);
+  } catch (error) {
+    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+  }
+}
+
+export async function deleteCommentReply(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  if (event.httpMethod !== 'DELETE') {
+    return Util.getErrorRes(event, 405, `Must call deleteArticle with DELETE, not: ${event.httpMethod}`);
+  }
+
+  if (!event.queryStringParameters) {
+    return Util.getErrorRes(event, 400, "No params included");
+  }
+
+  const missingParams: string[] = [];
+  if(!event.queryStringParameters.title) missingParams.push('article title');
+  if(!event.queryStringParameters.rootCommentId) missingParams.push('root comment ID');
+  if(!event.queryStringParameters.replyCommentId) missingParams.push('reply comment ID');
+  
+  if (missingParams.length !== 0) {
+    return Util.getErrorRes(event, 400, `Missing params: ${missingParams.join(', ')}`);
+  }
+
+  const { title, rootCommentId, replyCommentId } = event.queryStringParameters;
+
+
+  // first retrieve the entire article and find the index of the root comment and reply...
+  const articleRes = await docClient.get({
+    TableName: blogTable,
+    Key: {
+      "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
+    }
+  }).promise();
+  const rootComment = articleRes.Item.comments
+    ? articleRes.Item.comments.find( ({ id }) => id === rootCommentId )
+    : undefined;
+  const rootCommentIndex = articleRes.Item.comments
+    ? articleRes.Item.comments.findIndex( ({ id }) => id === rootCommentId )
+    : -1;
+
+  if (rootCommentIndex === -1) {
+    return Util.getErrorRes(event, 404, "No root comment found to delete reply from");
+  }
+
+  const existingCommentReplyIndex = rootComment.replies.findIndex( ({ id }) => id === replyCommentId );
+
+  // ...then using the index to delete that element from the comment list
+  const params: DocumentClient.UpdateItemInput = {
+    TableName: blogTable,
+    Key: {
+      "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
+    },
+    ReturnValues: 'NONE',
+    UpdateExpression: `REMOVE #comments[${rootCommentIndex}].replies[${existingCommentReplyIndex}]`,
+    ConditionExpression: `#comments[${rootCommentIndex}].replies[${existingCommentReplyIndex}].id = :replyCommentId`,
+    ExpressionAttributeNames: {
+      '#comments': 'comments'
+    },
+    ExpressionAttributeValues: {
+      ":replyCommentId": replyCommentId
     }
   }
 
