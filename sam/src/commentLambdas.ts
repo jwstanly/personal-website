@@ -301,7 +301,7 @@ export async function deleteCommentReply(event: APIGatewayProxyEvent): Promise<A
     return Util.getErrorRes(event, 404, "No root comment found to delete reply from");
   }
 
-  const existingCommentReplyIndex = rootComment.replies.findIndex( ({ id }) => id === replyCommentId );
+  const replyCommentIndex = rootComment.replies.findIndex( ({ id }) => id === replyCommentId );
 
   // ...then using the index to delete that element from the comment list
   const params: DocumentClient.UpdateItemInput = {
@@ -310,8 +310,8 @@ export async function deleteCommentReply(event: APIGatewayProxyEvent): Promise<A
       "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,
     },
     ReturnValues: 'NONE',
-    UpdateExpression: `REMOVE #comments[${rootCommentIndex}].replies[${existingCommentReplyIndex}]`,
-    ConditionExpression: `#comments[${rootCommentIndex}].replies[${existingCommentReplyIndex}].id = :replyCommentId`,
+    UpdateExpression: `REMOVE #comments[${rootCommentIndex}].replies[${replyCommentIndex}]`,
+    ConditionExpression: `#comments[${rootCommentIndex}].replies[${replyCommentIndex}].id = :replyCommentId`,
     ExpressionAttributeNames: {
       '#comments': 'comments'
     },

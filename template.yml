@@ -244,7 +244,7 @@ Resources:
             Auth:
               ApiKeyRequired: true
 
-  DeleteCommentLambdaFunction:
+  DeleteCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       # Layers:
