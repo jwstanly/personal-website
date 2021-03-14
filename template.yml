@@ -202,6 +202,27 @@ Resources:
             Auth:
               ApiKeyRequired: true
 
+  UpsertCommentReplyLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      Handler: handlers/commentLambdas.upsertCommentReply
+      Description: Upsert a comment reply for a blog article
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/comment/reply
+            Method: POST
+            Auth:
+              ApiKeyRequired: true
+
   DeleteCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
