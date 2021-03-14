@@ -7,20 +7,30 @@ export interface BlogArticle {
   createdAt: number;
   lastModifiedAt: number;
   content: string;
-  likes?: BlogLike[];
+  votes?: BlogVote[];
   comments?: BlogComment[];
 }
 
-export interface BlogLike {
+export interface BlogVote {
   id: string;
   userId: string;
-  date: Date;
+  createdAt: number;
+  lastModifiedAt: number;
+  vote: "LIKE" | "DISLIKE";
 }
 
 export interface BlogComment {
-  id: string;
+  id?: string;
   userId: string;
-  date: Date;
+  createdAt?: number;
+  lastModifiedAt?: number;
   comment: string;
   replies?: BlogComment[];
+}
+
+// Server Side
+
+export interface BlogCommentSubmission {
+  title: string;
+  blogComment: BlogComment;
 }

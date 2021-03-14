@@ -5,7 +5,7 @@ export default {
   getErrorRes: getErrorRes,
 }
 
-function getSuccessRes(event: APIGatewayProxyEvent, body: object | string): APIGatewayProxyResult {
+function getSuccessRes(event: APIGatewayProxyEvent, body: object): APIGatewayProxyResult {
   const response = {
     ...getCommonHeaders(),
     statusCode: 200,
@@ -37,15 +37,4 @@ function getCommonHeaders() {
       'Access-Control-Allow-Origin': '*' //'https://www.jwstanly.com'
     }
   }
-}
-
-export interface BlogArticle {
-  id?: string;
-  title: string;
-  subheader: string;
-  image?: string;
-  tags: string[];
-  createdAt?: number;
-  lastModifiedAt?: number;
-  content: string;
 }

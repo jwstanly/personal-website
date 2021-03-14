@@ -2,18 +2,19 @@ import {
   APIGatewayProxyEvent, 
   APIGatewayProxyResult 
 } from "aws-lambda";
-import dynamodb from 'aws-sdk/clients/dynamodb';
-import Util, { BlogArticle } from './lambdaUtils';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import Util from './lambdaUtils';
+import { BlogArticle } from '../../lib/Types';
 
 const blogTable = process.env.BLOG_TABLE;
-const docClient = new dynamodb.DocumentClient();
+const docClient = new DocumentClient();
 
 export async function getAllArticles(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   if (event.httpMethod !== 'GET') {
     return Util.getErrorRes(event, 405, `Must call getAllArticles with GET, not: ${event.httpMethod}`);
   }
 
-  const params: dynamodb.DocumentClient.ScanInput = {
+  const params: DocumentClient.ScanInput = {
     TableName: blogTable,
   }
 
@@ -86,18 +87,19 @@ export const upsertArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
   }
 
   const article: BlogArticle = {
+    ...articleSubmission,
     id: articleSubmission.id || (String)(Date.now()),
     createdAt: articleSubmission.createdAt || Date.now(),
-    lastModifiedAt: articleSubmission.lastModifiedAt || Date.now(),
-    ...articleSubmission
+    lastModifiedAt: Date.now(),
   }
 
-  const params = {
+  const params: DocumentClient.PutItemInput = {
     TableName: blogTable,
     Item: {
       "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}`,
       ...article,
-    }
+    },
+    ReturnValues: 'NONE',
   }
 
   const res = await docClient.put(params).promise();
@@ -117,7 +119,7 @@ export const deleteArticle = async (event: APIGatewayProxyEvent): Promise<APIGat
 
   const { title } = event.queryStringParameters;
 
-  const params = {
+  const params: DocumentClient.DeleteItemInput = {
     TableName: blogTable,
     Key: {
       "PartitionKey": `BlogArticle|${title.split(' ').join('+')}`,

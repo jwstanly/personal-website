@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteArticle = exports.upsertArticle = exports.getArticleByTitle = exports.getAllArticles = void 0;
-const dynamodb_1 = __importDefault(require("aws-sdk/clients/dynamodb"));
+const dynamodb_1 = require("aws-sdk/clients/dynamodb");
 const lambdaUtils_1 = __importDefault(require("./lambdaUtils"));
 const blogTable = process.env.BLOG_TABLE;
-const docClient = new dynamodb_1.default.DocumentClient();
+const docClient = new dynamodb_1.DocumentClient();
 async function getAllArticles(event) {
     if (event.httpMethod !== 'GET') {
-        return lambdaUtils_1.default.getErrorRes(event, 405, `Must call getArticle with GET, not: ${event.httpMethod}`);
+        return lambdaUtils_1.default.getErrorRes(event, 405, `Must call getAllArticles with GET, not: ${event.httpMethod}`);
     }
     const params = {
         TableName: blogTable,
@@ -71,10 +71,11 @@ const upsertArticle = async (event) => {
     if (missingAttributes.length !== 0) {
         return lambdaUtils_1.default.getErrorRes(event, 400, `Missing attributes: ${missingAttributes.join(', ')}`);
     }
-    const article = Object.assign({ id: articleSubmission.id || (String)(Date.now()), createdAt: articleSubmission.createdAt || Date.now(), lastModifiedAt: articleSubmission.lastModifiedAt || Date.now() }, articleSubmission);
+    const article = Object.assign(Object.assign({}, articleSubmission), { id: articleSubmission.id || (String)(Date.now()), createdAt: articleSubmission.createdAt || Date.now(), lastModifiedAt: Date.now() });
     const params = {
         TableName: blogTable,
-        Item: Object.assign({ "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}` }, article)
+        Item: Object.assign({ "PartitionKey": `BlogArticle|${article.title.split(' ').join('+')}` }, article),
+        ReturnValues: 'NONE',
     };
     const res = await docClient.put(params).promise();
     return lambdaUtils_1.default.getSuccessRes(event, res);

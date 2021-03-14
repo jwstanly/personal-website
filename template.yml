@@ -181,6 +181,48 @@ Resources:
             Auth:
               ApiKeyRequired: true
 
+  UpsertCommentLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      Handler: handlers/commentLambdas.upsertComment
+      Description: Upsert a comment for a blog article
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/comment
+            Method: POST
+            Auth:
+              ApiKeyRequired: true
+
+  DeleteCommentLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      Handler: handlers/commentLambdas.deleteComment
+      Description: Delete a comment in a blog article
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/comment
+            Method: DELETE
+            Auth:
+              ApiKeyRequired: true
+
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
