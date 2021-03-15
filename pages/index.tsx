@@ -4,7 +4,6 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 
 import HomeHeader from '../components/HomeHeader'
-import Navbar from '../components/Navbar'
 
 import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from '../components/Titles';
@@ -24,14 +23,6 @@ export default function Home() {
       </Head>
 
       <div id="home" />
-      <Navbar 
-        color="#FFF"
-        options={[
-          {label: "Contact", href: "/#contact"},
-          {label: "Blog", href: "/blog"},
-          {label: "Home", href: "/#home"},
-        ]}
-      />
 
       <HomeHeader />
 
@@ -108,14 +99,6 @@ export default function Home() {
       </p>
 
       <div style={{padding: '3vw'}}/>
-
-      <footer>
-        <Link href='https://github.com/jwstanly/personal-website' passHref>
-          <p className={styles.footerContent}>
-            Designed, built, and deployed by John Wright Stanly
-          </p>
-        </Link>
-      </footer>
     </>
   )
 }

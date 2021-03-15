@@ -4,7 +4,6 @@ import Head from 'next/head'
 import styles from '../../styles/Card.module.css';
 
 import HomeHeader from '../../components/HomeHeader'
-import Navbar from '../../components/Navbar'
 
 import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from '../../components/Titles';
@@ -37,15 +36,6 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
         <meta property="og:image" content="/images/profileClipped.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Navbar 
-        color="#FFF"
-        options={[
-          {label: "Contact", href: "/#contact"},
-          {label: "Blog", href: "/blog"},
-          {label: "Home", href: "/#home"},
-        ]}
-      />
 
       <div style={{marginTop: 40}}/>
       <H1>Recent Articles</H1>
