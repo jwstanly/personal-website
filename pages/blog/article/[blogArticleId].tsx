@@ -18,7 +18,7 @@ import TextField from '../../../components/TextField';
 import TextArea from '../../../components/TextArea';
 import CenteredContent from '../../../components/CenteredContent';
 import CommentForm from '../../../components/CommentForm';
-import Comment from '../../../components/Comment';
+import CommentBubble from '../../../components/CommentBubble';
 
 export async function getStaticPaths() {
 
@@ -43,6 +43,10 @@ export async function getStaticProps(context) {
 
 export default function Blog({article}: {article: BlogArticle}) {
 
+  function onReply() {
+    
+  }
+
   return (
     <>
       <Head>
@@ -52,7 +56,7 @@ export default function Blog({article}: {article: BlogArticle}) {
         {article.image ? <meta property="og:image" content={article.image} /> : <></>}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <div style={{marginTop: 40}}/>
 
       <Container>
@@ -81,7 +85,10 @@ export default function Blog({article}: {article: BlogArticle}) {
           {article.comments 
             ? article.comments.map(comment => {
               return (
-                <Comment comment={comment}/>
+                <CommentBubble 
+                  commentObj={comment}
+                  onPressReply={onReply}
+                />
               );
             }) : <></>}
         </CenteredContent>
