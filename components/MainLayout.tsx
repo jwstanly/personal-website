@@ -9,6 +9,12 @@ interface MainLayoutProps {
 
 export default function MainLayout({children}: MainLayoutProps){
 
+  React.useEffect(() => {
+    if (localStorage.getItem("userId") === null) {
+      localStorage.setItem("userId", Math.random().toString(36).substr(2, 11));
+    }
+  }, []);
+
   return (
     <div>
       <Navbar 

@@ -48,7 +48,7 @@ export default function CommentBoard(props: CommentBoardProps){
       return;
     }
 
-    let blogUser: BlogUser = { id: "1234567890" };
+    let blogUser: BlogUser = { id: localStorage.getItem("userId") };
     if(name) blogUser = {...blogUser, name: name};
     if(email) blogUser = {...blogUser, email: email};
 
