@@ -37,7 +37,16 @@ export async function getStaticProps(context) {
   }
 }
 
-export default function Blog({article}: {article: BlogArticle}) {
+export default function Blog(props: {article: BlogArticle}) {
+
+  const [article, setArticle] = React.useState<BlogArticle>(props.article);
+
+  function onArticleModify() {
+    API.getArticleByTitle(article.title).then( article => {
+      setArticle(article);
+      console.log("bruh", article);
+    });
+  }
 
   return (
     <>
@@ -71,8 +80,10 @@ export default function Blog({article}: {article: BlogArticle}) {
           </Col>
         </Row>
         <div style={{marginTop: 50}} />
-        <CommentBoard 
-          comments={article.comments}
+        <CommentBoard
+          key={article.comments.length}
+          article={article}
+          onArticleModify={onArticleModify}
         />
         <div style={{marginTop: 50}} />
       </Container>

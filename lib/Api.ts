@@ -1,4 +1,4 @@
-import { BlogArticle } from "./Types";
+import { BlogArticle, BlogComment, BlogCommentReply } from "./Types";
 import Util from "./Util";
 
 const API_URL = "https://api.jwstanly.com";
@@ -6,7 +6,9 @@ const API_URL = "https://api.jwstanly.com";
 export default {
   getAllArticles: getAllArticles,
   getArticleByTitle: getArticleByTitle,
-  upsertArticle: upsertArticle
+  upsertArticle: upsertArticle,
+  upsertComment: upsertComment,
+  upsertCommentReply: upsertCommentReply
 }
 
 function getKeyParams() {
@@ -54,6 +56,42 @@ async function upsertArticle(article: BlogArticle): Promise<any> {
     ...getKeyParams(),
     method: "POST",
     body: JSON.stringify(article),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+async function upsertComment(title: string, comment: BlogComment): Promise<any> {
+  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}`;
+  // console.log(url, team);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: "POST",
+    body: JSON.stringify(comment),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+async function upsertCommentReply(title: string, rootCommentId: string, reply: BlogCommentReply): Promise<any> {
+  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}`;
+  // console.log(url, team);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: "POST",
+    body: JSON.stringify(reply),
   })
     .then((res) => res.json())
     .then((data) => {

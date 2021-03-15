@@ -1,6 +1,6 @@
 import React, { ObjectHTMLAttributes } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { BlogComment } from '../lib/Types';
+import { BlogArticle, BlogComment, BlogUser } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';
 import CenteredContent from './CenteredContent';
@@ -8,23 +8,69 @@ import CommentBubble from './CommentBubble';
 import TextArea from './TextArea';
 import TextField from './TextField';
 import { H2 } from './Titles';
+import API from '../lib/Api';
 
 
 interface CommentBoardProps {
-  comments: BlogComment[];
+  article: BlogArticle;
+  onArticleModify: ()=>void;
 }
 
 export default function CommentBoard(props: CommentBoardProps){
 
-  const [comments, setComments] = React.useState<BlogComment[]>(props.comments);
+  const [comments, setComments] = React.useState<BlogComment[]>(props.article.comments);
   const [replyingTo, setReplyingTo] = React.useState<BlogComment | undefined>();
+
+  const [error, setError] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const [name, setName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [comment, setComment] = React.useState<string>('');
 
-  function onSubmit() {
-    console.log("Comment submitted");
+  async function onSubmit() {
+    setLoading(true);
+    if (!comment) {
+      setError("No comment added");
+      setLoading(false);
+      return;
+    } else if (comment.length > 2000) {
+      setError("Comments cannot be longer than 2000 characters");
+      setLoading(false);
+      return;
+    }else if (name && name.length > 100) {
+      setError("Names cannot be longer than 100 characters");
+      setLoading(false);
+      return;
+    } else if (email && !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+      setError("Please submit a valid email");
+      setLoading(false);
+      return;
+    }
+
+    let blogUser: BlogUser = { id: "1234567890" };
+    if(name) blogUser = {...blogUser, name: name};
+    if(email) blogUser = {...blogUser, email: email};
+
+    const blogComment: BlogComment = {
+      user: blogUser,
+      comment: comment,
+    }
+
+    try {
+      await API.upsertComment(props.article.title, blogComment);
+    } catch {
+      setError('The comments server experienced an error');
+      setLoading(false);
+    }
+
+    props.onArticleModify();
+    
+    setComment('');
+    setName('');
+    setEmail('');
+    setError('');
+    setLoading(false);
   }
 
   function onReply() {
@@ -34,7 +80,6 @@ export default function CommentBoard(props: CommentBoardProps){
   function onCancelReply() {
     setReplyingTo(undefined);
   }
-
 
   return (
     <CenteredContent>
@@ -59,12 +104,13 @@ export default function CommentBoard(props: CommentBoardProps){
           />
           <div style={{marginBottom: 30}} />
         </> : <></>}
+      <div className={styles.commentError}>{error}</div>
       <Row>
         <Col xs={12}>
           <TextArea 
             value={comment} 
             setValue={setComment}
-            label="Comment *"
+            label="Comment*"
           />
         </Col>
       </Row>
@@ -93,6 +139,7 @@ export default function CommentBoard(props: CommentBoardProps){
             <Button
               text="Post"
               onPress={onSubmit}
+              loading={loading}
             />
           </div>
           {replyingTo ? 
@@ -100,6 +147,7 @@ export default function CommentBoard(props: CommentBoardProps){
               <Button
                 text="Cancel"
                 onPress={onCancelReply}
+                loading={loading}
               />
             </div>
              : <></>}

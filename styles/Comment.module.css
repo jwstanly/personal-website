@@ -34,7 +34,7 @@
 .commentReplyButton {
   display: table;
   align-items: center;
-  margin: 0px 10px 5px 5px;
+  margin: 0px 5px 25px 5px;
   cursor: pointer;
 
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -60,4 +60,9 @@
   font-size: 16px;
   font-weight: 400;
   color: #222;
+}
+
+.commentError {
+  color: #F00;
+  margin-bottom: 20px;
 }
