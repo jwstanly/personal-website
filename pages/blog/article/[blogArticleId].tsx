@@ -19,6 +19,7 @@ import TextField from '../../../components/TextField';
 import TextArea from '../../../components/TextArea';
 import CenteredContent from '../../../components/CenteredContent';
 import CommentForm from '../../../components/CommentForm';
+import Comment from '../../../components/Comment';
 
 export async function getStaticPaths() {
 
@@ -85,11 +86,23 @@ export default function Blog({article}: {article: BlogArticle}) {
         </Row>
         <div style={{marginTop: 50}} />
         <CenteredContent>
+          <H2>Comments</H2>
+          <div style={{marginTop: 20}}/>
+          {article.comments 
+            ? article.comments.map(comment => {
+              return (
+                <Comment comment={comment}/>
+              );
+            }) : <></>}
+        </CenteredContent>
+        <div style={{marginTop: 50}} />
+        <CenteredContent>
           <CommentForm
             title="Add Comment"
             buttonText="Post"
           />
         </CenteredContent>
+        <div style={{marginTop: 50}} />
       </Container>
     </>
   );

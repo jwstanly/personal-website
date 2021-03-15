@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container, Row } from 'react-bootstrap';
 
 interface CenteredContentProps {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 };
 
 export default function CenteredContent(props: CenteredContentProps) {
