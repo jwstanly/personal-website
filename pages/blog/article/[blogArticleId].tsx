@@ -14,11 +14,7 @@ import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogArticle } from '../../../lib/Types';
 import Util from '../../../lib/Util';
 import API from '../../../lib/Api';
-import TextField from '../../../components/TextField';
-import TextArea from '../../../components/TextArea';
-import CenteredContent from '../../../components/CenteredContent';
-import CommentForm from '../../../components/CommentForm';
-import CommentBubble from '../../../components/CommentBubble';
+import CommentBoard from '../../../components/CommentBoard';
 
 export async function getStaticPaths() {
 
@@ -42,10 +38,6 @@ export async function getStaticProps(context) {
 }
 
 export default function Blog({article}: {article: BlogArticle}) {
-
-  function onReply() {
-    
-  }
 
   return (
     <>
@@ -79,26 +71,9 @@ export default function Blog({article}: {article: BlogArticle}) {
           </Col>
         </Row>
         <div style={{marginTop: 50}} />
-        <CenteredContent>
-          <H2>Comments</H2>
-          <div style={{marginTop: 20}}/>
-          {article.comments 
-            ? article.comments.map(comment => {
-              return (
-                <CommentBubble 
-                  commentObj={comment}
-                  onPressReply={onReply}
-                />
-              );
-            }) : <></>}
-        </CenteredContent>
-        <div style={{marginTop: 50}} />
-        <CenteredContent>
-          <CommentForm
-            title="Add Comment"
-            buttonText="Post"
-          />
-        </CenteredContent>
+        <CommentBoard 
+          comments={article.comments}
+        />
         <div style={{marginTop: 50}} />
       </Container>
     </>

@@ -9,10 +9,10 @@
   transition: background-color 300ms ease-in-out;
 
   margin-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 25px;
+  padding-bottom: 25px;
 
   display: flex;
 }
@@ -31,7 +31,7 @@
   align-self: flex-end;
 }
 
-.commentReply {
+.commentReplyButton {
   display: table;
   align-items: center;
   margin: 0px 10px 5px 5px;
@@ -48,7 +48,7 @@
   transition: border-bottom-color 100ms ease-in-out;
 }
 
-.commentReply:hover {
+.commentReplyButton:hover {
   border-bottom-color: #444;
   -webkit-transition: border-bottom-color 100ms ease-in-out;
   -ms-transition: border-bottom-color 100ms ease-in-out;
