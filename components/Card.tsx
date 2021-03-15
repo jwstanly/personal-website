@@ -14,7 +14,7 @@ interface TitleProps {
 export function Card(props: TitleProps){
 
   return (
-    <div style={{marginLeft: 10}}>
+    <div>
       <H2>{props.header}</H2>
       <H3>{props.subheader}</H3>
       <div style={{padding:10}}/>
