@@ -114,6 +114,8 @@ async function upsertCommentReply(event) {
         missingAttributes.push('user.id');
     if (!inputCommentReply.replyToId)
         missingAttributes.push('reply to ID');
+    if (!inputCommentReply.rootCommentId)
+        missingAttributes.push('root comment ID');
     if (!inputCommentReply.comment)
         missingAttributes.push('comment');
     if (missingAttributes.length !== 0) {

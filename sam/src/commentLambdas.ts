@@ -130,6 +130,7 @@ export async function upsertCommentReply(event: APIGatewayProxyEvent): Promise<A
   if(!inputCommentReply.user || typeof inputCommentReply.user !== "object") missingAttributes.push('user object');
   if(inputCommentReply.user && !inputCommentReply.user.id) missingAttributes.push('user.id');
   if(!inputCommentReply.replyToId) missingAttributes.push('reply to ID');
+  if(!inputCommentReply.rootCommentId) missingAttributes.push('root comment ID');
   if(!inputCommentReply.comment) missingAttributes.push('comment');
   
   if (missingAttributes.length !== 0) {

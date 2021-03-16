@@ -1,6 +1,6 @@
 import React, { ObjectHTMLAttributes } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { BlogArticle, BlogComment, BlogUser } from '../lib/Types';
+import { BlogArticle, BlogComment, BlogCommentReply, BlogUser } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';
 import CenteredContent from './CenteredContent';
@@ -18,8 +18,15 @@ interface CommentBoardProps {
 
 export default function CommentBoard(props: CommentBoardProps){
 
+  enum Mode {
+    COMMENT, 
+    REPLY, 
+    EDIT
+  }
+
+  const [mode, setMode] = React.useState<Mode>(Mode.COMMENT);
   const [comments, setComments] = React.useState<BlogComment[]>(props.article.comments);
-  const [replyingTo, setReplyingTo] = React.useState<BlogComment | undefined>();
+  const [highlightedComment, setHighlightedComment] = React.useState<BlogComment | BlogCommentReply | undefined>();
 
   const [error, setError] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -28,44 +35,9 @@ export default function CommentBoard(props: CommentBoardProps){
   const [email, setEmail] = React.useState<string>('');
   const [comment, setComment] = React.useState<string>('');
 
-  async function onSubmit() {
-    setLoading(true);
-    if (!comment) {
-      setError("No comment added");
-      setLoading(false);
-      return;
-    } else if (comment.length > 2000) {
-      setError("Comments cannot be longer than 2000 characters");
-      setLoading(false);
-      return;
-    }else if (name && name.length > 100) {
-      setError("Names cannot be longer than 100 characters");
-      setLoading(false);
-      return;
-    } else if (email && !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-      setError("Please submit a valid email");
-      setLoading(false);
-      return;
-    }
-
-    let blogUser: BlogUser = { id: localStorage.getItem("userId") };
-    if(name) blogUser = {...blogUser, name: name};
-    if(email) blogUser = {...blogUser, email: email};
-
-    const blogComment: BlogComment = {
-      user: blogUser,
-      comment: comment,
-    }
-
-    try {
-      await API.upsertComment(props.article.title, blogComment);
-    } catch {
-      setError('The comments server experienced an error');
-      setLoading(false);
-    }
-
-    props.onArticleModify();
-    
+  function clearCommentBoard(): void {
+    setMode(Mode.COMMENT);
+    setHighlightedComment(undefined);
     setComment('');
     setName('');
     setEmail('');
@@ -73,12 +45,128 @@ export default function CommentBoard(props: CommentBoardProps){
     setLoading(false);
   }
 
-  function onReply() {
+  function getCommentBoardErrors(): string {
+    if (!comment) {
+      return "No comment added";
+    } else if (comment.length > 2000) {
+      return "Comments cannot be longer than 2000 characters";
+    } else if (name && name.length > 100) {
+      return "Names cannot be longer than 100 characters";
+    } else if (email && !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+      return "Please submit a valid email";
+    }
+    return "";
+  }
+
+  async function onCommentSubmit() {
+    
+    setLoading(true);
+
+    const error = getCommentBoardErrors();
+    if(error) {
+      setLoading(false);
+      setError(error);
+      return;
+    }
+
+    let blogUser: BlogUser = { id: localStorage.getItem("userId") };
+    if(name) blogUser = {...blogUser, name: name};
+    if(email) blogUser = {...blogUser, email: email};
+
+    if(mode === Mode.COMMENT) {
+      
+      const blogComment: BlogComment = {
+        user: blogUser,
+        comment: comment,
+      }
+
+      try {
+        await API.upsertComment(props.article.title, blogComment);
+        clearCommentBoard();
+      } catch {
+        setError('The comments server experienced an error');
+        setLoading(false);
+      } 
+
+    } else if (mode === Mode.REPLY) {
+
+      const blogCommentReply: BlogCommentReply = {
+        user: blogUser,
+        replyToId: highlightedComment.id,
+        rootCommentId: highlightedComment.replies
+          ? highlightedComment.id
+          : (highlightedComment as BlogCommentReply).rootCommentId,
+        comment: comment,
+      }
+
+      try {
+        await API.upsertCommentReply(props.article.title, blogCommentReply.rootCommentId, blogCommentReply);
+        clearCommentBoard();
+      } catch {
+        setError('The comments server experienced an error');
+        setLoading(false);
+      } 
+
+    } else if (mode === Mode.EDIT) {
+
+      const blogCommentEdit: BlogComment | BlogCommentReply = {
+        ...highlightedComment,
+        user: blogUser,
+        comment: comment,
+      }
+
+      console.log('highlightedComment', highlightedComment);
+      console.log('blogCommentReply', blogCommentEdit);
+
+      try {
+        if (highlightedComment.replies) {
+          await API.upsertComment(props.article.title, blogCommentEdit);
+        } else {
+          await API.upsertCommentReply(
+            props.article.title,
+            (blogCommentEdit as BlogCommentReply).rootCommentId,
+            blogCommentEdit as BlogCommentReply
+          );
+        }
+        clearCommentBoard();
+      } catch {
+        setError('The comments server experienced an error');
+        setLoading(false);
+      } 
+
+    }
+
+    props.onArticleModify();
+
+  }
+
+  function onPressReply(comment:BlogComment) {
+    if(mode === Mode.EDIT) {
+      clearCommentBoard();
+    }
+    setMode(Mode.REPLY);
+    setHighlightedComment(comment);
+  }
+
+  function onPressEdit(comment:BlogComment) {
+    setMode(Mode.EDIT);
+    setHighlightedComment(comment);
+
+    setComment(comment.comment);
+    setName(comment.user.name);
+    setEmail(comment.user.email);
+  }
+
+  function onPressDelete(comment:BlogComment) {
     
   }
 
-  function onCancelReply() {
-    setReplyingTo(undefined);
+  function onCancelAction() {
+    if(mode === Mode.EDIT) {
+      clearCommentBoard();
+    }
+    setMode(Mode.COMMENT);
+    setHighlightedComment(undefined);
   }
 
   return (
@@ -88,19 +176,30 @@ export default function CommentBoard(props: CommentBoardProps){
       {comments
         ? comments.map(comment => {
           return (
-            <CommentBubble 
+            <CommentBubble
+              key={JSON.stringify(comment).length}
               commentObj={comment}
-              onPressReply={setReplyingTo}
+              onPressReply={onPressReply}
+              onPressEdit={onPressEdit}
+              onPressDelete={onPressDelete}
             />
           );
         }) : <></>}
       <div style={{marginTop: 50}} />
-      <H2>{replyingTo ? "Reply To:" : "Add Comment"}</H2>
+      <H2>
+        {mode === Mode.COMMENT 
+          ? "Add Comment"
+          : mode === Mode.REPLY
+            ? "Reply To:"
+            : "Edit:"
+        }
+      </H2>
       <div style={{marginTop: 20}}/>
-      {replyingTo ? 
+      {highlightedComment ? 
         <>
           <CommentBubble 
-            commentObj={replyingTo}
+            commentObj={highlightedComment}
+            shallowRender
           />
           <div style={{marginBottom: 30}} />
         </> : <></>}
@@ -138,15 +237,15 @@ export default function CommentBoard(props: CommentBoardProps){
           <div style={{float: "left"}}>
             <Button
               text="Post"
-              onPress={onSubmit}
+              onPress={onCommentSubmit}
               loading={loading}
             />
           </div>
-          {replyingTo ? 
+          {highlightedComment ? 
             <div style={{marginLeft: 10, float: "left"}}>
               <Button
                 text="Cancel"
-                onPress={onCancelReply}
+                onPress={onCancelAction}
                 loading={loading}
               />
             </div>

@@ -86,7 +86,7 @@ async function upsertComment(title: string, comment: BlogComment): Promise<any> 
 }
 
 async function upsertCommentReply(title: string, rootCommentId: string, reply: BlogCommentReply): Promise<any> {
-  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}`;
+  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
@@ -96,6 +96,7 @@ async function upsertCommentReply(title: string, rootCommentId: string, reply: B
     .then((res) => res.json())
     .then((data) => {
       // console.log(url, data);
+      console.log("COMPLETE",data)
       return data;
     })
     .catch((error) => {

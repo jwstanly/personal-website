@@ -30,6 +30,7 @@ export interface BlogComment {
 
 export interface BlogCommentReply extends BlogComment {
   replyToId: string;
+  rootCommentId: string;
 }
 
 export interface BlogUser {

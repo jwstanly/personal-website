@@ -44,7 +44,6 @@ export default function Blog(props: {article: BlogArticle}) {
   function onArticleModify() {
     API.getArticleByTitle(article.title).then( article => {
       setArticle(article);
-      console.log("bruh", article);
     });
   }
 
@@ -81,7 +80,7 @@ export default function Blog(props: {article: BlogArticle}) {
         </Row>
         <div style={{marginTop: 50}} />
         <CommentBoard
-          key={article.comments.length}
+          key={JSON.stringify(article).length}
           article={article}
           onArticleModify={onArticleModify}
         />
