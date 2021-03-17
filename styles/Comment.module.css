@@ -83,3 +83,9 @@
   -ms-transition: border-bottom-color 100ms ease-in-out;
   transition: border-bottom-color 100ms ease-in-out;
 }
+
+.commentOptionNoHover {
+  margin: 0px 5px 5px 5px;
+  float: right;
+  cursor:default;
+}

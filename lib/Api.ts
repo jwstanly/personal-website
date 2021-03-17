@@ -8,7 +8,9 @@ export default {
   getArticleByTitle: getArticleByTitle,
   upsertArticle: upsertArticle,
   upsertComment: upsertComment,
-  upsertCommentReply: upsertCommentReply
+  deleteComment: deleteComment,
+  upsertCommentReply: upsertCommentReply,
+  deleteCommentReply: deleteCommentReply
 }
 
 function getKeyParams() {
@@ -85,6 +87,23 @@ async function upsertComment(title: string, comment: BlogComment): Promise<any> 
     });
 }
 
+async function deleteComment(title: string, commentId: string): Promise<any> {
+  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}&commentId=${commentId}`;
+  // console.log(url, team);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 async function upsertCommentReply(title: string, rootCommentId: string, reply: BlogCommentReply): Promise<any> {
   const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}`;
   // console.log(url, team);
@@ -96,7 +115,23 @@ async function upsertCommentReply(title: string, rootCommentId: string, reply: B
     .then((res) => res.json())
     .then((data) => {
       // console.log(url, data);
-      console.log("COMPLETE",data)
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+async function deleteCommentReply(title: string, rootCommentId: string, replyCommentId: string): Promise<any> {
+  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}&replyCommentId=${replyCommentId}`;
+  // console.log(url, team);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(url, data);
       return data;
     })
     .catch((error) => {

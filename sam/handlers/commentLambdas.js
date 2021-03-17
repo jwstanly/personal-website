@@ -263,6 +263,9 @@ async function deleteCommentReply(event) {
         return lambdaUtils_1.default.getErrorRes(event, 404, "No root comment found to delete reply from");
     }
     const replyCommentIndex = rootComment.replies.findIndex(({ id }) => id === replyCommentId);
+    if (replyCommentIndex === -1) {
+        return lambdaUtils_1.default.getErrorRes(event, 404, "No reply comment found to delete from root comment");
+    }
     // ...then using the index to delete that element from the comment list
     const params = {
         TableName: blogTable,

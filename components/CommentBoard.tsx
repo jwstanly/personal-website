@@ -30,6 +30,7 @@ export default function CommentBoard(props: CommentBoardProps){
 
   const [error, setError] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [deleteLoading, setDeleteLoading] = React.useState<boolean>(false);
 
   const [name, setName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
@@ -140,7 +141,7 @@ export default function CommentBoard(props: CommentBoardProps){
 
   }
 
-  function onPressReply(comment:BlogComment) {
+  function onPressReply(comment: BlogComment | BlogCommentReply) {
     if(mode === Mode.EDIT) {
       clearCommentBoard();
     }
@@ -148,7 +149,7 @@ export default function CommentBoard(props: CommentBoardProps){
     setHighlightedComment(comment);
   }
 
-  function onPressEdit(comment:BlogComment) {
+  function onPressEdit(comment: BlogComment | BlogCommentReply) {
     setMode(Mode.EDIT);
     setHighlightedComment(comment);
 
@@ -157,8 +158,18 @@ export default function CommentBoard(props: CommentBoardProps){
     setEmail(comment.user.email);
   }
 
-  function onPressDelete(comment:BlogComment) {
-    
+  async function onPressDelete(comment: BlogComment | BlogCommentReply) {
+    setDeleteLoading(true);
+    console.log("What", comment, !!comment.replies, !comment.rootCommentId);
+    if(comment.replies && !comment.rootCommentId) {
+      await API.deleteComment(props.article.title, comment.id)
+    } else {
+      await API.deleteCommentReply(props.article.title, (comment as BlogCommentReply).rootCommentId, comment.id)
+    }
+
+    setDeleteLoading(false);
+
+    props.onArticleModify();
   }
 
   function onCancelAction() {
@@ -182,6 +193,7 @@ export default function CommentBoard(props: CommentBoardProps){
               onPressReply={onPressReply}
               onPressEdit={onPressEdit}
               onPressDelete={onPressDelete}
+              deleteLoading={deleteLoading}
             />
           );
         }) : <></>}
@@ -236,7 +248,7 @@ export default function CommentBoard(props: CommentBoardProps){
         <Col>
           <div style={{float: "left"}}>
             <Button
-              text="Post"
+              text={mode === Mode.COMMENT ? "Post" : mode === Mode.REPLY ? "Reply" : "Edit"}
               onPress={onCommentSubmit}
               loading={loading}
             />
@@ -246,7 +258,6 @@ export default function CommentBoard(props: CommentBoardProps){
               <Button
                 text="Cancel"
                 onPress={onCancelAction}
-                loading={loading}
               />
             </div>
              : <></>}

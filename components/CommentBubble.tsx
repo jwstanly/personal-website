@@ -3,22 +3,25 @@ import styles from '../styles/comment.module.css';
 
 import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from './Titles';
-import { BlogComment } from '../lib/Types';
+import { BlogComment, BlogCommentReply } from '../lib/Types';
 import Util from '../lib/Util';
 import DateUtil from '../lib/Date';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
 interface CommentProps {
   commentObj: BlogComment
-  onPressReply?: (comment:BlogComment)=>void;
-  onPressEdit?: (comment:BlogComment)=>void;
-  onPressDelete?: (comment:BlogComment)=>void;
+  onPressReply?: (comment:BlogComment|BlogCommentReply)=>void;
+  onPressEdit?: (comment:BlogComment|BlogCommentReply)=>void;
+  onPressDelete?: (comment:BlogComment|BlogCommentReply)=>void;
+  deleteLoading?: boolean;
   shallowRender?: boolean;
 }
 
-export default function CommentBubble({commentObj, onPressReply, onPressEdit, onPressDelete, shallowRender}: CommentProps){
+export default function CommentBubble({commentObj, onPressReply, onPressEdit, onPressDelete, deleteLoading, shallowRender}: CommentProps){
 
   const [showOptions, setShowOptions] = React.useState<boolean>(false);
+  const [confirmDelete, setConfirmDelete] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     setShowOptions(commentObj.user.id === localStorage.getItem("userId"));
   }, []);
@@ -57,17 +60,42 @@ export default function CommentBubble({commentObj, onPressReply, onPressEdit, on
                 </div>
               </div>
             </div>
-            {showOptions ? (
-              <div style={{alignSelf: 'flex-end', display: 'flex'}}>
-                <div className={styles.commentOption} onClick={() => onPressEdit(commentObj)}>
-                  Edit
+            {showOptions ?
+              confirmDelete ? 
+                deleteLoading ? (
+                  <div style={{alignSelf: 'flex-end', display: 'flex'}}>
+                    <div className={styles.commentOptionNoHover} onClick={() => {}}>
+                      Loading...
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{alignSelf: 'flex-end', display: 'flex'}}>
+                    <div className={styles.commentOptionNoHover} onClick={() => {}}>
+                      Are you sure? 
+                    </div>
+                    <div style={{marginLeft: 10}} />
+                    <div className={styles.commentOption} style={{marginLeft: 15}} onClick={async () => {
+                      await onPressDelete(commentObj);
+                      setConfirmDelete(false);
+                    }}>
+                      Yes
+                    </div>
+                    <div className={styles.commentOption} style={{marginLeft: 10}} onClick={() => {setConfirmDelete(false)}}>
+                      No
+                    </div>
+                  </div>
+              ) : (
+                <div style={{alignSelf: 'flex-end', display: 'flex'}}>
+                  <div className={styles.commentOption} onClick={() => onPressEdit(commentObj)}>
+                    Edit
+                  </div>
+                  <div style={{marginLeft: 10}} />
+                  <div className={styles.commentOption} style={{marginLeft: 5}} onClick={() => setConfirmDelete(true)}>
+                    Delete
+                  </div>
                 </div>
-                <div style={{marginLeft: 10}} />
-                <div className={styles.commentOption} style={{marginLeft: 5}} onClick={() => onPressDelete(commentObj)}>
-                  Delete
-                </div>
-              </div>
-            ) : <></>}
+              )
+            : <></>}
           </div>
         ) : (
           <></>
@@ -81,6 +109,7 @@ export default function CommentBubble({commentObj, onPressReply, onPressEdit, on
               onPressReply={onPressReply}
               onPressEdit={onPressEdit}
               onPressDelete={onPressDelete}
+              deleteLoading={deleteLoading}
             />
           </div>
         );
