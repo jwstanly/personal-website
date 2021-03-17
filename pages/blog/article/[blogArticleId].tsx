@@ -15,6 +15,7 @@ import { BlogArticle } from '../../../lib/Types';
 import Util from '../../../lib/Util';
 import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
+import ReactMarkdown from 'react-markdown';
 
 export async function getStaticPaths() {
 
@@ -73,9 +74,9 @@ export default function Blog(props: {article: BlogArticle}) {
         <div style={{marginTop: 50}} />
         <Row className="justify-content-center">
           <Col xs={12} md={10} lg={9} xl={8}>
-            <BlogMarkdown>  
+            <ReactMarkdown>
               {article.content}
-            </BlogMarkdown>
+            </ReactMarkdown>
           </Col>
         </Row>
         <div style={{marginTop: 50}} />
