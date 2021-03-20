@@ -2,15 +2,35 @@ import React, { ObjectHTMLAttributes } from 'react';
 import styles from '../styles/Home.module.css';
 
 interface TitleProps {
-  id?: string;
+  centered?: boolean;
+
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
+
   children: string;
+  id?: string;
   style?: object;
+}
+
+function getMargin(props: TitleProps): React.CSSProperties {
+  return {
+    marginTop: props.marginTop || 0,
+    marginLeft: props.marginLeft || 0,
+    marginBottom: props.marginBottom || 0,
+    marginRight: props.marginRight || 0,
+  }
 }
 
 export function H1(props: TitleProps){
 
   return (
-    <h1 id={props.id} className={styles.title}>
+    <h1 
+      id={props.id} 
+      className={props.centered ? styles.centered : ""} 
+      style={getMargin(props)}
+    >
       {props.children}
     </h1>
   );
@@ -19,7 +39,11 @@ export function H1(props: TitleProps){
 export function H2(props: TitleProps){
 
   return (
-    <h2 className={styles.subtitle}>
+    <h2 
+      id={props.id} 
+      className={props.centered ? styles.centered : ""} 
+      style={getMargin(props)}
+    >
       {props.children}
     </h2>
   );
@@ -28,7 +52,11 @@ export function H2(props: TitleProps){
 export function H3(props: TitleProps){
 
   return (
-    <h3 className={styles.h3title}>
+    <h3 
+      id={props.id} 
+      className={props.centered ? styles.centered : ""} 
+      style={getMargin(props)}
+    >
       {props.children}
     </h3>
   );
@@ -37,27 +65,39 @@ export function H3(props: TitleProps){
 export function H4(props: TitleProps){
 
   return (
-    <h3 className={styles.h3title}>
+    <h4
+      id={props.id} 
+      className={props.centered ? styles.centered : ""}
+      style={getMargin(props)}
+    >
       {props.children}
-    </h3>
+    </h4>
   );
 }
 
 export function H5(props: TitleProps){
 
   return (
-    <h3 className={styles.h3title}>
+    <h5 
+      id={props.id} 
+      className={props.centered ? styles.centered : ""}
+      style={getMargin(props)}
+    >
       {props.children}
-    </h3>
+    </h5>
   );
 }
 
 export function H6(props: TitleProps){
 
   return (
-    <h3 className={styles.h3title}>
+    <h6 
+      id={props.id} 
+      className={props.centered ? styles.centered : ""}
+      style={getMargin(props)}
+    >
       {props.children}
-    </h3>
+    </h6>
   );
 }
 

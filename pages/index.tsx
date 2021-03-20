@@ -50,7 +50,7 @@ export default function Home() {
 
       <div style={{padding: '10px'}}/>
 
-      <H1>Experience</H1>
+      <H1 centered marginBottom={40}>Experience</H1>
 
       <div style={{padding: '5px'}}/>
       
@@ -92,7 +92,7 @@ export default function Home() {
 
       <div style={{padding: '20px'}}/>
 
-      <H1 id="contact">Contact Me</H1>
+      <H1 centered marginBottom={40} id="contact">Contact Me</H1>
 
       <p className={styles.headerContentText} style={{marginRight: 15, marginLeft: 15}}>
         I'm always down to chat. Send me an email at jwstanly[at]gmail.com

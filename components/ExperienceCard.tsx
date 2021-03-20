@@ -27,7 +27,7 @@ export function ExperienceCard(props: ExperienceCardProps){
                 alt={props.imageAlt}
               />
             </div>
-            <div style={{float: 'left', marginRight: 10}} className={styles.cardTextContainer}>
+            <div style={{float: 'left'}} className={styles.cardTextContainer}>
               <Card
                 header={props.header}
                 subheader={props.subheader}

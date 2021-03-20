@@ -18,7 +18,7 @@ export default function Navbar(props: NavbarTypes){
     <div className={styles.navbarContainer}>
       <div style={{backgroundColor: props.color}}>
         <ul className={styles.navbar}>
-          <h4 className={`${styles.navbarItem} ${styles.navbarBrand}`}>jwstanly.com</h4>
+          <div className={`${styles.navbarItem} ${styles.navbarBrand}`}>jwstanly.com</div>
           {props.options.map(option => {
             return (
               <li className={styles.navbarItem} key={option.href}>

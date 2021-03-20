@@ -38,7 +38,7 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
       </Head>
 
       <div style={{marginTop: 40}}/>
-      <H1>Recent Articles</H1>
+      <H1 centered marginBottom={40}>Recent Articles</H1>
 
       {articles && articles.map((article: BlogArticle) => {
         return (
