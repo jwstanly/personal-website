@@ -70,9 +70,14 @@ export default function CommentBoard(props: CommentBoardProps){
       return;
     }
 
-    let blogUser: BlogUser = { id: localStorage.getItem("userId") };
-    if(name) blogUser = {...blogUser, name: name};
-    if(email) blogUser = {...blogUser, email: email};
+    let blogUser: BlogUser = { 
+      id: localStorage.getItem("userId") 
+    };
+    if (name) blogUser.name = name;
+    if (email) blogUser.email = email;
+
+    // store email locally so users can edit their email securly without the database
+    localStorage.setItem("userEmail", email);
 
     if(mode === Mode.COMMENT) {
       
@@ -155,7 +160,7 @@ export default function CommentBoard(props: CommentBoardProps){
 
     setComment(comment.comment);
     setName(comment.user.name);
-    setEmail(comment.user.email);
+    setEmail(localStorage.getItem("userEmail"));
   }
 
   async function onPressDelete(comment: BlogComment | BlogCommentReply) {
