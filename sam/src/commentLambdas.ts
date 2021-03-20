@@ -91,6 +91,10 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
 
   try {
     const res = await docClient.update(params).promise();
+
+    // strip emails from response so they can't be snooped client-side
+    Util.stripEmails(res.Attributes as BlogArticle);
+
     return Util.getSuccessRes(event, res);
   } catch (error) {
     return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
@@ -199,6 +203,10 @@ export async function upsertCommentReply(event: APIGatewayProxyEvent): Promise<A
 
   try {
     const res = await docClient.update(params).promise();
+
+    // strip emails from response so they can't be snooped client-side
+    Util.stripEmails(res.Attributes as BlogArticle);
+
     return Util.getSuccessRes(event, res);
   } catch (error) {
     return Util.getErrorRes(event, 500, `A database error occured. ${error}`);

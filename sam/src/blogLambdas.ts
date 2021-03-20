@@ -20,9 +20,12 @@ export async function getAllArticles(event: APIGatewayProxyEvent): Promise<APIGa
 
   const articlesRes = await docClient.scan(params).promise();
 
-  if (Object.keys(articlesRes).length === 0) {
+  if (!articlesRes.Items || Object.keys(articlesRes.Items).length === 0) {
     return Util.getErrorRes(event, 404, "No articles found");
   }
+
+  // strip emails from response so they can't be snooped client-side
+  (articlesRes.Items as BlogArticle[]).forEach(Util.stripEmails);
 
   console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articlesRes)}`);
 
@@ -52,6 +55,9 @@ export async function getArticleByTitle(event: APIGatewayProxyEvent): Promise<AP
   if (Object.keys(articleRes).length === 0) {
     return Util.getErrorRes(event, 404, "No article found");
   }
+
+  // strip emails from response so they can't be snooped client-side
+  Util.stripEmails(articleRes.Item as BlogArticle);
 
   console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articleRes)}`);
 
@@ -104,6 +110,11 @@ export async function upsertArticle(event: APIGatewayProxyEvent): Promise<APIGat
       ? existingArticle.createdAt
       : inputArticle.createdAt || Date.now(),
     lastModifiedAt: Date.now(),
+    comments: inputArticle.comments
+      ? inputArticle.comments
+      : existingArticle && existingArticle.comments
+        ? existingArticle.comments
+        : []
   }
 
   const params: DocumentClient.PutItemInput = {
