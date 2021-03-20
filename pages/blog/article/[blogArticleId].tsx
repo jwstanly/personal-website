@@ -66,7 +66,7 @@ export default function Blog(props: {article: BlogArticle}) {
             <Card
               header={article.title}
               subheader={article.subheader}
-              codeTags={article.tags}
+              tags={article.tags}
               content={[]}
             />
           </Col>

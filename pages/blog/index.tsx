@@ -50,7 +50,7 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
                     <Card
                       header={article.title}
                       subheader={article.subheader}
-                      codeTags={article.tags}
+                      tags={article.tags}
                       content={article.content}
                     />
                   </div>

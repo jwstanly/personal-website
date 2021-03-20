@@ -14,17 +14,6 @@
   font-size: 18px;
 }
 
-.contentText {
-  text-align: left;
-  color: #222;
-  font-size: 16px;
-  font-weight: 500;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.6;
-letter-spacing: -0.04em;
-  margin-block-end: 0.0em;
-}
-
 .codeText {
   float:left;
   padding-right: 20px;
@@ -34,6 +23,18 @@ letter-spacing: -0.04em;
   font-size: 12px;
   margin: 0px 0px 5px 0px;
   font-family: 'IBM Plex Mono';
+}
+
+.tagText {
+  float:left;
+  padding: 0.4em 1em;
+  margin: 0px 1.2em 0px 0px;
+  /* background-color: #BBB; */
+  border-radius: 0.5em;
+  border: 1px solid #888;
+  color: #888;
+  font-weight: 600;
+  font-size: 11px;
 }
 
 .footerContent {

@@ -121,7 +121,7 @@ export function Code(props: TitleProps){
 export function Tag(props: TitleProps){
 
   return (
-    <div className={styles.codeText}>
+    <div className={styles.tagText}>
       {props.children}
     </div>
   );
