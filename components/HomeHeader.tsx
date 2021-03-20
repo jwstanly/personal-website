@@ -4,13 +4,13 @@ import styles from '../styles/HomeHeader.module.css';
 export default function HomeHeader(){
   return (
     <div className={styles.header}>
-      <div style={{flex: 2, flexDirection: 'column', marginTop: '7vw'}}>
-        <h1 className={`${styles.headerFirstLineText} ${styles.greyGradientText}`}>
+      <div style={{flex: 2, flexDirection: 'column', marginTop: '6vw'}}>
+        <div className={`${styles.headerFirstLineText} ${styles.greyGradientText}`}>
           Hey, I'm
-        </h1>
-        <h1 className={`${styles.headerSecondLineText} ${styles.colorGradientText}`}>
+        </div>
+        <div className={`${styles.headerSecondLineText} ${styles.colorGradientText}`}>
           John Wright
-        </h1>
+        </div>
       </div>
       <div style={{flex:1.2}}>
         <img

@@ -29,15 +29,17 @@
 }
 
 .headerFirstLineText {
+  font-size: 72px;
+  font-weight: 300;
   margin-left: 5vw;
   font-size: 4.5vw;
-  font-weight: 300;
+
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   letter-spacing: -0.02em;
-  margin-block-end: 0.0em;
 }
 
 .headerSecondLineText {
+  line-height: 9.3vw;
   margin-left: 5vw;
   font-weight: 900;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
