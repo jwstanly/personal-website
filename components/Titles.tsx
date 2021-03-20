@@ -3,6 +3,8 @@ import styles from '../styles/Home.module.css';
 
 interface TitleProps {
   centered?: boolean;
+  italic?: boolean;
+  underline?: boolean;
 
   marginTop?: number;
   marginBottom?: number;
@@ -13,13 +15,21 @@ interface TitleProps {
   id?: string;
 }
 
-function getMargin(props: TitleProps): React.CSSProperties {
-  return {
+function getCSS(props: TitleProps): React.CSSProperties {
+  let css: React.CSSProperties = {
     marginTop: props.marginTop || 0,
     marginLeft: props.marginLeft || 0,
     marginBottom: props.marginBottom || 0,
     marginRight: props.marginRight || 0,
   }
+
+  if(props.italic) {
+    css.fontStyle = "italic"
+  } else if(props.underline) {
+    css.textDecoration = "underline"
+  }
+
+  return css;
 }
 
 export function H1(props: TitleProps){
@@ -28,7 +38,7 @@ export function H1(props: TitleProps){
     <h1 
       id={props.id} 
       className={props.centered ? styles.centered : ""} 
-      style={getMargin(props)}
+      style={getCSS(props)}
     >
       {props.children}
     </h1>
@@ -41,7 +51,7 @@ export function H2(props: TitleProps){
     <h2 
       id={props.id} 
       className={props.centered ? styles.centered : ""} 
-      style={getMargin(props)}
+      style={getCSS(props)}
     >
       {props.children}
     </h2>
@@ -54,7 +64,7 @@ export function H3(props: TitleProps){
     <h3 
       id={props.id} 
       className={props.centered ? styles.centered : ""} 
-      style={getMargin(props)}
+      style={getCSS(props)}
     >
       {props.children}
     </h3>
@@ -67,7 +77,7 @@ export function H4(props: TitleProps){
     <h4
       id={props.id} 
       className={props.centered ? styles.centered : ""}
-      style={getMargin(props)}
+      style={getCSS(props)}
     >
       {props.children}
     </h4>
@@ -80,7 +90,7 @@ export function H5(props: TitleProps){
     <h5 
       id={props.id} 
       className={props.centered ? styles.centered : ""}
-      style={getMargin(props)}
+      style={getCSS(props)}
     >
       {props.children}
     </h5>
@@ -93,7 +103,7 @@ export function H6(props: TitleProps){
     <h6 
       id={props.id} 
       className={props.centered ? styles.centered : ""}
-      style={getMargin(props)}
+      style={getCSS(props)}
     >
       {props.children}
     </h6>
