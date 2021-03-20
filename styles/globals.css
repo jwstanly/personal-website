@@ -87,6 +87,38 @@ p {
   margin-block-end: 0.0em;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+blockquote {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  margin-left: 3vw !important;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+}
+
+pre {
+  color: #222 !important;
+  background: #F1F1F1;
+  border: 1px solid #E1E1E1;
+  border-radius: 4px;
+  font-size: 90%;
+  padding: .2rem .5rem;
+}
+
+code {
+  color: #222;
+  padding: 0rem 0.5rem;
+  font-size: 90%;
+  white-space: wrap;
+}
+
 .animated-1 {
     animation-duration: 1s;
     animation-fill-mode: both;
