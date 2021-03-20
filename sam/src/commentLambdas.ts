@@ -4,7 +4,7 @@ import {
 } from "aws-lambda";
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import Util from './lambdaUtils';
-import { BlogComment, BlogArticle, BlogCommentReply } from '../../lib/Types';
+import { BlogComment, BlogArticle, BlogCommentReply, BlogUser } from '../../lib/Types';
 
 const blogTable = process.env.BLOG_TABLE;
 const docClient = new DocumentClient();
@@ -59,8 +59,20 @@ export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGat
     ? articleRes.Item.comments.findIndex( ({ id }) => id === inputComment.id )
     : -1;
 
+  // preserve email accross edits (client-side never gets email back to edit)
+  const outputUser: BlogUser = inputComment.user;
+  if (
+    !inputComment.user.email
+    && existingComment 
+    && existingComment.user 
+    && existingComment.user.email
+  ) {
+    outputUser.email = existingComment.user.email;
+  }
+
   const outputComment: BlogComment = {
     ...inputComment,
+    user: outputUser,
     id: inputComment.id || String(Date.now()),
     createdAt: existingComment 
       ? existingComment.createdAt
@@ -173,9 +185,20 @@ export async function upsertCommentReply(event: APIGatewayProxyEvent): Promise<A
     ? rootComment.replies.findIndex( ({ id }) => id === inputCommentReply.id )
     : -1;
 
+  // preserve email accross edits (client-side never gets email back to edit)
+  const outputUser: BlogUser = inputCommentReply.user;
+  if (
+    !inputCommentReply.user.email
+    && existingCommentReply 
+    && existingCommentReply.user 
+    && existingCommentReply.user.email
+  ) {
+    outputUser.email = existingCommentReply.user.email;
+  }
 
   const outputCommentReply: BlogCommentReply = {
     ...inputCommentReply,
+    user: outputUser,
     id: inputCommentReply.id || String(Date.now()),
     createdAt: existingCommentReply 
       ? existingCommentReply.createdAt
