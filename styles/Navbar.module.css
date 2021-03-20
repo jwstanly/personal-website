@@ -25,6 +25,8 @@
   margin-left: 4vw;
   float: left;
 
+  cursor: pointer;
+
   display: block;
 
   font-size: 20px;

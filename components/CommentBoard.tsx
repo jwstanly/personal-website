@@ -182,8 +182,9 @@ export default function CommentBoard(props: CommentBoardProps){
 
   return (
     <CenteredContent>
-      <H2>Comments</H2>
-      <div style={{marginTop: 20}}/>
+      <H2 marginBottom={20}>
+        Comments
+      </H2>
       {comments
         ? comments.map(comment => {
           return (
@@ -198,7 +199,7 @@ export default function CommentBoard(props: CommentBoardProps){
           );
         }) : <H6 marginTop={25} marginLeft={40} italic>Be the first to add a comment!</H6>}
       <div style={{marginTop: 50}} />
-      <H2>
+      <H2 marginBottom={25}>
         {mode === Mode.COMMENT 
           ? "Add Comment"
           : mode === Mode.REPLY
@@ -206,7 +207,6 @@ export default function CommentBoard(props: CommentBoardProps){
             : "Edit:"
         }
       </H2>
-      <div style={{marginTop: 20}}/>
       {highlightedComment ? 
         <>
           <CommentBubble 
