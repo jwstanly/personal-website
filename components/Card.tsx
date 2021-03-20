@@ -20,7 +20,7 @@ export function Card(props: TitleProps){
       <H6 marginTop={3} marginBottom={10}>{props.subheader}</H6>
       {props.tags
         ? <div style={{display: 'inline-block', marginBottom: 10, marginTop: 10}}>
-            {["These", "Are", "tags", "Next.js", "React", 'CloudFormation'].map(tag => {return <Tag key={tag}>{tag}</Tag>;})}
+            {props.tags.map(tag => {return <Tag key={tag}>{tag}</Tag>;})}
           </div>
         : <></>}
       {props.codeTags

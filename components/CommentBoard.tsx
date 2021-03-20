@@ -7,7 +7,7 @@ import CenteredContent from './CenteredContent';
 import CommentBubble from './CommentBubble';
 import TextArea from './TextArea';
 import TextField from './TextField';
-import { H2 } from './Titles';
+import { H2, H6 } from './Titles';
 import API from '../lib/Api';
 
 
@@ -196,7 +196,7 @@ export default function CommentBoard(props: CommentBoardProps){
               deleteLoading={deleteLoading}
             />
           );
-        }) : <></>}
+        }) : <H6 marginTop={25} marginLeft={40} italic>Be the first to add a comment!</H6>}
       <div style={{marginTop: 50}} />
       <H2>
         {mode === Mode.COMMENT 
@@ -221,7 +221,7 @@ export default function CommentBoard(props: CommentBoardProps){
           <TextArea 
             value={comment} 
             setValue={setComment}
-            label="Comment*"
+            label="Comment"
           />
         </Col>
       </Row>

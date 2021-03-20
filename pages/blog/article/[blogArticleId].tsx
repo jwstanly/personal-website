@@ -71,7 +71,7 @@ export default function Blog(props: {article: BlogArticle}) {
             />
           </Col>
         </Row>
-        <div style={{marginTop: 50}} />
+        <div style={{marginTop: 20}} />
         <Row className="justify-content-center">
           <Col xs={12} md={10} lg={9} xl={8}>
             <ReactMarkdown>
