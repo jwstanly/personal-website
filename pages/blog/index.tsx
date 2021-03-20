@@ -51,7 +51,11 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
                       header={article.title}
                       subheader={article.subheader}
                       tags={article.tags}
-                      content={article.content}
+                      content={
+                        article.content.length > 400
+                          ? article.content.substring(0,400) + "..."
+                          : article.content
+                      }
                     />
                   </div>
                 </Link>
