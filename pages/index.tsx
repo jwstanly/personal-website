@@ -26,7 +26,7 @@ export default function Home() {
 
       <HomeHeader />
 
-      <div style={{padding: '15px'}}/>
+      <div style={{padding: '3vw'}}/>
 
       <Container>
         <Row className="justify-content-center">
@@ -48,7 +48,7 @@ export default function Home() {
         </Row>
       </Container>
 
-      <div style={{padding: '10px'}}/>
+      <div style={{padding: '3vw'}}/>
 
       <H1 centered marginBottom={40}>Experience</H1>
 
