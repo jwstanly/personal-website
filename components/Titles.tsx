@@ -11,7 +11,6 @@ interface TitleProps {
 
   children: string;
   id?: string;
-  style?: object;
 }
 
 function getMargin(props: TitleProps): React.CSSProperties {
@@ -104,7 +103,7 @@ export function H6(props: TitleProps){
 export function Text(props: TitleProps){
 
   return (
-    <p className={styles.contentText} style={props.style}>
+    <p>
       {props.children}
     </p>
   );
@@ -113,8 +112,17 @@ export function Text(props: TitleProps){
 export function Code(props: TitleProps){
 
   return (
-    <p className={styles.codeText} style={props.style}>
+    <div className={styles.codeText}>
       {props.children}
-    </p>
+    </div>
+  );
+}
+
+export function Tag(props: TitleProps){
+
+  return (
+    <div className={styles.codeText}>
+      {props.children}
+    </div>
   );
 }
