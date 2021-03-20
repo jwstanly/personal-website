@@ -16,9 +16,11 @@ async function getAllArticles(event) {
         TableName: blogTable,
     };
     const articlesRes = await docClient.scan(params).promise();
-    if (Object.keys(articlesRes).length === 0) {
+    if (!articlesRes.Items || Object.keys(articlesRes.Items).length === 0) {
         return lambdaUtils_1.default.getErrorRes(event, 404, "No articles found");
     }
+    // strip emails from response so they can't be snooped client-side
+    articlesRes.Items.forEach(lambdaUtils_1.default.stripEmails);
     console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articlesRes)}`);
     return lambdaUtils_1.default.getSuccessRes(event, articlesRes);
 }
@@ -41,6 +43,8 @@ async function getArticleByTitle(event) {
     if (Object.keys(articleRes).length === 0) {
         return lambdaUtils_1.default.getErrorRes(event, 404, "No article found");
     }
+    // strip emails from response so they can't be snooped client-side
+    lambdaUtils_1.default.stripEmails(articleRes.Item);
     console.info(`params: ${JSON.stringify(params)}, articleRes: ${JSON.stringify(articleRes)}`);
     return lambdaUtils_1.default.getSuccessRes(event, articleRes);
 }
@@ -83,7 +87,11 @@ async function upsertArticle(event) {
     const existingArticle = existingArticleRes.Item;
     const outputArticle = Object.assign(Object.assign({}, inputArticle), { id: inputArticle.id || (String)(Date.now()), createdAt: existingArticle
             ? existingArticle.createdAt
-            : inputArticle.createdAt || Date.now(), lastModifiedAt: Date.now() });
+            : inputArticle.createdAt || Date.now(), lastModifiedAt: Date.now(), comments: inputArticle.comments
+            ? inputArticle.comments
+            : existingArticle && existingArticle.comments
+                ? existingArticle.comments
+                : [] });
     const params = {
         TableName: blogTable,
         Item: Object.assign({ "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}` }, outputArticle),

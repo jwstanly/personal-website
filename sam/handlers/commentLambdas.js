@@ -51,7 +51,15 @@ async function upsertComment(event) {
     const existingCommentIndex = articleRes.Item.comments
         ? articleRes.Item.comments.findIndex(({ id }) => id === inputComment.id)
         : -1;
-    const outputComment = Object.assign(Object.assign({}, inputComment), { id: inputComment.id || String(Date.now()), createdAt: existingComment
+    // preserve email accross edits (client-side never gets email back to edit)
+    const outputUser = inputComment.user;
+    if (!inputComment.user.email
+        && existingComment
+        && existingComment.user
+        && existingComment.user.email) {
+        outputUser.email = existingComment.user.email;
+    }
+    const outputComment = Object.assign(Object.assign({}, inputComment), { user: outputUser, id: inputComment.id || String(Date.now()), createdAt: existingComment
             ? existingComment.createdAt
             : inputComment.createdAt || Date.now(), lastModifiedAt: Date.now(), replies: existingComment
             ? existingComment.replies
@@ -75,6 +83,8 @@ async function upsertComment(event) {
     };
     try {
         const res = await docClient.update(params).promise();
+        // strip emails from response so they can't be snooped client-side
+        lambdaUtils_1.default.stripEmails(res.Attributes);
         return lambdaUtils_1.default.getSuccessRes(event, res);
     }
     catch (error) {
@@ -147,7 +157,15 @@ async function upsertCommentReply(event) {
     const existingCommentReplyIndex = rootComment.replies && inputCommentReply.id
         ? rootComment.replies.findIndex(({ id }) => id === inputCommentReply.id)
         : -1;
-    const outputCommentReply = Object.assign(Object.assign({}, inputCommentReply), { id: inputCommentReply.id || String(Date.now()), createdAt: existingCommentReply
+    // preserve email accross edits (client-side never gets email back to edit)
+    const outputUser = inputCommentReply.user;
+    if (!inputCommentReply.user.email
+        && existingCommentReply
+        && existingCommentReply.user
+        && existingCommentReply.user.email) {
+        outputUser.email = existingCommentReply.user.email;
+    }
+    const outputCommentReply = Object.assign(Object.assign({}, inputCommentReply), { user: outputUser, id: inputCommentReply.id || String(Date.now()), createdAt: existingCommentReply
             ? existingCommentReply.createdAt
             : inputCommentReply.createdAt || Date.now(), lastModifiedAt: Date.now() });
     // ...then using the index to upsert that element of the comment list
@@ -169,6 +187,8 @@ async function upsertCommentReply(event) {
     };
     try {
         const res = await docClient.update(params).promise();
+        // strip emails from response so they can't be snooped client-side
+        lambdaUtils_1.default.stripEmails(res.Attributes);
         return lambdaUtils_1.default.getSuccessRes(event, res);
     }
     catch (error) {
