@@ -296,7 +296,7 @@ Resources:
       DistributionConfig:
         Comment: Cloudfront Distribution pointing to S3 website
         Origins:
-        - DomainName: !Join ['', [!Ref DomainName, .s3-website., !Ref AWSRegion, .amazonaws.com]] 
+        - DomainName: !Join ['', [!Ref DomainName, .s3-website., !Ref AWS::Region, .amazonaws.com]] 
           Id: CustomS3WebsiteOrigin
           CustomOriginConfig:
             OriginProtocolPolicy: http-only  # S3 buckets configured as a website can't use HTTPS
