@@ -21,7 +21,7 @@ export function ExperienceCard(props: ExperienceCardProps){
       <Row className="justify-content-center">
         <Col xs={12} md={10} lg={9} xl={8}>
           <div className={styles.cardContainer}>
-            <div style={{float:'left', marginLeft: 10}}>
+            <div style={{float:'left'}}>
               <LargeIcon
                 imageUrl={props.imageUrl}
                 alt={props.imageAlt}
