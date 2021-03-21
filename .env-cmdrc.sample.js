@@ -1,15 +1,13 @@
 const env = {
    production: {
-      REACT_APP_ENV: 'PRODUCTION',
-      REACT_APP_ClientUrl: 'www.YourWebsite.com',
+      ENV_NAME: 'PRODUCTION',
       AWS_CLI_PROFILE: 'default',
-      BUCKET_NAME: 'YourWebsite.com',
+      DOMAIN_NAME: 'YourWebsite.com',
       ACM_CERT_ARN: 'YourACMCertificateARN',
       CF_DISTRIBUTION_ID: 'YourCloudFrontDistributionID',
    },
    local: {
-      REACT_APP_ENV: 'LOCAL',
-      REACT_APP_ClientUrl: 'http://localhost:3000',
+      ENV_NAME: 'LOCAL',
       AWS_CLI_PROFILE: 'default',
    },
 };
