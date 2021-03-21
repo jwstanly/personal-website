@@ -190,7 +190,7 @@ export default function CommentBoard(props: CommentBoardProps){
       <H2 marginBottom={20}>
         Comments
       </H2>
-      {comments
+      {comments && comments.length
         ? comments.map(comment => {
           return (
             <CommentBubble

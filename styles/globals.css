@@ -8,7 +8,7 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #3383d8 !important;
   text-decoration: none;
 }
 
@@ -59,16 +59,25 @@ h2 {
 h3 {
   font-size: 30px !important;
   font-weight: 800 !important;
+
+  margin-top: 45px !important;
+  margin-bottom: 22px !important;
 }
 
 h4 {
   font-size: 25px !important;
   font-weight: 800 !important;
+  
+  margin-top: 50px !important;
+  margin-bottom: 30px !important;
 }
 
 h5 {
   font-size: 20px !important;
   font-weight: 800 !important;
+
+  margin-top: 50px !important;
+  margin-bottom: 30px !important;
 }
 
 h6 {
@@ -110,13 +119,21 @@ pre {
   border-radius: 4px;
   font-size: 90%;
   padding: .2rem .5rem;
+  
+  margin-top: 25px !important;
+  margin-bottom: 30px !important;
 }
 
 code {
-  color: #222;
-  padding: 0rem 0.5rem;
+  color: #222 !important;
+  padding: .2rem 0.5rem;
+  font-weight: 100;
+  margin: 0 0.1rem;
   font-size: 90%;
-  white-space: wrap;
+  /* white-space: nowrap; */
+  background: #F1F1F1;
+  /* border: 1px solid #E1E1E1; */
+  border-radius: 4px;
 }
 
 .animated-1 {

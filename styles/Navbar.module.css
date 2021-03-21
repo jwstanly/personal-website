@@ -39,9 +39,10 @@
   color: #222;
 }
 
-a.navbarLink {
+div.navbarLink {
   display: block;
   color: black;
+  cursor: pointer;
   text-align: center;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   text-decoration: none;
@@ -51,7 +52,7 @@ a.navbarLink {
   position: relative;
 }
 
-a.navbarLink:before {
+div.navbarLink:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -64,7 +65,7 @@ a.navbarLink:before {
   transition: all 0.1s ease-in-out;
 }
 
-a.navbarLink:hover:before {
+div.navbarLink:hover:before {
   visibility: visible;
   transform: scaleX(1);
 }

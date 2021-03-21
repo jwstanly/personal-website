@@ -26,9 +26,9 @@ export default function Navbar(props: NavbarTypes){
             return (
               <li className={styles.navbarItem} key={option.href}>
                 <Link href={option.href} passHref>
-                  <a className={styles.navbarLink}>
+                  <div className={styles.navbarLink}>
                     {option.label}
-                  </a>
+                  </div>
                 </Link>
               </li>
             );
