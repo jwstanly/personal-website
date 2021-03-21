@@ -165,8 +165,7 @@ export default function CommentBoard(props: CommentBoardProps){
 
   async function onPressDelete(comment: BlogComment | BlogCommentReply) {
     setDeleteLoading(true);
-    console.log("What", comment, !!comment.replies, !comment.rootCommentId);
-    if(comment.replies && !comment.rootCommentId) {
+    if(comment.replies && !(comment as BlogCommentReply).rootCommentId) {
       await API.deleteComment(props.article.title, comment.id)
     } else {
       await API.deleteCommentReply(props.article.title, (comment as BlogCommentReply).rootCommentId, comment.id)
