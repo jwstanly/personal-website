@@ -9,7 +9,7 @@ const {
 sh.echo(`Deploying resources for "${DOMAIN_NAME}"`);
 sh.exec(
    'sam deploy '
-   + `--stack-name jwstanly-website `
+   + `--stack-name ${DOMAIN_NAME.split('.')[0]}-website `
    + '--parameter-overrides '
       + `DomainName=${DOMAIN_NAME} `
       + `AcmCertificateArn=${ACM_CERT_ARN} `

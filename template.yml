@@ -20,12 +20,6 @@ Parameters:
     Description: The Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate. Example = arn:aws:acm:[resource_id_here]
     AllowedPattern: "arn:aws:acm:.*"
     ConstraintDescription: Must be the ARN for the ACM certificate.
-  AWSRegion:
-    Type: String
-    Default: us-east-1
-    Description: The AWS Region Code for the AWS Region where resources will be provisioned. Example = us-east-1
-    AllowedPattern: (us(-gov)?|ap|ca|cn|eu|sa)-(central|(north|south)?(east|west)?)-\d
-    ConstraintDescription: Must be an AWS Region Code
     
 Globals:
   Function:

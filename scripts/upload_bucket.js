@@ -15,6 +15,7 @@ sh.exec(
 );
 
 if (CF_DISTRIBUTION_ID) {
+   sh.echo('\n');
    sh.exec(
       'aws cloudfront create-invalidation '
       + `--distribution-id ${CF_DISTRIBUTION_ID} ` 
