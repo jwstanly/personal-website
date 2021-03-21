@@ -52,6 +52,14 @@ export default function Blog(props: {article: BlogArticle}) {
     <>
       <Head>
         <title>{article.title}</title>
+        <meta name="description">
+          {
+            article.subheader 
+            + ". " 
+            + article.content.substring(0, 160 - (article.subheader.length + 5)) 
+            + "..."
+          }
+        </meta>
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.subheader}  />
         {article.image ? <meta property="og:image" content={article.image} /> : <></>}
