@@ -21,10 +21,17 @@ export default function Navbar(props: NavbarTypes){
     <div className={styles.navbarContainer}>
       <div style={{backgroundColor: props.color}}>
         <ul className={styles.navbar}>
-          <div onClick={() => router.push('/')} className={`${styles.navbarItem} ${styles.navbarBrand}`}>jwstanly.com</div>
+          <li className={styles.navbarItem} style={{float: 'left'}}>
+            <Link href='/' passHref>
+              <div className={styles.navbarBrand}>
+                jwstanly.com
+              </div>
+            </Link>
+          </li>
+          
           {props.options.map(option => {
             return (
-              <li className={styles.navbarItem} key={option.href}>
+              <li className={styles.navbarItem} style={{float: 'right'}} key={option.href}>
                 <Link href={option.href} passHref>
                   <div className={styles.navbarLink}>
                     {option.label}
