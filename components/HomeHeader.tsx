@@ -12,7 +12,7 @@ export default function HomeHeader(){
           John Wright
         </div>
       </div>
-      <div style={{flex:1.2}}>
+      <div style={{flex:1.14}}>
         <img
           style={{width: '20vw', height: '20vw', marginTop: '5vw', marginLeft: '10vw'}}
           src="/images/profileClipped.png" 

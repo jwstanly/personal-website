@@ -1,12 +1,13 @@
 .navbarContainer {
   -webkit-box-shadow: -2px -1px 15px 7px rgba(0,0,0,0.5);
   -moz-box-shadow: -3px -2px 30px 14px rgba(0,0,0,0.425);
+  margin: 0px 0px 5px 0px;
   box-shadow: 0px 1px 12px #CCCCCC;
 }
 
 .navbar {
   list-style-type: none;
-  margin: 0px 8vw 0px 8vw;
+  margin: 0px 6vw 0px 6vw;
   padding: 0;
   overflow: hidden;
 }
