@@ -16,9 +16,10 @@ export default function Home() {
     <>
       <Head>
         <title>John Wright Stanly</title>
-        <meta name="description">
-          I'm John Wright Stanly, a software engineer from Jacksonville, Florida. I've been working on some pretty cool projects while on my gap year before Georgia Tech.
-        </meta>
+        <meta 
+          name="description"
+          content="I'm John Wright Stanly, a software engineer from Jacksonville, Florida. I've been working on some pretty cool projects while on my gap year before Georgia Tech."
+        />
         <meta property="og:title" content="John Wright Stanly's Personal Website" />
         <meta property="og:description" content="Home of John Wright Stanly's website and blog" />
         <meta property="og:image" content="/images/profileClipped.png" />
