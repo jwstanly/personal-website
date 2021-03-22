@@ -23,17 +23,19 @@
     },
     "scripts": {
         "dev": "NODE_OPTIONS='--inspect' next dev",
-        "build": "next build",
-        "start": "next start",
-        "export": "next export",
+
+        "build": "next build && next export",
         "index-html": "node ./scripts/index_html",
         "sync-s3": "env-cmd -e production node ./scripts/upload_bucket",
-        "deploy": "yarn run build && yarn run export && yarn run index-html && yarn run sync-s3",
+        
         "compile-lambdas": "tsc -p sam/tsconfig.sam.json",
         "sam-build": "env-cmd -e production node ./scripts/sam_build",
         "sam-package": "env-cmd -e production node ./scripts/sam_package",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
-        "provision": "yarn run compile-lambdas && yarn run sam-build && yarn run sam-deploy"
+
+        "deploy": "yarn run deploy:backend && yarn run deploy:frontend",
+        "deploy:backend": "yarn run compile-lambdas && yarn run sam-build && yarn run sam-deploy",
+        "deploy:frontend": "yarn run build && yarn run index-html && yarn run sync-s3"
     },
     "eslintConfig": {
         "extends": [

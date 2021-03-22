@@ -30,6 +30,7 @@ Globals:
     Environment:
       Variables:
         BLOG_TABLE: !Ref PersonalWebsiteTable
+        DOMAIN_NAME: !Ref DomainName
 
 Resources:
   PersonalWebsiteApi:
@@ -205,6 +206,7 @@ Resources:
       Description: Upsert a comment reply for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
+        - AmazonSESFullAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref PersonalWebsiteTable
       Events:
@@ -349,6 +351,39 @@ Resources:
         AliasTarget:
           HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
           DNSName: !GetAtt [CloudFrontDistribution, DomainName]
+
+  EmailDNS:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZone
+      RecordSets: !GetAtt 'EmailDomainIdentity.RecordSets'
+      # RecordSetDefaults:
+      #   TTL: 60
+      #   Weight: 1
+      #   SetIdentifier: !Ref 'AWS::Region'
+
+  EmailDkimDNS:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZone
+      RecordSets: !GetAtt 'EmailDkimTokens.RecordSets'
+
+  EmailDomainIdentity:
+    Type: Custom::DomainIdentity
+    Properties:
+      Domain: !Ref DomainName
+      Region: !Ref AWS::Region
+      ServiceToken: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:binxio-cfn-ses-provider'
+      # service token points to lambda function deployed in auto-managed-cfn-ses-provider stack
+
+  EmailDkimTokens:
+    Type: Custom::DkimTokens
+    Properties:
+      Domain: !GetAtt 'EmailDomainIdentity.Domain'
+      Region: !GetAtt 'EmailDomainIdentity.Region'
+      ServiceToken: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:binxio-cfn-ses-provider'
+      # service token points to lambda function deployed in auto-managed-cfn-ses-provider stack
+
 
 Outputs:
   WebsiteURL:

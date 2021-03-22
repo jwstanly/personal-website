@@ -5,9 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCommentReply = exports.deleteComment = exports.upsertCommentReply = exports.upsertComment = void 0;
 const dynamodb_1 = require("aws-sdk/clients/dynamodb");
+const ses_1 = __importDefault(require("aws-sdk/clients/ses"));
 const lambdaUtils_1 = __importDefault(require("./lambdaUtils"));
 const blogTable = process.env.BLOG_TABLE;
+const awsRegion = process.env.AWS_REGION;
+const domainName = process.env.DOMAIN_NAME;
 const docClient = new dynamodb_1.DocumentClient();
+const ses = new ses_1.default({ region: awsRegion });
 async function upsertComment(event) {
     if (event.httpMethod !== 'POST') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call upsertArticle with POST, not: ${event.httpMethod}`);
@@ -150,7 +154,43 @@ async function upsertCommentReply(event) {
     if (rootCommentIndex === -1) {
         return lambdaUtils_1.default.getErrorRes(event, 404, 'No root comment found');
     }
-    // TODO: search `rootComment` for replyToId and send the user an email that someone replied to their comment 
+    const repliedToComment = rootComment.id === inputCommentReply.replyToId
+        ? rootComment
+        : rootComment.replies.find(({ id }) => id === inputCommentReply.replyToId);
+    if (!repliedToComment) {
+        return lambdaUtils_1.default.getErrorRes(event, 404, 'No reply comment found');
+    }
+    if (repliedToComment.user.email) {
+        console.log("Emailing", repliedToComment.user.email);
+        const emailParams = {
+            Destination: {
+                ToAddresses: [repliedToComment.user.email],
+                BccAddresses: ['jwstanly@yahoo.com'],
+            },
+            Message: {
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: "Your blog comment has a response!"
+                },
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: lambdaUtils_1.default.getEmailHTML(domainName, articleRes.Item, inputCommentReply)
+                    },
+                },
+            },
+            Source: `donotreply@${domainName}`,
+        };
+        // Instead of throwing 500s, report errors to CloudWatch
+        // Clients shouldn't experience a total failure just because the email failed
+        try {
+            const res = await ses.sendEmail(emailParams).promise();
+            console.log("SES SUCCESS", res);
+        }
+        catch (error) {
+            console.log("SES ERROR:", error);
+        }
+    }
     const existingCommentReply = rootComment.replies && inputCommentReply.id
         ? rootComment.replies.find(({ id }) => id === inputCommentReply.id)
         : undefined;

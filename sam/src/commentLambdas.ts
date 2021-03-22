@@ -1,13 +1,16 @@
-import { 
-  APIGatewayProxyEvent, 
-  APIGatewayProxyResult 
-} from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import SES from 'aws-sdk/clients/ses';
+
 import Util from './lambdaUtils';
 import { BlogComment, BlogArticle, BlogCommentReply, BlogUser } from '../../lib/Types';
 
 const blogTable = process.env.BLOG_TABLE;
+const awsRegion = process.env.AWS_REGION;
+const domainName = process.env.DOMAIN_NAME;
+
 const docClient = new DocumentClient();
+const ses = new SES({region: awsRegion});
 
 
 export async function upsertComment(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
@@ -172,11 +175,51 @@ export async function upsertCommentReply(event: APIGatewayProxyEvent): Promise<A
     ? articleRes.Item.comments.findIndex( ({ id }) => id === event.queryStringParameters.rootCommentId )
     : -1;
 
-  if(rootCommentIndex === -1) {
+  if (rootCommentIndex === -1) {
     return Util.getErrorRes(event, 404, 'No root comment found');
   }
 
-  // TODO: search `rootComment` for replyToId and send the user an email that someone replied to their comment 
+  const repliedToComment: BlogComment | BlogCommentReply = rootComment.id === inputCommentReply.replyToId
+    ? rootComment
+    : rootComment.replies.find( ({ id }) => id === inputCommentReply.replyToId );
+
+  if (!repliedToComment) {
+    return Util.getErrorRes(event, 404, 'No reply comment found');
+  }
+
+  if (repliedToComment.user.email) {
+
+    console.log("Emailing", repliedToComment.user.email);
+
+    const emailParams: SES.SendEmailRequest = {
+      Destination: {
+        ToAddresses: [repliedToComment.user.email],
+        BccAddresses: ['jwstanly@yahoo.com'],
+      },
+      Message: {
+        Subject: { 
+          Charset: "UTF-8",
+          Data: "Your blog comment has a response!" 
+        },
+        Body: {
+          Html: { 
+            Charset: "UTF-8",
+            Data: Util.getEmailHTML(domainName, articleRes.Item as BlogArticle, inputCommentReply)
+          },
+        },
+      },
+      Source: `donotreply@${domainName}`,
+    };
+
+    // Instead of throwing 500s, report errors to CloudWatch
+    // Clients shouldn't experience a total failure just because the email failed
+    try {
+      const res = await ses.sendEmail(emailParams).promise();
+      console.log("SES SUCCESS", res);
+    } catch (error) {
+      console.log("SES ERROR:", error);
+    }
+  }
 
   const existingCommentReply = rootComment.replies && inputCommentReply.id
     ? rootComment.replies.find( ({ id }) => id === inputCommentReply.id )
