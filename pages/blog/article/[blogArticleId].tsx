@@ -42,11 +42,11 @@ export default function Blog(props: {article: BlogArticle}) {
 
   const [article, setArticle] = React.useState<BlogArticle>(props.article);
 
-  function onArticleModify() {
-    API.getArticleByTitle(article.title).then( article => {
-      setArticle(article);
-    });
+  function fetchArticle() {
+    API.getArticleByTitle(article.title).then(setArticle);
   }
+
+  React.useEffect(fetchArticle, []);
 
   return (
     <>
@@ -92,7 +92,7 @@ export default function Blog(props: {article: BlogArticle}) {
         <CommentBoard
           key={JSON.stringify(article).length}
           article={article}
-          onArticleModify={onArticleModify}
+          onArticleModify={fetchArticle}
         />
         <div style={{marginTop: 50}} />
       </Container>
