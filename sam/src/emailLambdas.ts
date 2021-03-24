@@ -14,8 +14,8 @@ const ses = new SES({region: awsRegion});
 
 
 export async function unsubscribeEmail(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-  if (event.httpMethod !== 'POST') {
-    return Util.getErrorRes(event, 405, `Must call unsubscribeEmail with POST, not: ${event.httpMethod}`);
+  if (event.httpMethod !== 'DELETE') {
+    return Util.getErrorRes(event, 405, `Must call unsubscribeEmail with DELETE, not: ${event.httpMethod}`);
   }
 
   const missingParams: string[] = [];
