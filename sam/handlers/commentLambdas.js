@@ -175,7 +175,7 @@ async function upsertCommentReply(event) {
                 Body: {
                     Html: {
                         Charset: "UTF-8",
-                        Data: lambdaUtils_1.default.getEmailHTML(domainName, articleRes.Item, inputCommentReply)
+                        Data: lambdaUtils_1.default.getEmailHTML(domainName, articleRes.Item, repliedToComment, inputCommentReply)
                     },
                 },
             },
