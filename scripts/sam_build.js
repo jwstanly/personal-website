@@ -12,5 +12,6 @@ sh.exec(
    + '--parameter-overrides '
       + `DomainName=${DOMAIN_NAME} `
       + `AcmCertificateArn=${ACM_CERT_ARN} `
+   + '--template-file ./sam/template.yml '
    + `--profile ${AWS_CLI_PROFILE} `
-);
+)
