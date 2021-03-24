@@ -57,7 +57,7 @@ function getCommonHeaders() {
   }
 }
 
-function getEmailHTML(domainName: string, article: BlogArticle, commentReply: BlogCommentReply): string {
+function getEmailHTML(domainName: string, article: BlogArticle, originalComment: BlogComment | BlogCommentReply, commentReply: BlogCommentReply): string {
   return `
     <!DOCTYPE html
       PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -309,6 +309,11 @@ function getEmailHTML(domainName: string, article: BlogArticle, commentReply: Bl
                               <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
                             </div>
                             <!--[if (!mso)&(!IE)]><!-->
+                            <div style="margin-top:5px;"></div>
+                            <a href="https://${domainName}/blog/unsubscribe?title=${article.title.split(" ").join("+")}&commentId=${originalComment.id}"
+                              style="text-decoration:none;cursor:pointer;color:#666;font-size:11px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+                              Unsubscribe
+                            </a>
                           </div>
                           <!--<![endif]-->
                         </div>

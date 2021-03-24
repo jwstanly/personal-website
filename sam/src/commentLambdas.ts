@@ -204,7 +204,7 @@ export async function upsertCommentReply(event: APIGatewayProxyEvent): Promise<A
         Body: {
           Html: { 
             Charset: "UTF-8",
-            Data: Util.getEmailHTML(domainName, articleRes.Item as BlogArticle, inputCommentReply)
+            Data: Util.getEmailHTML(domainName, articleRes.Item as BlogArticle, repliedToComment, inputCommentReply)
           },
         },
       },
