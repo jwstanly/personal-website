@@ -260,6 +260,27 @@ Resources:
             Method: DELETE
             Auth:
               ApiKeyRequired: true
+  
+  UnsubscribeEmailLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Layers:
+      #   - !Ref LambdaLibs
+      Handler: handlers/emailLambdas.unsubscribeEmail
+      Description: Unsubscribe a user by deleting their email from the comment
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/unsubscribe
+            Method: DELETE
+            Auth:
+              ApiKeyRequired: true
 
   Bucket:
     Type: AWS::S3::Bucket
