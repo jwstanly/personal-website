@@ -23,7 +23,7 @@ Parameters:
     
 Globals:
   Function:
-    CodeUri: sam/.
+    CodeUri: ./
     Runtime: nodejs14.x
     MemorySize: 128
     Timeout: 180

@@ -47,10 +47,11 @@ export async function unsubscribeEmail(event: APIGatewayProxyEvent): Promise<API
         "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
       },
       ReturnValues: 'NONE',
-      UpdateExpression: `REMOVE #comments[${rootCommentIndex}].user.email`,
+      UpdateExpression: `REMOVE #comments[${rootCommentIndex}].#user.email`,
       ConditionExpression: `#comments[${rootCommentIndex}].id = :commentId`,
       ExpressionAttributeNames: {
-        '#comments': 'comments'
+        '#comments': 'comments',
+        '#user': 'user'
       },
       ExpressionAttributeValues: {
         ":commentId": event.queryStringParameters.commentId
@@ -66,11 +67,15 @@ export async function unsubscribeEmail(event: APIGatewayProxyEvent): Promise<API
   
   } else {  // user was from a reply comment; delete email from reply comment in root comment
 
+    let replyRootCommentIndex = -2;
     let replyCommentIndex;
-    for(const comment of articleRes.Item.comments) {
-      if(comment.replies) {
-        replyCommentIndex = comment.replies.findIndex( ({ id }) => id === event.queryStringParameters.commentId )
-        if (replyCommentIndex >= 0) break;
+    for(let i = 0; i < articleRes.Item.comments.length; i++) {
+      if(articleRes.Item.comments[i].replies) {
+        replyCommentIndex = articleRes.Item.comments[i].replies.findIndex( ({ id }) => id === event.queryStringParameters.commentId );
+        if (replyCommentIndex >= 0) {
+          replyRootCommentIndex = i;
+          break;
+        }
       }
     }
 
@@ -80,10 +85,11 @@ export async function unsubscribeEmail(event: APIGatewayProxyEvent): Promise<API
         "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
       },
       ReturnValues: 'NONE',
-      UpdateExpression: `REMOVE #comments[${rootCommentIndex}].replies[${replyCommentIndex}].user.email`,
-      ConditionExpression: `#comments[${rootCommentIndex}].replies[${replyCommentIndex}].id = :replyCommentId`,
+      UpdateExpression: `REMOVE #comments[${replyRootCommentIndex}].replies[${replyCommentIndex}].#user.email`,
+      ConditionExpression: `#comments[${replyRootCommentIndex}].replies[${replyCommentIndex}].id = :replyCommentId`,
       ExpressionAttributeNames: {
-        '#comments': 'comments'
+        '#comments': 'comments',
+        '#user': 'user'
       },
       ExpressionAttributeValues: {
         ":replyCommentId": event.queryStringParameters.commentId
