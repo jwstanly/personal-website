@@ -21,6 +21,7 @@ export async function unsubscribeEmail(event: APIGatewayProxyEvent): Promise<API
   const missingParams: string[] = [];
   if(!event.queryStringParameters.title) missingParams.push('article title');
   if(!event.queryStringParameters.commentId) missingParams.push('comment ID');
+  if(!event.queryStringParameters.email) missingParams.push('email');
   if (missingParams.length) {
     return Util.getErrorRes(event, 400, `Missing params: ${missingParams.join(', ')}`);
   }
@@ -48,13 +49,14 @@ export async function unsubscribeEmail(event: APIGatewayProxyEvent): Promise<API
       },
       ReturnValues: 'NONE',
       UpdateExpression: `REMOVE #comments[${rootCommentIndex}].#user.email`,
-      ConditionExpression: `#comments[${rootCommentIndex}].id = :commentId`,
+      ConditionExpression: `#comments[${rootCommentIndex}].id = :commentId AND #comments[${rootCommentIndex}].#user.email = :email`,
       ExpressionAttributeNames: {
         '#comments': 'comments',
         '#user': 'user'
       },
       ExpressionAttributeValues: {
-        ":commentId": event.queryStringParameters.commentId
+        ":commentId": event.queryStringParameters.commentId,
+        ":email":  event.queryStringParameters.email,
       }
     }
 

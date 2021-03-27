@@ -296,7 +296,7 @@ function getEmailHTML(domainName, article, originalComment, commentReply) {
                             </div>
                             <!--[if (!mso)&(!IE)]><!-->
                             <div style="margin-top:5px;"></div>
-                            <a href="https://${domainName}/blog/unsubscribe?title=${article.title.split(" ").join("+")}&commentId=${originalComment.id}"
+                            <a href="https://${domainName}/blog/unsubscribe?title=${article.title.split(" ").join("+")}&commentId=${originalComment.id}&email=${originalComment.user.email}"
                               style="text-decoration:none;cursor:pointer;color:#666;font-size:11px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
                               Unsubscribe
                             </a>

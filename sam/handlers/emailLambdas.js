@@ -21,6 +21,8 @@ async function unsubscribeEmail(event) {
         missingParams.push('article title');
     if (!event.queryStringParameters.commentId)
         missingParams.push('comment ID');
+    if (!event.queryStringParameters.email)
+        missingParams.push('email');
     if (missingParams.length) {
         return lambdaUtils_1.default.getErrorRes(event, 400, `Missing params: ${missingParams.join(', ')}`);
     }
@@ -44,13 +46,14 @@ async function unsubscribeEmail(event) {
             },
             ReturnValues: 'NONE',
             UpdateExpression: `REMOVE #comments[${rootCommentIndex}].#user.email`,
-            ConditionExpression: `#comments[${rootCommentIndex}].id = :commentId`,
+            ConditionExpression: `#comments[${rootCommentIndex}].id = :commentId AND #comments[${rootCommentIndex}].#user.email = :email`,
             ExpressionAttributeNames: {
                 '#comments': 'comments',
                 '#user': 'user'
             },
             ExpressionAttributeValues: {
-                ":commentId": event.queryStringParameters.commentId
+                ":commentId": event.queryStringParameters.commentId,
+                ":email": event.queryStringParameters.email,
             }
         };
         try {
