@@ -52,10 +52,10 @@ export default function Unsubscribe(props: any) {
       </Head>
 
       <div style={{marginTop: 40}}/>
-      <H1 centered marginBottom={20}>Unsubscribe</H1>
+      <H1 centered marginBottom={20}>Remove Your Email</H1>
       <Row className="justify-content-center">
         <Col xs={10} md={8} lg={6} xl={6}>
-          <H6 centered marginBottom={20}>Type in your email to confirm you want it permanently removed from your blog comment</H6>
+          <H6 centered marginBottom={20}>Type in your email to confirm your unsubscription and removal from your blog comment</H6>
           <H6 red marginTop={error ? 30 : 0}>{error}</H6>
           <H6 green marginTop={success ? 30 : 0}>{success}</H6>
           <TextField
@@ -72,7 +72,7 @@ export default function Unsubscribe(props: any) {
           />
         </Col>
       </Row>
-      <div style={{marginTop: '60vh'}}/>
+      <div style={{marginTop: '50vh'}}/>
       
     </>
   );
