@@ -10,7 +10,8 @@ export default {
   upsertComment: upsertComment,
   deleteComment: deleteComment,
   upsertCommentReply: upsertCommentReply,
-  deleteCommentReply: deleteCommentReply
+  deleteCommentReply: deleteCommentReply,
+  unsubscribeEmail: unsubscribeEmail,
 }
 
 function getKeyParams() {
@@ -124,6 +125,23 @@ async function upsertCommentReply(title: string, rootCommentId: string, reply: B
 
 async function deleteCommentReply(title: string, rootCommentId: string, replyCommentId: string): Promise<any> {
   const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}&replyCommentId=${replyCommentId}`;
+  // console.log(url, team);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+async function unsubscribeEmail(title: string, commentId: string, confirmEmail: string): Promise<any> {
+  const url = `${API_URL}/blog/unsubscribe?title=${Util.serializeTitle(title)}&commentId=${commentId}&email=${confirmEmail}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
