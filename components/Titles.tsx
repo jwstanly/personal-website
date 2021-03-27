@@ -6,6 +6,9 @@ interface TitleProps {
   italic?: boolean;
   underline?: boolean;
 
+  red?: boolean;
+  green?: boolean;
+
   marginTop?: number;
   marginBottom?: number;
   marginLeft?: number;
@@ -27,6 +30,10 @@ function getCSS(props: TitleProps): React.CSSProperties {
     css.fontStyle = "italic"
   } else if(props.underline) {
     css.textDecoration = "underline"
+  } else if(props.red) {
+    css.color = "#F00"
+  } else if(props.green) {
+    css.color = "#49D65D"
   }
 
   return css;
