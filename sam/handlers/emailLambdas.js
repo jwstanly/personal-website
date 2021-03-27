@@ -83,13 +83,14 @@ async function unsubscribeEmail(event) {
             },
             ReturnValues: 'NONE',
             UpdateExpression: `REMOVE #comments[${replyRootCommentIndex}].replies[${replyCommentIndex}].#user.email`,
-            ConditionExpression: `#comments[${replyRootCommentIndex}].replies[${replyCommentIndex}].id = :replyCommentId`,
+            ConditionExpression: `#comments[${replyRootCommentIndex}].replies[${replyCommentIndex}].id = :replyCommentId AND #comments[${replyRootCommentIndex}].replies[${replyCommentIndex}].#user.email = :email`,
             ExpressionAttributeNames: {
                 '#comments': 'comments',
                 '#user': 'user'
             },
             ExpressionAttributeValues: {
-                ":replyCommentId": event.queryStringParameters.commentId
+                ":replyCommentId": event.queryStringParameters.commentId,
+                ":email": event.queryStringParameters.email,
             }
         };
         try {
