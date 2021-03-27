@@ -7,6 +7,7 @@ interface TextFieldProps {
   setValue: (string)=>void;
   label?: string;
   onEnter?: ()=>void;
+  placeholder?: string;
 };
 
 export default function TextField(props: TextFieldProps) {
@@ -28,6 +29,7 @@ export default function TextField(props: TextFieldProps) {
           value={props.value}
           onInput={e => props.setValue((e.target as HTMLTextAreaElement).value)}
           onKeyPress={enterAction}  
+          placeholder={props.placeholder}
         />
       </div>
     </div>
