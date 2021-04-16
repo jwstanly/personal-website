@@ -1,6 +1,9 @@
 export default {
   getFormattedDate: getFormattedDate,
-  getAMPMHours: getAMPMHours
+  getFormattedTime: getFormattedTime,
+  getAMPMHours: getAMPMHours,
+  getMonthString: getMonthString,
+  getMonthStringAbr: getMonthStringAbr,
 }
 
 function getFormattedDate(eventDateParam: Date | number | string): string {
