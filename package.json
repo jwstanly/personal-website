@@ -28,7 +28,7 @@
         "index-html": "node ./scripts/index_html",
         "sync-s3": "env-cmd -e production node ./scripts/upload_bucket",
         
-        "compile-lambdas": "tsc -p sam/tsconfig.sam.json",
+        "compile-lambdas": "tsc -p backend/tsconfig.sam.json",
         "sam-build": "env-cmd -e production node ./scripts/sam_build",
         "sam-package": "env-cmd -e production node ./scripts/sam_package",
         "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",

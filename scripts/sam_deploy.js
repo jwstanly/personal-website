@@ -62,6 +62,6 @@ sh.exec(
       + `AcmCertificateArn=${ACM_CERT_ARN} `
    + '--resolve-s3 '
    + '--capabilities CAPABILITY_IAM '
-   + '--template-file ./sam/template.yml '
+   + '--template-file ./backend/template.yml '
    + `--profile ${AWS_CLI_PROFILE} `
 );

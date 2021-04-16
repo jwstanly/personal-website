@@ -9,6 +9,6 @@ sh.echo(`Packaging SAM resources for "${DOMAIN_NAME}"`);
 sh.exec(
    'sam package ' 
    + `--s3-bucket s3://${DOMAIN_NAME}-sam-code `
-   + '--template-file ./sam/template.yml '
+   + '--template-file ./backend/template.yml '
    + `--profile ${AWS_CLI_PROFILE} `
 );
