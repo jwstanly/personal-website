@@ -7,8 +7,6 @@ Description: >-
 Transform:
 - AWS::Serverless-2016-10-31
 
-# Huge thanks to Ryan Yost. Check out his repo...
-# https://github.com/ryanjyost/react-spa-starter
 Parameters:
   DomainName:
     Type: String
@@ -81,22 +79,9 @@ Resources:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
 
-  # LambdaLibs:
-  #   Type: AWS::Serverless::LayerVersion
-  #   Properties:
-  #     LayerName: lambda-layer-lib
-  #     Description: Dependencies for the lambda functions, seperate from the react frontend
-  #     ContentUri: lambda-lib/.
-  #     CompatibleRuntimes:
-  #       - nodejs14.x
-  #   Metadata:
-  #     BuildMethod: makefile
-
   GetAllArticlesLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/blogLambdas.getAllArticles
       Description: Get all the blog articles
       Policies:
@@ -116,8 +101,6 @@ Resources:
   GetArticleByTitleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/blogLambdas.getArticleByTitle
       Description: Get the blog article given its URL encoded title
       Policies:
@@ -137,8 +120,6 @@ Resources:
   UpsertArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/blogLambdas.upsertArticle
       Description: Upsert a blog article
       Policies:
@@ -158,8 +139,6 @@ Resources:
   DeleteArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/blogLambdas.deleteArticle
       Description: Delete the blog article
       Policies:
@@ -179,8 +158,6 @@ Resources:
   UpsertCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/commentLambdas.upsertComment
       Description: Upsert a comment for a blog article
       Policies:
@@ -200,8 +177,6 @@ Resources:
   UpsertCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/commentLambdas.upsertCommentReply
       Description: Upsert a comment reply for a blog article
       Policies:
@@ -222,8 +197,6 @@ Resources:
   DeleteCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/commentLambdas.deleteComment
       Description: Delete a comment in a blog article
       Policies:
@@ -243,8 +216,6 @@ Resources:
   DeleteCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/commentLambdas.deleteCommentReply
       Description: Delete a comment in a blog article
       Policies:
@@ -264,8 +235,6 @@ Resources:
   UnsubscribeEmailLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      # Layers:
-      #   - !Ref LambdaLibs
       Handler: handlers/emailLambdas.unsubscribeEmail
       Description: Unsubscribe a user by deleting their email from the comment
       Policies:
@@ -308,7 +277,7 @@ Resources:
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     DependsOn:
-    - Bucket # don't create cf distribution until S3 Bucket has been created
+    - Bucket
     Properties:
       DistributionConfig:
         Comment: Cloudfront Distribution pointing to S3 website
@@ -323,7 +292,7 @@ Resources:
         Aliases:
           - !Ref 'DomainName'
           - !Join ['.', [www, !Ref DomainName]]
-        DefaultCacheBehavior: # some defaults, not too important
+        DefaultCacheBehavior:
           AllowedMethods:
           - GET
           - HEAD
