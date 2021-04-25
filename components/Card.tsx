@@ -12,10 +12,6 @@ interface CardProps {
   tags?: string[];
   codeTags?: string[];
   content: string | string[];
-  likes: number,
-  dislikes: number,
-  onLike?: ()=>void;
-  onDislike?: ()=>void;
 }
 
 export function Card(props: CardProps){
@@ -30,13 +26,6 @@ export function Card(props: CardProps){
           {props.codeTags ? props.codeTags.map(tag => {return <Code key={tag}>{tag}</Code>;}) : <></>}
         </div>
       </div>
-
-      {props.onLike && props.onDislike ? (
-        <LikeDislikePanel   
-          likes={props.likes || 0}
-          dislikes={props.dislikes || 0}
-        />
-      ) : <></>}
      
       <Spacer bottom={5}/>
       {Array.isArray(props.content)
