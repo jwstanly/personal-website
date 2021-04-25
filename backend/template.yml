@@ -231,6 +231,25 @@ Resources:
             Method: DELETE
             Auth:
               ApiKeyRequired: true
+
+  UpsertVoteLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: handlers/voteLambdas.upsertVote
+      Description: Upsert a vote for a blog article
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/vote
+            Method: POST
+            Auth:
+              ApiKeyRequired: truea
   
   UnsubscribeEmailLambdaFunction:
     Type: AWS::Serverless::Function

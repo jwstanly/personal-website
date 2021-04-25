@@ -12,11 +12,10 @@ export interface BlogArticle {
 }
 
 export interface BlogVote {
-  id: string;
   userId: string;
   createdAt: number;
   lastModifiedAt: number;
-  vote: "LIKE" | "DISLIKE";
+  vote: "LIKE" | "DISLIKE" | "NEUTRAL";
 }
 
 export interface BlogComment {
