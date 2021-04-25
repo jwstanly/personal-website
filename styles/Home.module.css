@@ -118,7 +118,9 @@
 .likeText {
   color: #999;
   margin-top: 8px;
-  margin-right: 3px;
+  /* margin-right: 3px; */
+  width: 10px;
+  text-align: center;
   cursor:default;
   font-size: 14px;
 }

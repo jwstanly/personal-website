@@ -11,11 +11,12 @@ import { ExperienceCard } from '../../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../../components/Card';
 import { BlogMarkdown } from '../../../components/BlogMarkdown';
-import { BlogArticle } from '../../../lib/Types';
+import { BlogArticle, BlogVote } from '../../../lib/Types';
 import Util from '../../../lib/Util';
 import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
 import ReactMarkdown from 'react-markdown';
+import { LikeDislikePanel } from '../../../components/LikeDislikePanel';
 
 export async function getStaticPaths() {
 
@@ -41,9 +42,13 @@ export async function getStaticProps(context) {
 export default function Blog(props: {article: BlogArticle}) {
 
   const [article, setArticle] = React.useState<BlogArticle>(props.article);
+  const [fetchedArticle, setFetchedArticle] = React.useState<BlogArticle>();
 
   function fetchArticle() {
-    API.getArticleByTitle(article.title).then(setArticle);
+    API.getArticleByTitle(article.title).then(newArticle => {
+      setArticle(newArticle);
+      setFetchedArticle(newArticle);
+    });
   }
 
   React.useEffect(fetchArticle, []);
@@ -77,10 +82,13 @@ export default function Blog(props: {article: BlogArticle}) {
               subheader={article.subheader}
               tags={article.tags}
               content={[]}
-              likes={0}
-              dislikes={0}
-              onLike={()=>{}}
-              onDislike={()=>{}}
+            />
+          </Col>
+          <Col xs={12} md={10} lg={9} xl={8}>
+            <LikeDislikePanel   
+              key={JSON.stringify(article).length}
+              article={fetchedArticle}
+              onArticleModify={fetchArticle}
             />
           </Col>
         </Row>
@@ -95,7 +103,7 @@ export default function Blog(props: {article: BlogArticle}) {
         <div style={{marginTop: 50}} />
         <CommentBoard
           key={JSON.stringify(article).length}
-          article={article}
+          article={fetchedArticle}
           onArticleModify={fetchArticle}
         />
         <div style={{marginTop: 50}} />
