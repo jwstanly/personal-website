@@ -77,6 +77,10 @@ export default function Blog(props: {article: BlogArticle}) {
               subheader={article.subheader}
               tags={article.tags}
               content={[]}
+              likes={0}
+              dislikes={0}
+              onLike={()=>{}}
+              onDislike={()=>{}}
             />
           </Col>
         </Row>

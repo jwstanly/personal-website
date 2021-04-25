@@ -89,3 +89,36 @@
   color: #fff;
   margin-bottom: 0;
 }
+
+.likeButton {
+  fill: #999;
+  -webkit-transition: fill 100ms ease-in-out;
+  -ms-transition: fill 100ms ease-in-out;
+  transition: fill 100ms ease-in-out;
+  height: 40px;
+  width: 40px;
+}
+
+.likeButton:hover {
+  fill: #666;
+  -webkit-transition: fill 100ms ease-in-out;
+  -ms-transition: fill 100ms ease-in-out;
+  transition: fill 100ms ease-in-out; 
+  cursor: pointer;
+}
+
+.likeButton:active {
+  fill: #222;
+  -webkit-transition: fill 100ms ease-in-out;
+  -ms-transition: fill 100ms ease-in-out;
+  transition: fill 100ms ease-in-out; 
+  cursor: pointer;
+}
+
+.likeText {
+  color: #999;
+  margin-top: 8px;
+  margin-right: 3px;
+  cursor:default;
+  font-size: 14px;
+}
