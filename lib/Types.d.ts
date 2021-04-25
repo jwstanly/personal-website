@@ -13,10 +13,12 @@ export interface BlogArticle {
 
 export interface BlogVote {
   userId: string;
-  createdAt: number;
-  lastModifiedAt: number;
-  vote: "LIKE" | "DISLIKE" | "NEUTRAL";
+  createdAt?: number;
+  lastModifiedAt?: number;
+  vote: VoteType;
 }
+
+export type VoteType = "LIKE" | "DISLIKE" | "NEUTRAL";
 
 export interface BlogComment {
   id?: string;
