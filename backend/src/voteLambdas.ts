@@ -10,8 +10,8 @@ const blogTable = process.env.BLOG_TABLE;
 const docClient = new DocumentClient();
 
 export async function upsertVote(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-  if (event.httpMethod !== 'GET') {
-    return Util.getErrorRes(event, 405, `Must call getAllArticles with GET, not: ${event.httpMethod}`);
+  if (event.httpMethod !== 'POST') {
+    return Util.getErrorRes(event, 405, `Must call upsertVote with POST, not: ${event.httpMethod}`);
   }
 
   if (!event.queryStringParameters || !event.queryStringParameters.title) {

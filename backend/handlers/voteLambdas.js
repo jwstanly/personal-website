@@ -9,8 +9,8 @@ const lambdaUtils_1 = __importDefault(require("./lambdaUtils"));
 const blogTable = process.env.BLOG_TABLE;
 const docClient = new dynamodb_1.DocumentClient();
 async function upsertVote(event) {
-    if (event.httpMethod !== 'GET') {
-        return lambdaUtils_1.default.getErrorRes(event, 405, `Must call getAllArticles with GET, not: ${event.httpMethod}`);
+    if (event.httpMethod !== 'POST') {
+        return lambdaUtils_1.default.getErrorRes(event, 405, `Must call upsertVote with POST, not: ${event.httpMethod}`);
     }
     if (!event.queryStringParameters || !event.queryStringParameters.title) {
         return lambdaUtils_1.default.getErrorRes(event, 400, "Missing param: title");

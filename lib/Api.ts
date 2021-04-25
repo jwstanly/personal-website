@@ -1,4 +1,4 @@
-import { BlogArticle, BlogComment, BlogCommentReply } from "./Types";
+import { BlogArticle, BlogComment, BlogCommentReply, BlogVote } from "./Types";
 import Util from "./Util";
 
 const API_URL = "https://api.jwstanly.com";
@@ -11,6 +11,7 @@ export default {
   deleteComment: deleteComment,
   upsertCommentReply: upsertCommentReply,
   deleteCommentReply: deleteCommentReply,
+  upsertVote: upsertVote,
   unsubscribeEmail: unsubscribeEmail,
 }
 
@@ -129,6 +130,24 @@ async function deleteCommentReply(title: string, rootCommentId: string, replyCom
   return fetch(url, {
     ...getKeyParams(),
     method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+async function upsertVote(title: string, vote: BlogVote) {
+  const url = `${API_URL}/blog/vote?title=${Util.serializeTitle(title)}`;
+  // console.log(url, vote);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: "POST",
+    body: JSON.stringify(vote),
   })
     .then((res) => res.json())
     .then((data) => {
