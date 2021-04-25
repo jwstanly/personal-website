@@ -91,6 +91,10 @@ async function upsertArticle(event) {
             ? inputArticle.comments
             : existingArticle && existingArticle.comments
                 ? existingArticle.comments
+                : [], votes: inputArticle.votes
+            ? inputArticle.votes
+            : existingArticle && existingArticle.votes
+                ? existingArticle.votes
                 : [] });
     const params = {
         TableName: blogTable,

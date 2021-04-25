@@ -1,6 +1,5 @@
 const input = require('prompt-sync')();
 const fs = require('fs');
-const https = require('https');
 const fetch = require('node-fetch');
 const { spawn } = require('child_process')
 
