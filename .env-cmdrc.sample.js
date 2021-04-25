@@ -5,6 +5,7 @@ const env = {
       DOMAIN_NAME: 'YourWebsite.com',
       ACM_CERT_ARN: 'YourACMCertificateARN',
       CF_DISTRIBUTION_ID: 'YourCloudFrontDistributionID',
+      API_KEY: 'YourAPIKey',
    },
    local: {
       ENV_NAME: 'LOCAL',
