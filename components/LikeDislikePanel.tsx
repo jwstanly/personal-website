@@ -17,6 +17,8 @@ export function LikeDislikePanel(props: LikeDislikePanelProps){
 
   const [userCurrentVote, setUserCurrentVote] = React.useState<VoteType | undefined>();
 
+  const [loading, setLoading] = React.useState<boolean>(true);
+
   function setVotes() {
     let tempLikes = 0;
     let tempDislikes = 0;
@@ -76,6 +78,7 @@ export function LikeDislikePanel(props: LikeDislikePanelProps){
   }
 
   React.useEffect(() => {
+    setLoading(!props.article);
     setVotes();
     assignUsersVote();
   }, [props.article])
@@ -83,14 +86,14 @@ export function LikeDislikePanel(props: LikeDislikePanelProps){
   return (
     <div style={{display: 'flex', justifyContent: 'stretch'}}>
       <p className={styles.likeText} style={userCurrentVote === "LIKE" ? {color: '#222'} : {}}>
-        {likes || "-"}
+        {loading ? "-" : likes}
       </p>
       <svg viewBox="-60 -30 350 300" onClick={()=>onVote("LIKE")} className={styles.likeButton} style={userCurrentVote === "LIKE" ? {fill: '#222'} : {}}>
         <path d="M7.67,93.896h52.077V215.34H7.67V93.896z M207.67,106.682c-7.189-7.189-14.382-14.379-21.572-21.57h-41.451l9.877-25.102  l2.801-7.119l-0.258-2.049L151,2.33L121.115,0L110.15,37.822L80.954,85.176V215.34h107.89L207.67,106.682z" />
       </svg>
       <Spacer left={10} />
       <p className={styles.likeText} style={userCurrentVote === "DISLIKE" ? {color: '#222'} : {}}>
-        {dislikes || "-"}
+        {loading ? "-" : dislikes}
       </p>
       <svg viewBox="-60 -30 350 300" onClick={()=>onVote("DISLIKE")} className={styles.likeButton} style={userCurrentVote === "DISLIKE" ? {fill: '#222', transform: 'rotate(180deg)'} : {transform: 'rotate(180deg)'}}>
         <path d="M7.67,93.896h52.077V215.34H7.67V93.896z M207.67,106.682c-7.189-7.189-14.382-14.379-21.572-21.57h-41.451l9.877-25.102  l2.801-7.119l-0.258-2.049L151,2.33L121.115,0L110.15,37.822L80.954,85.176V215.34h107.89L207.67,106.682z" />
