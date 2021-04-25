@@ -28,7 +28,7 @@ async function upsertVote(event) {
     const missingAttributes = [];
     if (!inputVote.userId)
         missingAttributes.push('userID');
-    if (inputVote.vote)
+    if (!inputVote.vote)
         missingAttributes.push('vote');
     if (missingAttributes.length !== 0) {
         return lambdaUtils_1.default.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);

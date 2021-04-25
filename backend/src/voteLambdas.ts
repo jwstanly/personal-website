@@ -32,7 +32,7 @@ export async function upsertVote(event: APIGatewayProxyEvent): Promise<APIGatewa
 
   const missingAttributes: string[] = [];
   if(!inputVote.userId) missingAttributes.push('userID');
-  if(inputVote.vote) missingAttributes.push('vote');
+  if(!inputVote.vote) missingAttributes.push('vote');
 
   if (missingAttributes.length !== 0) {
     return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
