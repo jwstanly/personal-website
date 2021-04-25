@@ -25,7 +25,7 @@ export default function CommentBoard(props: CommentBoardProps){
   }
 
   const [mode, setMode] = React.useState<Mode>(Mode.COMMENT);
-  const [comments, setComments] = React.useState<BlogComment[]>(props.article.comments);
+  const [comments, setComments] = React.useState<BlogComment[] | undefined>();
   const [highlightedComment, setHighlightedComment] = React.useState<BlogComment | BlogCommentReply | undefined>();
 
   const [error, setError] = React.useState<string>('');
@@ -184,6 +184,14 @@ export default function CommentBoard(props: CommentBoardProps){
     setHighlightedComment(undefined);
   }
 
+  React.useEffect(() => {
+    setComments(
+      props.article && props.article.comments
+        ? props.article.comments
+        : []
+    );
+  }, [props.article])
+
   return (
     <CenteredContent>
       <H2 marginBottom={20}>
@@ -201,7 +209,11 @@ export default function CommentBoard(props: CommentBoardProps){
               deleteLoading={deleteLoading}
             />
           );
-        }) : <H6 marginTop={25} marginLeft={40} italic>Be the first to add a comment!</H6>}
+        }) : (
+          <H6 marginTop={25} marginLeft={40} italic>
+            Be the first to add a comment!
+          </H6>
+        )}
       <div style={{marginTop: 50}} />
       <H2 marginBottom={25}>
         {mode === Mode.COMMENT 
