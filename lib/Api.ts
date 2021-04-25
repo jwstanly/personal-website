@@ -2,7 +2,7 @@ import { BlogArticle, BlogComment, BlogCommentReply, BlogVote } from "./Types";
 import Util from "./Util";
 import env from '../.env-cmdrc.js';
 
-const API_URL = "https://api.jwstanly.com";
+const API_URL = `https://api.${env.production.DOMAIN_NAME}`;
 
 export default {
   getAllArticles: getAllArticles,
@@ -17,12 +17,11 @@ export default {
 }
 
 function getKeyParams() {
-  const key = env.production.API_KEY;
   return {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'X-API-KEY': key,
+      'X-API-KEY': env.production.API_KEY,
       'Content-Type': 'application/json',
     },
   };
