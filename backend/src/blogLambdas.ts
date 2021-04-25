@@ -114,6 +114,11 @@ export async function upsertArticle(event: APIGatewayProxyEvent): Promise<APIGat
       ? inputArticle.comments
       : existingArticle && existingArticle.comments
         ? existingArticle.comments
+        : [],
+    votes: inputArticle.votes
+      ? inputArticle.votes
+      : existingArticle && existingArticle.votes
+        ? existingArticle.votes
         : []
   }
 
