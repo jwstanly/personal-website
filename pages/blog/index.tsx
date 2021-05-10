@@ -56,9 +56,11 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
                       subheader={article.subheader}
                       tags={article.tags}
                       content={
-                        article.content.length > 400
-                          ? article.content.substring(0,400) + "..."
-                          : article.content
+                        Util.formatPureText(
+                          article.content.length > 400
+                            ? article.content.substring(0,400) + "..."
+                            : article.content
+                        )
                       }
                     />
                   </div>
