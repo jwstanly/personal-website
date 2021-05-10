@@ -63,7 +63,7 @@ export default function Home() {
         codeTags={["Next.js", "React Native", "RTMP/HLS", "AWS", "TypeScript"]}
         content={[
           'Winsight is a livestreaming app for youth sports. Friends and family can watch personal highlight reels created just for their athletes.',
-          "I've developed the mobile app and website. I've also helped develop our APIs and servers hosted on AWS"
+          "I've developed the mobile app and website. I've also helped develop our APIs and servers hosted on AWS."
         ]}
         imageUrl="https://is2-ssl.mzstatic.com/image/thumb/Purple124/v4/79/f5/86/79f5861c-ea2d-122d-7774-5b7bf93ddc69/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp"
         imageAlt="Winsight logo"
@@ -87,7 +87,7 @@ export default function Home() {
         codeTags={["NLP", "STT", "Translation", "TTS", "YouTube API", "IBM Cloud", "GCP", "Python"]}
         content={[
           'Audiodub is a service that uses machine learning to automatically translate and dub YouTube videos into 20+ languages. ',
-          "I developed parts of the NLP pipeline, like adding speaker diarization and minimizing API calls with IBM Watson. I also helped with biz-dev with things like writing an email scraper and talking to YouTubers like Minute Physics and 3Blue1Brown"
+          "I developed parts of the NLP pipeline, like adding speaker diarization and minimizing API calls with IBM Watson. I also helped with biz-dev with things like writing an email scraper and talking to YouTubers like Minute Physics and 3Blue1Brown."
         ]}
         imageUrl="https://i.imgur.com/ITWU7N2.png"
         imageAlt="Audiodub logo"
