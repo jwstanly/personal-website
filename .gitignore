@@ -47,3 +47,5 @@ yarn-error.log*
 .aws-sam/
 
 edit.md
+
+.history/
