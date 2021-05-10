@@ -36,17 +36,16 @@ export default function Home() {
         <Row className="justify-content-center">
           <Col xs={12} md={9}>
             <p className={styles.headerContentText}>
-              I'm John Wright Stanly, a software engineer out of Jacksonville, Florida. 
+              I'm John Wright Stanly, a {Math.floor((Date.now()/1000 - 1000497300) / 31536000)} year old from Jacksonville, Florida. 
             </p>
             <p className={styles.headerContentText}>
               I graduated from Stanton College Prep in May 2020. 
               I plan to study aerospace engineering at Georgia Tech.
               However, I decided to take a gap year thanks to Covid-19.  
-              In the meantime, I've been working on some pretty cool projects!
-            </p>  
+              In the meantime, I've been working on some pretty cool projects.
+            </p>
             <p className={styles.headerContentText}>
-              Besides programming, I also really like aerospace engineering. 
-              I also love to run, bike, golf, and learn about local history here in Jacksonville. 
+              My passions are software development and commercial aviation. I also enjoy running, biking, and golfing. 
             </p>
           </Col>
         </Row>
@@ -64,7 +63,7 @@ export default function Home() {
         codeTags={["Next.js", "React Native", "RTMP/HLS", "AWS", "TypeScript"]}
         content={[
           'Winsight is a livestreaming app for youth sports. Friends and family can watch personal highlight reels created just for their athletes.',
-          "I've developed the mobile app and website. I've also helped deploy our websites, APIs, and servers to AWS."
+          "I've developed the mobile app and website. I've also helped develop our APIs and servers hosted on AWS"
         ]}
         imageUrl="https://is2-ssl.mzstatic.com/image/thumb/Purple124/v4/79/f5/86/79f5861c-ea2d-122d-7774-5b7bf93ddc69/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp"
         imageAlt="Winsight logo"
