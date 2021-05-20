@@ -5,7 +5,7 @@ import styles from '../../../styles/Home.module.css';
 
 import HomeHeader from '../../../components/HomeHeader'
 
-import { Col, Container, Row } from 'react-bootstrap'
+// import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, H4, H5, H6, Text } from '../../../components/Titles';
 import { ExperienceCard } from '../../../components/ExperienceCard';
 import Link from 'next/link';
@@ -74,32 +74,32 @@ export default function Blog(props: {article: BlogArticle}) {
 
       <div style={{marginTop: 40}}/>
 
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={12} md={10} lg={9} xl={8}>
+      <div>
+        <div className="justify-content-center">
+          <div xs={12} md={10} lg={9} xl={8}>
             <Card
               header={article.title}
               subheader={article.subheader}
               tags={article.tags}
               content={[]}
             />
-          </Col>
-          <Col xs={12} md={10} lg={9} xl={8}>
+          </div>
+          <div xs={12} md={10} lg={9} xl={8}>
             <LikeDislikePanel   
               key={JSON.stringify(article).length}
               article={fetchedArticle}
               onArticleModify={fetchArticle}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
         <div style={{marginTop: 10}} />
-        <Row className="justify-content-center">
-          <Col xs={12} md={10} lg={9} xl={8}>
+        <div className="justify-content-center">
+          <div xs={12} md={10} lg={9} xl={8}>
             <ReactMarkdown>
               {article.content}
             </ReactMarkdown>
-          </Col>
-        </Row>
+          </div>
+        </div>
         <div style={{marginTop: 50}} />
         <CommentBoard
           key={JSON.stringify(article).length}
@@ -107,7 +107,7 @@ export default function Blog(props: {article: BlogArticle}) {
           onArticleModify={fetchArticle}
         />
         <div style={{marginTop: 50}} />
-      </Container>
+      </div>
     </>
   );
 }

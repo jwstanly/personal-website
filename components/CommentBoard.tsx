@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+// import { Col, Row } from 'react-bootstrap';
 import { BlogArticle, BlogComment, BlogCommentReply, BlogUser } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';
@@ -232,36 +232,36 @@ export default function CommentBoard(props: CommentBoardProps){
           <div style={{marginBottom: 30}} />
         </> : <></>}
       <div className={styles.commentError}>{error}</div>
-      <Row>
-        <Col xs={12}>
+      <div>
+        <div xs={12}>
           <TextArea 
             value={comment} 
             setValue={setComment}
             label="Comment"
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} md={5}>
+        </div>
+      </div>
+      <div>
+        <div xs={12} md={5}>
           <TextField 
             value={name}
             setValue={setName}
             label="Name" 
             type="text"
           />
-        </Col>
-        <Col xs={12} md={7}>
+        </div>
+        <div xs={12} md={7}>
           <TextField 
             value={email}
             setValue={setEmail}
             label="Email"
             type="email"
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
       <div style={{marginTop: 10}}/>
-      <Row>
-        <Col>
+      <div>
+        <div>
           <div style={{float: "left"}}>
             <Button
               text={mode === Mode.COMMENT ? "Post" : mode === Mode.REPLY ? "Reply" : "Edit"}
@@ -277,8 +277,8 @@ export default function CommentBoard(props: CommentBoardProps){
               />
             </div>
              : <></>}
-        </Col>
-      </Row>
+        </div>
+      </div>
     </CenteredContent>
   );
 }

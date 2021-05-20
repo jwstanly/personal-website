@@ -5,7 +5,7 @@ import styles from '../../styles/Card.module.css';
 
 import HomeHeader from '../../components/HomeHeader'
 
-import { Col, Container, Row } from 'react-bootstrap'
+// import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from '../../components/Titles';
 import { ExperienceCard } from '../../components/ExperienceCard';
 import Link from 'next/link';
@@ -46,9 +46,9 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
 
       {articles && articles.map((article: BlogArticle) => {
         return (
-          <Container key={article.id}>
-            <Row className="justify-content-center">
-              <Col xs={12} md={10} lg={9} xl={8}>
+          <div key={article.id}>
+            <div className="justify-content-center">
+              <div xs={12} md={10} lg={9} xl={8}>
                 <Link href={`/blog/article/${Util.serializeTitle(article.title)}`} passHref>
                   <div className={styles.blogCard}>
                     <Card
@@ -66,9 +66,9 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
                   </div>
                 </Link>
                 <div style={{marginTop: 50}}/>
-              </Col>
-            </Row>
-          </Container>
+              </div>
+            </div>
+          </div>
         );
       })}
     </>

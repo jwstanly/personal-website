@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Row } from 'react-bootstrap';
+// import { Col, Container, Row } from 'react-bootstrap';
 
 interface CenteredContentProps {
   children: React.ReactNode;
@@ -8,10 +8,10 @@ interface CenteredContentProps {
 export default function CenteredContent(props: CenteredContentProps) {
 
   return (
-    <Row className="justify-content-center">
-      <Col xs={12} md={10} lg={9} xl={8}>
+    <div className="justify-content-center">
+      <div xs={12} md={10} lg={9} xl={8}>
         {props.children}
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 }

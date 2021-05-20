@@ -1,7 +1,6 @@
 import React, { ObjectHTMLAttributes } from 'react';
 import styles from '../styles/Home.module.css';
 
-import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, H6, Tag, Text } from './Titles';
 import Spacer from './Spacer';
 import { LikeDislikePanel } from './LikeDislikePanel';

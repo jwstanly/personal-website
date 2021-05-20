@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css';
 
 import HomeHeader from '../components/HomeHeader'
 
-import { Col, Container, Row } from 'react-bootstrap'
+// import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from '../components/Titles';
 import { ExperienceCard } from '../components/ExperienceCard';
 import Link from 'next/link';
@@ -32,9 +32,9 @@ export default function Home() {
 
       <div style={{padding: '3vw'}}/>
 
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={12} md={9}>
+      <div>
+        <div className="justify-content-center">
+          <div xs={12} md={9}>
             <p className={styles.headerContentText}>
               I'm John Wright Stanly, a {Math.floor((Date.now()/1000 - 1000497300) / 31536000)} year old from Jacksonville, Florida. 
             </p>
@@ -47,9 +47,9 @@ export default function Home() {
             <p className={styles.headerContentText}>
               My passions are software development and commercial aviation. I also enjoy running, biking, and golfing. 
             </p>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
 
       <div style={{padding: '3vw'}}/>
 

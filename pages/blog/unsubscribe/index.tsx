@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 import { Code, H1, H2, H3, H6, Text } from '../../../components/Titles';
 import TextField from '../../../components/TextField';
-import { Col, Row } from 'react-bootstrap';
+// import { Col, Row } from 'react-bootstrap';
 import Button from '../../../components/Button';
 import Spacer from '../../../components/Spacer';
 import API from '../../../lib/Api';
@@ -53,8 +53,8 @@ export default function Unsubscribe(props: any) {
 
       <div style={{marginTop: 40}}/>
       <H1 centered marginBottom={20}>Remove Your Email</H1>
-      <Row className="justify-content-center">
-        <Col xs={10} md={8} lg={6} xl={6}>
+      <div className="justify-content-center">
+        <div xs={10} md={8} lg={6} xl={6}>
           <H6 centered marginBottom={20}>Type in your email to confirm your unsubscription and removal from your blog comment</H6>
           <H6 red marginTop={error ? 30 : 0}>{error}</H6>
           <H6 green marginTop={success ? 30 : 0}>{success}</H6>
@@ -70,8 +70,8 @@ export default function Unsubscribe(props: any) {
             onPress={onUnsubscribe}
             loading={loading}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
       <div style={{marginTop: '50vh'}}/>
       
     </>
