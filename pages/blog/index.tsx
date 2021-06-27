@@ -51,6 +51,7 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
               <Col xs={12} md={10} lg={9} xl={8}>
                 <Link href={`/blog/article/${Util.serializeTitle(article.title)}`} passHref>
                   <div className={styles.blogCard}>
+                    <img src={article.image} />
                     <Card
                       header={article.title}
                       subheader={article.subheader}
