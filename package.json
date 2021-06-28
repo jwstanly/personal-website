@@ -17,6 +17,8 @@
         "@types/shelljs": "^0.8.8",
         "autoprefixer": "^10.2.5",
         "env-cmd": "10.0.1",
+        "eslint": "^7.29.0",
+        "eslint-config-next": "^11.0.1",
         "node-fetch": "^2.6.1",
         "postcss": "^8.2.15",
         "prompt-sync": "^4.2.0",
@@ -26,6 +28,7 @@
     },
     "scripts": {
         "dev": "NODE_OPTIONS='--inspect' next dev",
+        "lint": "next lint",
         "build": "next build && next export",
         "index-html": "node ./scripts/index_html",
         "sync-s3": "env-cmd -e production node ./scripts/upload_bucket",
