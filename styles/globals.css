@@ -121,6 +121,10 @@ blockquote {
 }
 
 pre {
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow: auto;
+  white-space: nowrap;
   color: #222 !important;
   background: #F1F1F1;
   border: 1px solid #E1E1E1;
@@ -134,6 +138,7 @@ pre {
 }
 
 code {
+  word-wrap: break-word;
   color: #222 !important;
   padding: .2rem 0.0rem;
   font-weight: 100;
