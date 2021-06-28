@@ -21,6 +21,7 @@
         "eslint-config-next": "^11.0.1",
         "node-fetch": "^2.6.1",
         "postcss": "^8.2.15",
+        "prettier": "^2.3.2",
         "prompt-sync": "^4.2.0",
         "shelljs": "^0.8.3",
         "tailwindcss": "^2.1.2",
