@@ -9,6 +9,7 @@ import HomeHeader from '../components/HomeHeader'
 import { Code, H1, H2, H3, Text } from '../components/Titles';
 import { ExperienceCard } from '../components/ExperienceCard';
 import Link from 'next/link';
+import CenteredContainer from '../components/CenteredContainer';
 
 export default function Home() {
 
@@ -32,24 +33,20 @@ export default function Home() {
 
       <div style={{padding: '3vw'}}/>
 
-      <div>
-        <div className="justify-content-center">
-          <div xs={12} md={9}>
-            <p className={styles.headerContentText}>
-              I'm John Wright Stanly, a {Math.floor((Date.now()/1000 - 1000497300) / 31536000)} year old from Jacksonville, Florida. 
-            </p>
-            <p className={styles.headerContentText}>
-              I graduated from Stanton College Prep in May 2020. 
-              I plan to study aerospace engineering at Georgia Tech.
-              However, I decided to take a gap year thanks to Covid-19.  
-              In the meantime, I've been working on some pretty cool projects.
-            </p>
-            <p className={styles.headerContentText}>
-              My passions are software development and commercial aviation. I also enjoy running, biking, and golfing. 
-            </p>
-          </div>
-        </div>
-      </div>
+      <CenteredContainer>
+        <p className={styles.headerContentText}>
+          I'm John Wright Stanly, a {Math.floor((Date.now()/1000 - 1000497300) / 31536000)} year old from Jacksonville, Florida. 
+        </p>
+        <p className={styles.headerContentText}>
+          I graduated from Stanton College Prep in May 2020. 
+          I plan to study aerospace engineering at Georgia Tech.
+          However, I decided to take a gap year thanks to Covid-19.  
+          In the meantime, I've been working on some pretty cool projects.
+        </p>
+        <p className={styles.headerContentText}>
+          My passions are software development and commercial aviation. I also enjoy running, biking, and golfing. 
+        </p>
+      </CenteredContainer>
 
       <div style={{padding: '3vw'}}/>
 
@@ -100,8 +97,6 @@ export default function Home() {
       <p className={styles.headerContentText} style={{marginRight: 15, marginLeft: 15}}>
         I'm always down to chat. Send me an email at jwstanly[at]gmail.com
       </p>
-
-      <div style={{padding: '3vw'}}/>
     </>
   )
 }

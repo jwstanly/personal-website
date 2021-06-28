@@ -1,16 +1,19 @@
 import Link from 'next/link';
-import React, { ObjectHTMLAttributes } from 'react';
+import React from 'react';
 import styles from '../styles/Home.module.css';
+import CenteredContainer from './CenteredContainer';
 
 export default function Footer(){
 
   return (
     <footer>
-      <Link href='https://github.com/jwstanly/personal-website' passHref>
-        <p className={styles.footerContent}>
-          Designed, built, and deployed by John Wright Stanly
-        </p>
-      </Link>
+      <CenteredContainer>
+        <Link href='https://github.com/jwstanly/personal-website' passHref>
+          <p className={styles.footerContent}>
+            Designed, built, and deployed by John Wright Stanly
+          </p>
+        </Link>
+      </CenteredContainer>
     </footer>
   );
 }

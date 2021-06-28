@@ -17,6 +17,8 @@ import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
 import ReactMarkdown from 'react-markdown';
 import { LikeDislikePanel } from '../../../components/LikeDislikePanel';
+import CenteredContainer from '../../../components/CenteredContainer';
+import Spacer from '../../../components/Spacer';
 
 export async function getStaticPaths() {
 
@@ -74,40 +76,30 @@ export default function Blog(props: {article: BlogArticle}) {
 
       <div style={{marginTop: 40}}/>
 
-      <div>
-        <div className="justify-content-center">
-          <div xs={12} md={10} lg={9} xl={8}>
-            <Card
-              header={article.title}
-              subheader={article.subheader}
-              tags={article.tags}
-              content={[]}
-            />
-          </div>
-          <div xs={12} md={10} lg={9} xl={8}>
-            <LikeDislikePanel   
-              key={JSON.stringify(article).length}
-              article={fetchedArticle}
-              onArticleModify={fetchArticle}
-            />
-          </div>
-        </div>
-        <div style={{marginTop: 10}} />
-        <div className="justify-content-center">
-          <div xs={12} md={10} lg={9} xl={8}>
-            <ReactMarkdown>
-              {article.content}
-            </ReactMarkdown>
-          </div>
-        </div>
-        <div style={{marginTop: 50}} />
+      <CenteredContainer>
+        <Card
+          header={article.title}
+          subheader={article.subheader}
+          tags={article.tags}
+          content={[]}
+        />
+        <LikeDislikePanel   
+          key={JSON.stringify(article).length}
+          article={fetchedArticle}
+          onArticleModify={fetchArticle}
+        />
+        <Spacer top={10} />
+        <ReactMarkdown>
+          {article.content}
+        </ReactMarkdown>
+        <Spacer top={50} />
         <CommentBoard
           key={JSON.stringify(article).length}
           article={fetchedArticle}
           onArticleModify={fetchArticle}
         />
-        <div style={{marginTop: 50}} />
-      </div>
+      </CenteredContainer>
+      <Spacer top={50} />
     </>
   );
 }

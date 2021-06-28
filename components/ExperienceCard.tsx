@@ -4,6 +4,7 @@ import { LargeIcon } from './LargeIcon';
 import { Card } from './Card';
 
 import styles from '../styles/Card.module.css';
+import CenteredContainer from './CenteredContainer';
 
 interface ExperienceCardProps {
   header: string;
@@ -17,27 +18,23 @@ interface ExperienceCardProps {
 export function ExperienceCard(props: ExperienceCardProps){
 
   return (
-    <div>
-      <div className="justify-content-center">
-        <div xs={12} md={10} lg={9} xl={8}>
-          <div className={styles.cardContainer}>
-            <div style={{float:'left'}}>
-              <LargeIcon
-                imageUrl={props.imageUrl}
-                alt={props.imageAlt}
-              />
-            </div>
-            <div style={{float: 'left'}} className={styles.cardTextContainer}>
-              <Card
-                header={props.header}
-                subheader={props.subheader}
-                codeTags={props.codeTags}
-                content={props.content}
-              />
-            </div>
-          </div>
+    <CenteredContainer>
+      <div className={styles.cardContainer}>
+        <div style={{float:'left'}}>
+          <LargeIcon
+            imageUrl={props.imageUrl}
+            alt={props.imageAlt}
+          />
+        </div>
+        <div style={{float: 'left'}} className={styles.cardTextContainer}>
+          <Card
+            header={props.header}
+            subheader={props.subheader}
+            codeTags={props.codeTags}
+            content={props.content}
+          />
         </div>
       </div>
-    </div>
+    </CenteredContainer>
   );
 }

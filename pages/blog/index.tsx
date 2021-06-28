@@ -13,6 +13,8 @@ import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
 import API from '../../lib/Api';
 import Util from '../../lib/Util';
+import Spacer from '../../components/Spacer';
+import CenteredContainer from '../../components/CenteredContainer';
 
 export async function getStaticProps(context) {
   
@@ -47,30 +49,42 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
       {articles && articles.map((article: BlogArticle) => {
         return (
           <div key={article.id}>
-            <div className="justify-content-center">
-              <div xs={12} md={10} lg={9} xl={8}>
-                <Link href={`/blog/article/${Util.serializeTitle(article.title)}`} passHref>
-                  <div className={styles.blogCard}>
-                    <Card
-                      header={article.title}
-                      subheader={article.subheader}
-                      tags={article.tags}
-                      content={
-                        Util.formatPureText(
-                          article.content.length > 400
-                            ? article.content.substring(0,400) + "..."
-                            : article.content
-                        )
-                      }
-                    />
-                  </div>
-                </Link>
-                <div style={{marginTop: 50}}/>
-              </div>
-            </div>
+            <CenteredContainer>
+              <Link href={`/blog/article/${Util.serializeTitle(article.title)}`} passHref>
+                <div className={styles.blogCard}>
+                  <img 
+                    src={article.image}
+                    style={{
+                      objectFit: 'cover'
+                    }}
+                  />
+                  <Card
+                    header={article.title}
+                    subheader={article.subheader}
+                    tags={article.tags}
+                    content={
+                      Util.formatPureText(
+                        article.content.length > 400
+                          ? article.content.substring(0,400) + "..."
+                          : article.content
+                      )
+                    }
+                  />
+                </div>
+              </Link>
+            </CenteredContainer>
           </div>
         );
+      }).reduce((prev, curr) => {
+        return(
+          <>
+            {prev}
+            <Spacer top={50} />
+            {curr}
+          </>
+        )
       })}
+      <Spacer top={50} />
     </>
   );
 }

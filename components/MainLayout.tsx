@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/Home.module.css';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import Spacer from './Spacer';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -26,6 +27,7 @@ export default function MainLayout({children}: MainLayoutProps){
         ]}
       />
       {children}
+      <Spacer top={100} />
       <Footer />
     </div>
 

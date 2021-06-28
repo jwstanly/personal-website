@@ -3,12 +3,13 @@ import React from 'react';
 import { BlogArticle, BlogComment, BlogCommentReply, BlogUser } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';
-import CenteredContent from './CenteredContent';
+import CenteredContainer from './CenteredContainer';
 import CommentBubble from './CommentBubble';
 import TextArea from './TextArea';
 import TextField from './TextField';
 import { H2, H6 } from './Titles';
 import API from '../lib/Api';
+import Spacer from './Spacer';
 
 
 interface CommentBoardProps {
@@ -193,7 +194,7 @@ export default function CommentBoard(props: CommentBoardProps){
   }, [props.article])
 
   return (
-    <CenteredContent>
+    <>
       <H2 marginBottom={20}>
         Comments
       </H2>
@@ -232,8 +233,8 @@ export default function CommentBoard(props: CommentBoardProps){
           <div style={{marginBottom: 30}} />
         </> : <></>}
       <div className={styles.commentError}>{error}</div>
-      <div>
-        <div xs={12}>
+      <div className="flex">
+        <div className="flex-1">
           <TextArea 
             value={comment} 
             setValue={setComment}
@@ -241,8 +242,8 @@ export default function CommentBoard(props: CommentBoardProps){
           />
         </div>
       </div>
-      <div>
-        <div xs={12} md={5}>
+      <div className="sm:flex">
+        <div className="sm:flex-shrink-2">
           <TextField 
             value={name}
             setValue={setName}
@@ -250,7 +251,8 @@ export default function CommentBoard(props: CommentBoardProps){
             type="text"
           />
         </div>
-        <div xs={12} md={7}>
+        <Spacer left={20} />
+        <div className="flex-1">
           <TextField 
             value={email}
             setValue={setEmail}
@@ -279,6 +281,6 @@ export default function CommentBoard(props: CommentBoardProps){
              : <></>}
         </div>
       </div>
-    </CenteredContent>
+    </>
   );
 }
