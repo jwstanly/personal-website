@@ -1,5 +1,4 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import { LargeIcon } from './LargeIcon';
 import { Card } from './Card';
 

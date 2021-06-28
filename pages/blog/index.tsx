@@ -5,7 +5,6 @@ import styles from '../../styles/Card.module.css';
 
 import HomeHeader from '../../components/HomeHeader'
 
-// import { Col, Container, Row } from 'react-bootstrap'
 import { Code, H1, H2, H3, Text } from '../../components/Titles';
 import { ExperienceCard } from '../../components/ExperienceCard';
 import Link from 'next/link';

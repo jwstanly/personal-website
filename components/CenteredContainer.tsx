@@ -1,5 +1,4 @@
 import React from "react";
-// import { Col, Container, Row } from 'react-bootstrap';
 
 interface CenteredContainerProps {
   children: JSX.Element | JSX.Element[];

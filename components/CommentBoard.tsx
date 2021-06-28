@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Col, Row } from 'react-bootstrap';
 import { BlogArticle, BlogComment, BlogCommentReply, BlogUser } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';

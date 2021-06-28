@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 
 import { Code, H1, H2, H3, H6, Text } from '../../../components/Titles';
 import TextField from '../../../components/TextField';
-// import { Col, Row } from 'react-bootstrap';
 import Button from '../../../components/Button';
 import Spacer from '../../../components/Spacer';
 import API from '../../../lib/Api';
+import CenteredContainer from '../../../components/CenteredContainer';
 
 export default function Unsubscribe(props: any) {
 
@@ -51,29 +51,26 @@ export default function Unsubscribe(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div style={{marginTop: 40}}/>
-      <H1 centered marginBottom={20}>Remove Your Email</H1>
-      <div className="justify-content-center">
-        <div xs={10} md={8} lg={6} xl={6}>
-          <H6 centered marginBottom={20}>Type in your email to confirm your unsubscription and removal from your blog comment</H6>
-          <H6 red marginTop={error ? 30 : 0}>{error}</H6>
-          <H6 green marginTop={success ? 30 : 0}>{success}</H6>
-          <TextField
-            type="email"
-            value={email}
-            setValue={setEmail}
-            placeholder={router.query.email as string}
-          />
-          <Spacer top={30} />
-          <Button
-            text="Confirm"
-            onPress={onUnsubscribe}
-            loading={loading}
-          />
-        </div>
-      </div>
+      <Spacer top={50} />
+      <CenteredContainer>
+        <H1 centered marginBottom={20}>Remove Your Email</H1>
+        <H6 centered marginBottom={20}>Type in your email to confirm your unsubscription and removal from your blog comment</H6>
+        <H6 red marginTop={error ? 30 : 0}>{error}</H6>
+        <H6 green marginTop={success ? 30 : 0}>{success}</H6>
+        <TextField
+          type="email"
+          value={email}
+          setValue={setEmail}
+          placeholder={router.query.email as string}
+        />
+        <Spacer top={30} />
+        <Button
+          text="Confirm"
+          onPress={onUnsubscribe}
+          loading={loading}
+        />
+      </CenteredContainer>
       <div style={{marginTop: '50vh'}}/>
-      
     </>
   );
 }
