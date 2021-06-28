@@ -18,6 +18,7 @@ import ReactMarkdown from 'react-markdown';
 import { LikeDislikePanel } from '../../../components/LikeDislikePanel';
 import CenteredContainer from '../../../components/CenteredContainer';
 import Spacer from '../../../components/Spacer';
+import HeadTags from '../../../components/HeadTags';
 
 export async function getStaticPaths() {
 
@@ -56,22 +57,16 @@ export default function Blog(props: {article: BlogArticle}) {
 
   return (
     <>
-      <Head>
-        <title>{article.title}</title>
-        <meta 
-          name="description"
-          content={
-            article.subheader 
-            + ". " 
-            + article.content.substring(0, 160 - (article.subheader.length + 5)) 
-            + "..."
-          }
-        />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.subheader}  />
-        {article.image ? <meta property="og:image" content={article.image} /> : <></>}
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadTags
+        title={article.title}
+        description={
+          article.subheader 
+          + ". " 
+          + article.content.substring(0, 160 - (article.subheader.length + 5)) 
+          + "..."
+        }
+        imageUrl={article.image}
+      />
 
       <div style={{marginTop: 40}}/>
 

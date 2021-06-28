@@ -8,6 +8,7 @@ import Button from '../../../components/Button';
 import Spacer from '../../../components/Spacer';
 import API from '../../../lib/Api';
 import CenteredContainer from '../../../components/CenteredContainer';
+import HeadTags from '../../../components/HeadTags';
 
 export default function Unsubscribe(props: any) {
 
@@ -46,10 +47,9 @@ export default function Unsubscribe(props: any) {
 
   return (
     <>
-      <Head>
-        <title>Unsubscribe Email - John Wright Stanly</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadTags
+        title='Unsubscribe Email - John Wright Stanly'
+      />
 
       <Spacer top={50} />
       <CenteredContainer>

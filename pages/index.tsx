@@ -4,6 +4,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 
 import HomeHeader from '../components/HomeHeader'
+import HeadTags from '../components/HeadTags'
 
 import { Code, H1, H2, H3, Text } from '../components/Titles';
 import { ExperienceCard } from '../components/ExperienceCard';
@@ -14,17 +15,10 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>John Wright Stanly</title>
-        <meta 
-          name="description"
-          content="I'm John Wright Stanly, a software engineer from Jacksonville, Florida. I've been working on some pretty cool projects while on my gap year before Georgia Tech."
-        />
-        <meta property="og:title" content="John Wright Stanly's Personal Website" />
-        <meta property="og:description" content="Home of John Wright Stanly's website and blog" />
-        <meta property="og:image" content="/images/profileClipped.png" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadTags
+        title='John Wright Stanly'
+        description="I'm John Wright Stanly, a software engineer from Jacksonville, Florida. I've been working on some pretty cool projects while on my gap year before Georgia Tech."
+      />
 
       <div id="home" />
 
@@ -56,7 +50,7 @@ export default function Home() {
       <ExperienceCard
         header='Winsight'
         subheader='Co-Founder, Software Engineer'
-        codeTags={["Next.js", "React Native", "RTMP/HLS", "AWS", "TypeScript"]}
+        codeTags={["AWS", "React Native", "Next.js", "RTMP/HLS", "FFmpeg", "TypeScript"]}
         content={[
           'Winsight is a livestreaming app for youth sports. Friends and family can watch personal highlight reels created just for their athletes.',
           "I've developed the mobile app and website. I've also helped develop our APIs and servers hosted on AWS."
@@ -99,21 +93,3 @@ export default function Home() {
     </>
   )
 }
-
-{/* <div style={{justifyContent: "center", backgroundColor: 'red', position: 'relative', maxHeight: '500px', height: 'auto', aspectRatio: "1:1"}}>
-  <img
-    style={{position: 'absolute', left: '5%', width: '70%'}}
-    src="/images/winsightWeb.png" 
-    alt="John Wright Stanly"
-  />
-  <img
-    style={{position: 'absolute', right: '5%',  width: '40%'}}
-    src="/images/winsightPhone.png" 
-    alt="John Wright Stanly"
-  />
-  <img
-    style={{position: 'absolute', left: '15%', width: '30%', borderRadius: 20, boxShadow: '0px 0px 40px 5px #CCC'}}
-    src="https://is2-ssl.mzstatic.com/image/thumb/Purple124/v4/79/f5/86/79f5861c-ea2d-122d-7774-5b7bf93ddc69/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp" 
-    alt="John Wright Stanly"
-  />
-</div> */}

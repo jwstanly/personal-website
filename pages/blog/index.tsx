@@ -14,6 +14,7 @@ import API from '../../lib/Api';
 import Util from '../../lib/Util';
 import Spacer from '../../components/Spacer';
 import CenteredContainer from '../../components/CenteredContainer';
+import HeadTags from '../../components/HeadTags';
 
 export async function getStaticProps(context) {
   
@@ -30,17 +31,10 @@ export default function Blog({articles}: {articles: BlogArticle[]}) {
 
   return (
     <>
-      <Head>
-        <title>Blog - John Wright Stanly</title>
-        <meta 
-          name="description"
-          content="A collection of tips and stories about software engineering I wish I knew about earlier. I hope this blog inspires your next project or helps squash your bug!"
-        />
-        <meta property="og:title" content="John Wright Stanly's Personal Website" />
-        <meta property="og:description" content="Home of John Wright Stanly's website and blog" />
-        <meta property="og:image" content="/images/profileClipped.png" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadTags
+        title='Blog - John Wright Stanly'
+        description="A collection of tips and stories about software engineering I wish I knew about earlier. I hope this blog inspires your next project or helps squash that bug."
+      />
 
       <div style={{marginTop: 40}}/>
       <H1 centered marginBottom={40}>Recent Articles</H1>
