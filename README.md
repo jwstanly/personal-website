@@ -1,18 +1,19 @@
 # Personal Website
 
-This repo contains the full tech stack for my personal website, [jwstanly.com](https://www.jwstanly.com). 
+This repo contains the tech stack for my personal website, [jwstanly.com](https://www.jwstanly.com). 
 
-The frontend was built using ReactJS with TypeScript. The backend was built on AWS SAM. Both the frontend and backend are deployed using CloudFormation.
+The frontend was built using React, Next.js, and TypeScript. The backend was built using an AWS Serverless Application Model (SAM) stack with API Gateway, Lambda, and DynamoDB. Both the frontend and backend are deployed and operated using CloudFormation.
 
 ## Project structure
 
-- `/__tests__` - Unit tests for the SAM lambda functions. 
-- `/build` - Production ready react code. Gitignored, but will populate upon running `yarn run build`.
-- `/lambda-lib` - Contains a node makefile for building lambda deployment packages. 
-- `/public` - Stores the react page template `public/index.html`. Only files inside public can be used from `public/index.html`.  
-- `/backend` - Root directory for all SAM lambda functions. Noticeably, this folder contains a seperate `package.json`. All lambda deployment packages are are built with `backend/package.json` instead of the `package.json`. This `backend/package.json` contains many less modules. This reduces the size of the deployed lambda functions, and ensures react modules do not contribute to lambda bloat. 
+- `/backend` - Root directory for all SAM lambda functions. This directory has a seperate `package.json`. All lambda deployment packages are are built with `backend/package.json` instead of the `package.json`. This `backend/package.json` contains many less modules. This reduces the size of the deployed lambda functions, and ensures react modules do not contribute to lambda bloat. 
+- `/componets` - React components
+- `/lib` - Util functions that can be used on the frontend or backend
+- `/pages` - Next.js pages. More on Next.js project structure [here](https://nextjs.org/docs/basic-features/pages)
+- `/public` - Public assets like images and manifest files. All files in `/public` are uploaded to S3/CloudFront.
 - `/scripts` - ShellJS scripts to help with provisioning, building, and deploying. 
-- `.env-cmdrc.sample.js` - A sample env-cmd rc file. Enables different staging environments. If you would like to use this repo, you must fill in your own ACM Certificate ARN and CloudFront Distribution ID. Once you've populated your own AWS configuration, rename the file to `.env-cmdrc.js`. More setup details below.
+- `/styles` - Global and modular CSS files
+- `.env-cmdrc.sample.js` - A sample environment configuration file. Enables different staging environments and basic config. If you would like to use this repo, you must fill in your own ACM Certificate ARN and CloudFront Distribution ID. Once you've populated your own AWS configuration, rename the file to `.env-cmdrc.js`. More setup details below.
 - `buildspec.yml` - Commands for SAM to run.
 - `package.json` - The project wide package file. This stores all the react modules. Noticeably, this is different than `backend/package.json`. 
 - `template.yml` - A CloudFormation template that defines the application's AWS resources. Uses a SAM transform to include serverless resources. 
@@ -24,7 +25,7 @@ The frontend was built using ReactJS with TypeScript. The backend was built on A
 
 ## Credit
 
-Huge thanks to Ryan Yost and his [React Single Page Application Starter](https://github.com/ryanjyost/react-spa-starter)! This repo defined the CloudFormation resources for S3, CloudFront, and Route53. I also took inspiration from this repo to use ShellJS and env-cmd together for some nice staging environement aware scripts.
+Huge thanks to Ryan Yost and his [React Single Page Application Starter](https://github.com/ryanjyost/react-spa-starter)! This repo helped with the CloudFormation resource definitions for S3, CloudFront, and Route53. I also took inspiration from this repo to use ShellJS and env-cmd together for some nice staging environement aware scripts.
 
 ## Replication
 
