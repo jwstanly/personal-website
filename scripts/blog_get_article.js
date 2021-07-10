@@ -4,17 +4,17 @@ const fetch = require('node-fetch');
 
 const { DOMAIN_NAME, API_KEY } = process.env;
 
-console.log("Get blog article")
+console.log('Get blog article');
 
 const title = input('Title: ');
 const contentsFile = input('Ouput contents file [./edit.md]: ');
 
-console.log("Fetching article...");
+console.log('Fetching article...');
 
-fetch(`https://api.${DOMAIN_NAME}/blog?title=${title.split(" ").join("+")}`, {
+fetch(`https://api.${DOMAIN_NAME}/blog?title=${title.split(' ').join('+')}`, {
   method: 'GET',
   headers: {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'X-API-KEY': API_KEY,
     'Content-Type': 'application/json',
   },
@@ -23,10 +23,14 @@ fetch(`https://api.${DOMAIN_NAME}/blog?title=${title.split(" ").join("+")}`, {
   .then(res => {
     fs.writeFileSync(
       contentsFile.length ? contentsFile : './edit.md',
-      res.Item.content 
+      res.Item.content,
     );
-    console.log(`SUCCESS: ${title} was fetched to ${contentsFile.length ? contentsFile : './edit.md'}`);
+    console.log(
+      `SUCCESS: ${title} was fetched to ${
+        contentsFile.length ? contentsFile : './edit.md'
+      }`,
+    );
   })
   .catch(error => {
-    console.log("ERROR: Failed to publish blog article:\n", error);
+    console.log('ERROR: Failed to publish blog article:\n', error);
   });

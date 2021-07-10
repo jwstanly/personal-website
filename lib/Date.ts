@@ -4,15 +4,19 @@ export default {
   getAMPMHours: getAMPMHours,
   getMonthString: getMonthString,
   getMonthStringAbr: getMonthStringAbr,
-}
+};
 
 function getFormattedDate(eventDateParam: Date | number | string): string {
   const eventDate =
     eventDateParam instanceof Date ? eventDateParam : new Date(eventDateParam);
   return (
-    getMonthStringAbr(eventDate.getMonth()) + " " +
-    eventDate.getDate() + ", " + eventDate.getFullYear() +
-    " at " + getFormattedTime(eventDate)
+    getMonthStringAbr(eventDate.getMonth()) +
+    ' ' +
+    eventDate.getDate() +
+    ', ' +
+    eventDate.getFullYear() +
+    ' at ' +
+    getFormattedTime(eventDate)
   );
 }
 

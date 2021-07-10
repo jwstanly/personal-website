@@ -7,7 +7,7 @@
   margin-left: 40px;
 }
 
-@media only screen and (max-device-width: 480px){
+@media only screen and (max-device-width: 480px) {
   .cardContainer {
     display: inline;
   }
@@ -21,7 +21,7 @@
 
 .blogCard {
   border-radius: 10px;
-  box-shadow: 0px 1px 12px #CCC;
+  box-shadow: 0px 1px 12px #ccc;
   padding: 20px;
 }
 

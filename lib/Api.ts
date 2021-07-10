@@ -1,5 +1,5 @@
-import { BlogArticle, BlogComment, BlogCommentReply, BlogVote } from "./Types";
-import Util from "./Util";
+import { BlogArticle, BlogComment, BlogCommentReply, BlogVote } from './Types';
+import Util from './Util';
 import env from '../.env-cmdrc.js';
 
 const API_URL = `https://api.${env.production.DOMAIN_NAME}`;
@@ -14,13 +14,13 @@ export default {
   deleteCommentReply: deleteCommentReply,
   upsertVote: upsertVote,
   unsubscribeEmail: unsubscribeEmail,
-}
+};
 
 function getKeyParams() {
   return {
     method: 'GET',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'X-API-KEY': env.production.API_KEY,
       'Content-Type': 'application/json',
     },
@@ -30,12 +30,12 @@ function getKeyParams() {
 async function getAllArticles(): Promise<BlogArticle[]> {
   const url = `${API_URL}/blog/all`;
   return fetch(url, getKeyParams())
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("GET ALL ARTICLES", url, data);
+    .then(res => res.json())
+    .then(data => {
+      console.log('GET ALL ARTICLES', url, data);
       return data.Items;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
@@ -43,12 +43,12 @@ async function getAllArticles(): Promise<BlogArticle[]> {
 async function getArticleByTitle(title: string): Promise<BlogArticle> {
   const url = `${API_URL}/blog?title=${Util.serializeTitle(title)}`;
   return fetch(url, getKeyParams())
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data.Item;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
@@ -58,85 +58,102 @@ async function upsertArticle(article: BlogArticle): Promise<any> {
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(article),
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
 
-async function upsertComment(title: string, comment: BlogComment): Promise<any> {
+async function upsertComment(
+  title: string,
+  comment: BlogComment,
+): Promise<any> {
   const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(comment),
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
 
 async function deleteComment(title: string, commentId: string): Promise<any> {
-  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}&commentId=${commentId}`;
+  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(
+    title,
+  )}&commentId=${commentId}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
-    method: "DELETE",
+    method: 'DELETE',
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
 
-async function upsertCommentReply(title: string, rootCommentId: string, reply: BlogCommentReply): Promise<any> {
-  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}`;
+async function upsertCommentReply(
+  title: string,
+  rootCommentId: string,
+  reply: BlogCommentReply,
+): Promise<any> {
+  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(
+    title,
+  )}&rootCommentId=${rootCommentId}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(reply),
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
 
-async function deleteCommentReply(title: string, rootCommentId: string, replyCommentId: string): Promise<any> {
-  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(title)}&rootCommentId=${rootCommentId}&replyCommentId=${replyCommentId}`;
+async function deleteCommentReply(
+  title: string,
+  rootCommentId: string,
+  replyCommentId: string,
+): Promise<any> {
+  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(
+    title,
+  )}&rootCommentId=${rootCommentId}&replyCommentId=${replyCommentId}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
-    method: "DELETE",
+    method: 'DELETE',
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
@@ -146,32 +163,38 @@ async function upsertVote(title: string, vote: BlogVote) {
   // console.log(url, vote);
   return fetch(url, {
     ...getKeyParams(),
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(vote),
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
 
-async function unsubscribeEmail(title: string, commentId: string, confirmEmail: string): Promise<any> {
-  const url = `${API_URL}/blog/unsubscribe?title=${Util.serializeTitle(title)}&commentId=${commentId}&email=${confirmEmail}`;
+async function unsubscribeEmail(
+  title: string,
+  commentId: string,
+  confirmEmail: string,
+): Promise<any> {
+  const url = `${API_URL}/blog/unsubscribe?title=${Util.serializeTitle(
+    title,
+  )}&commentId=${commentId}&email=${confirmEmail}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
-    method: "DELETE",
+    method: 'DELETE',
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       // console.log(url, data);
       return data;
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }

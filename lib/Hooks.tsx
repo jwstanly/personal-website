@@ -2,10 +2,9 @@ import React from 'react';
 
 export default {
   useWindowDimensions: useWindowDimensions,
-}
+};
 
 function useWindowDimensions() {
-
   interface Dims {
     width: number;
     height: number;
@@ -17,14 +16,13 @@ function useWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
-      height
+      height,
     };
   }
 
   function resize() {
     setWindowDimensions(getWindowDimensions());
   }
-
 
   React.useEffect(() => {
     setWindowDimensions(getWindowDimensions());

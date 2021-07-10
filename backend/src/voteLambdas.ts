@@ -1,7 +1,4 @@
-import { 
-  APIGatewayProxyEvent, 
-  APIGatewayProxyResult 
-} from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import Util from './lambdaUtils';
 import { BlogArticle, BlogVote } from '../../lib/Types';
@@ -9,13 +6,19 @@ import { BlogArticle, BlogVote } from '../../lib/Types';
 const blogTable = process.env.BLOG_TABLE;
 const docClient = new DocumentClient();
 
-export async function upsertVote(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+export async function upsertVote(
+  event: APIGatewayProxyEvent,
+): Promise<APIGatewayProxyResult> {
   if (event.httpMethod !== 'POST') {
-    return Util.getErrorRes(event, 405, `Must call upsertVote with POST, not: ${event.httpMethod}`);
+    return Util.getErrorRes(
+      event,
+      405,
+      `Must call upsertVote with POST, not: ${event.httpMethod}`,
+    );
   }
 
   if (!event.queryStringParameters || !event.queryStringParameters.title) {
-    return Util.getErrorRes(event, 400, "Missing param: title");
+    return Util.getErrorRes(event, 400, 'Missing param: title');
   }
 
   let inputVote: BlogVote;
@@ -23,7 +26,11 @@ export async function upsertVote(event: APIGatewayProxyEvent): Promise<APIGatewa
   try {
     inputVote = JSON.parse(event.body);
   } catch (error) {
-    return Util.getErrorRes(event, 400, `Failed to parse JSON. Error info: ${error}`);
+    return Util.getErrorRes(
+      event,
+      400,
+      `Failed to parse JSON. Error info: ${error}`,
+    );
   }
 
   if (!inputVote) {
@@ -31,32 +38,41 @@ export async function upsertVote(event: APIGatewayProxyEvent): Promise<APIGatewa
   }
 
   const missingAttributes: string[] = [];
-  if(!inputVote.userId) missingAttributes.push('userID');
-  if(!inputVote.vote) missingAttributes.push('vote');
+  if (!inputVote.userId) missingAttributes.push('userID');
+  if (!inputVote.vote) missingAttributes.push('vote');
 
   if (missingAttributes.length !== 0) {
-    return Util.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
+    return Util.getErrorRes(
+      event,
+      400,
+      `Missing body attributes: ${missingAttributes.join(', ')}`,
+    );
   }
 
   // first retrieve the entire article and find the index of the vote...
-  const articleRes = await docClient.get({
-    TableName: blogTable,
-    Key: {
-      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
-    }
-  }).promise();
-
+  const articleRes = await docClient
+    .get({
+      TableName: blogTable,
+      Key: {
+        PartitionKey: `BlogArticle|${event.queryStringParameters.title
+          .split(' ')
+          .join('+')}`,
+      },
+    })
+    .promise();
 
   const existingVote = articleRes.Item.votes
-    ? articleRes.Item.votes.find( ({ userId }) => userId === inputVote.userId )
+    ? articleRes.Item.votes.find(({ userId }) => userId === inputVote.userId)
     : undefined;
   const existingVoteIndex = articleRes.Item.votes
-    ? articleRes.Item.votes.findIndex( ({ userId }) => userId === inputVote.userId )
+    ? articleRes.Item.votes.findIndex(
+        ({ userId }) => userId === inputVote.userId,
+      )
     : -1;
 
   const outputVote: BlogVote = {
     userId: inputVote.userId,
-    createdAt: existingVote 
+    createdAt: existingVote
       ? existingVote.createdAt
       : inputVote.createdAt || Date.now(),
     lastModifiedAt: Date.now(),
@@ -67,18 +83,22 @@ export async function upsertVote(event: APIGatewayProxyEvent): Promise<APIGatewa
   const params: DocumentClient.UpdateItemInput = {
     TableName: blogTable,
     Key: {
-      "PartitionKey": `BlogArticle|${event.queryStringParameters.title.split(' ').join('+')}`,
+      PartitionKey: `BlogArticle|${event.queryStringParameters.title
+        .split(' ')
+        .join('+')}`,
     },
     ReturnValues: 'ALL_NEW',
-    UpdateExpression: existingVoteIndex === -1 
-      ? 'SET #votes = list_append(if_not_exists(#votes, :newList), :blogVote)'
-      : `SET #votes[${existingVoteIndex}] = :blogVote`,
+    UpdateExpression:
+      existingVoteIndex === -1
+        ? 'SET #votes = list_append(if_not_exists(#votes, :newList), :blogVote)'
+        : `SET #votes[${existingVoteIndex}] = :blogVote`,
     ExpressionAttributeNames: {
-      '#votes': 'votes'
+      '#votes': 'votes',
     },
-    ExpressionAttributeValues: existingVoteIndex === -1 
-      ? { ':blogVote': [outputVote], ':newList': [] }
-      : { ':blogVote': outputVote }
+    ExpressionAttributeValues:
+      existingVoteIndex === -1
+        ? { ':blogVote': [outputVote], ':newList': [] }
+        : { ':blogVote': outputVote },
   };
 
   try {

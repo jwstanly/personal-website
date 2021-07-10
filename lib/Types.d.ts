@@ -18,7 +18,7 @@ export interface BlogVote {
   vote: VoteType;
 }
 
-export type VoteType = "LIKE" | "DISLIKE" | "NEUTRAL";
+export type VoteType = 'LIKE' | 'DISLIKE' | 'NEUTRAL';
 
 export interface BlogComment {
   id?: string;
