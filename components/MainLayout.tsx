@@ -6,30 +6,28 @@ import Spacer from './Spacer';
 
 interface MainLayoutProps {
   children: React.ReactNode;
-};
+}
 
-export default function MainLayout({children}: MainLayoutProps){
-
+export default function MainLayout({ children }: MainLayoutProps) {
   React.useEffect(() => {
-    if (localStorage.getItem("userId") === null) {
-      localStorage.setItem("userId", Math.random().toString(36).substr(2, 11));
+    if (localStorage.getItem('userId') === null) {
+      localStorage.setItem('userId', Math.random().toString(36).substr(2, 11));
     }
   }, []);
 
   return (
     <div>
-      <Navbar 
+      <Navbar
         color="#FFF"
         options={[
-          {label: "Contact", href: "/#contact"},
-          {label: "Blog", href: "/blog"},
-          {label: "Home", href: "/"},
+          { label: 'Contact', href: '/#contact' },
+          { label: 'Blog', href: '/blog' },
+          { label: 'Home', href: '/' },
         ]}
       />
       {children}
       <Spacer top={100} />
       <Footer />
     </div>
-
   );
 }

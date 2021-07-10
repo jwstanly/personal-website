@@ -1,17 +1,16 @@
-import React from "react";
+import React from 'react';
 import styles from '../styles/Form.module.css';
 
 interface TextFieldProps {
   type: string;
   value: string;
-  setValue: (string)=>void;
+  setValue: (string) => void;
   label?: string;
-  onEnter?: ()=>void;
+  onEnter?: () => void;
   placeholder?: string;
-};
+}
 
 export default function TextField(props: TextFieldProps) {
-  
   function enterAction(e) {
     if (props.onEnter && e.key === 'Enter') {
       props.onEnter();
@@ -24,15 +23,14 @@ export default function TextField(props: TextFieldProps) {
         <label>{props.label}</label>
       </div>
       <div className={styles.formInput}>
-        <input 
+        <input
           type={props.type}
           value={props.value}
           onInput={e => props.setValue((e.target as HTMLTextAreaElement).value)}
-          onKeyPress={enterAction}  
+          onKeyPress={enterAction}
           placeholder={props.placeholder}
         />
       </div>
     </div>
-
   );
 }

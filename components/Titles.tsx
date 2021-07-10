@@ -24,27 +24,26 @@ function getCSS(props: TitleProps): React.CSSProperties {
     marginLeft: props.marginLeft || 0,
     marginBottom: props.marginBottom || 0,
     marginRight: props.marginRight || 0,
-  }
+  };
 
-  if(props.italic) {
-    css.fontStyle = "italic"
-  } else if(props.underline) {
-    css.textDecoration = "underline"
-  } else if(props.red) {
-    css.color = "#F00"
-  } else if(props.green) {
-    css.color = "#49D65D"
+  if (props.italic) {
+    css.fontStyle = 'italic';
+  } else if (props.underline) {
+    css.textDecoration = 'underline';
+  } else if (props.red) {
+    css.color = '#F00';
+  } else if (props.green) {
+    css.color = '#49D65D';
   }
 
   return css;
 }
 
-export function H1(props: TitleProps){
-
+export function H1(props: TitleProps) {
   return (
-    <h1 
-      id={props.id} 
-      className={props.centered ? styles.centered : ""} 
+    <h1
+      id={props.id}
+      className={props.centered ? styles.centered : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -52,12 +51,11 @@ export function H1(props: TitleProps){
   );
 }
 
-export function H2(props: TitleProps){
-
+export function H2(props: TitleProps) {
   return (
-    <h2 
-      id={props.id} 
-      className={props.centered ? styles.centered : ""} 
+    <h2
+      id={props.id}
+      className={props.centered ? styles.centered : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -65,12 +63,11 @@ export function H2(props: TitleProps){
   );
 }
 
-export function H3(props: TitleProps){
-
+export function H3(props: TitleProps) {
   return (
-    <h3 
-      id={props.id} 
-      className={props.centered ? styles.centered : ""} 
+    <h3
+      id={props.id}
+      className={props.centered ? styles.centered : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -78,12 +75,11 @@ export function H3(props: TitleProps){
   );
 }
 
-export function H4(props: TitleProps){
-
+export function H4(props: TitleProps) {
   return (
     <h4
-      id={props.id} 
-      className={props.centered ? styles.centered : ""}
+      id={props.id}
+      className={props.centered ? styles.centered : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -91,12 +87,11 @@ export function H4(props: TitleProps){
   );
 }
 
-export function H5(props: TitleProps){
-
+export function H5(props: TitleProps) {
   return (
-    <h5 
-      id={props.id} 
-      className={props.centered ? styles.centered : ""}
+    <h5
+      id={props.id}
+      className={props.centered ? styles.centered : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -104,12 +99,11 @@ export function H5(props: TitleProps){
   );
 }
 
-export function H6(props: TitleProps){
-
+export function H6(props: TitleProps) {
   return (
-    <h6 
-      id={props.id} 
-      className={props.centered ? styles.centered : ""}
+    <h6
+      id={props.id}
+      className={props.centered ? styles.centered : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -117,29 +111,14 @@ export function H6(props: TitleProps){
   );
 }
 
-export function Text(props: TitleProps){
-
-  return (
-    <p>
-      {props.children}
-    </p>
-  );
+export function Text(props: TitleProps) {
+  return <p>{props.children}</p>;
 }
 
-export function Code(props: TitleProps){
-
-  return (
-    <div className={styles.codeText}>
-      {props.children}
-    </div>
-  );
+export function Code(props: TitleProps) {
+  return <div className={styles.codeText}>{props.children}</div>;
 }
 
-export function Tag(props: TitleProps){
-
-  return (
-    <div className={styles.tagText}>
-      {props.children}
-    </div>
-  );
+export function Tag(props: TitleProps) {
+  return <div className={styles.tagText}>{props.children}</div>;
 }

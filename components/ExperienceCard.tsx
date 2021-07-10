@@ -14,18 +14,14 @@ interface ExperienceCardProps {
   imageAlt: string;
 }
 
-export function ExperienceCard(props: ExperienceCardProps){
-
+export function ExperienceCard(props: ExperienceCardProps) {
   return (
     <CenteredContainer>
       <div className={styles.cardContainer}>
-        <div style={{float:'left'}}>
-          <LargeIcon
-            imageUrl={props.imageUrl}
-            alt={props.imageAlt}
-          />
+        <div style={{ float: 'left' }}>
+          <LargeIcon imageUrl={props.imageUrl} alt={props.imageAlt} />
         </div>
-        <div style={{float: 'left'}} className={styles.cardTextContainer}>
+        <div style={{ float: 'left' }} className={styles.cardTextContainer}>
           <Card
             header={props.header}
             subheader={props.subheader}

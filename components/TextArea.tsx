@@ -1,15 +1,14 @@
-import React from "react";
+import React from 'react';
 import styles from '../styles/Form.module.css';
 
 interface TextAreaProps {
   value: string;
-  setValue: (string)=>void;
+  setValue: (string) => void;
   label?: string;
-  onEnter?: ()=>void;
-};
+  onEnter?: () => void;
+}
 
 export default function TextArea(props: TextAreaProps) {
-  
   function enterAction(e) {
     if (props.onEnter && e.key === 'Enter') {
       props.onEnter();
@@ -22,7 +21,7 @@ export default function TextArea(props: TextAreaProps) {
         <label>{props.label}</label>
       </div>
       <div className={styles.textAreaComment}>
-        <textarea 
+        <textarea
           rows={3}
           className={styles.textAreaInput}
           value={props.value}

@@ -5,11 +5,6 @@ interface BlogMarkdownProps {
   children: string;
 }
 
-export function BlogMarkdown(props: BlogMarkdownProps){
-
-  return (
-    <p className={styles.contentText}>
-      {props.children}
-    </p>
-  );
+export function BlogMarkdown(props: BlogMarkdownProps) {
+  return <p className={styles.contentText}>{props.children}</p>;
 }

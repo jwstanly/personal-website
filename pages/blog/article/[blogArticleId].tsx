@@ -1,9 +1,9 @@
-import React from 'react'
-import Head from 'next/head'
+import React from 'react';
+import Head from 'next/head';
 
 import styles from '../../../styles/Home.module.css';
 
-import HomeHeader from '../../../components/HomeHeader'
+import HomeHeader from '../../../components/HomeHeader';
 
 import { Code, H1, H2, H3, H4, H5, H6, Text } from '../../../components/Titles';
 import { ExperienceCard } from '../../../components/ExperienceCard';
@@ -21,28 +21,27 @@ import Spacer from '../../../components/Spacer';
 import HeadTags from '../../../components/HeadTags';
 
 export async function getStaticPaths() {
-
   const paths = await Util.getBlogArticlePaths();
 
   return {
     paths: paths,
-    fallback: false
+    fallback: false,
   };
 }
 
 export async function getStaticProps(context) {
-  
-  const article: BlogArticle = await API.getArticleByTitle(context.params.blogArticleId);
-  
-  return { 
+  const article: BlogArticle = await API.getArticleByTitle(
+    context.params.blogArticleId,
+  );
+
+  return {
     props: {
-      article: article
-    } 
-  }
+      article: article,
+    },
+  };
 }
 
-export default function Blog(props: {article: BlogArticle}) {
-
+export default function Blog(props: { article: BlogArticle }) {
   const [article, setArticle] = React.useState<BlogArticle>(props.article);
   const [fetchedArticle, setFetchedArticle] = React.useState<BlogArticle>();
 
@@ -53,22 +52,22 @@ export default function Blog(props: {article: BlogArticle}) {
     });
   }
 
-  React.useEffect(fetchArticle, []);
+  React.useEffect(fetchArticle, [article.title]);
 
   return (
     <>
       <HeadTags
         title={article.title}
         description={
-          article.subheader 
-          + ". " 
-          + article.content.substring(0, 160 - (article.subheader.length + 5)) 
-          + "..."
+          article.subheader +
+          '. ' +
+          article.content.substring(0, 160 - (article.subheader.length + 5)) +
+          '...'
         }
         imageUrl={article.image}
       />
 
-      <div style={{marginTop: 40}}/>
+      <div style={{ marginTop: 40 }} />
 
       <CenteredContainer>
         <Card
@@ -77,15 +76,13 @@ export default function Blog(props: {article: BlogArticle}) {
           tags={article.tags}
           content={[]}
         />
-        <LikeDislikePanel   
+        <LikeDislikePanel
           key={JSON.stringify(article).length}
           article={fetchedArticle}
           onArticleModify={fetchArticle}
         />
         <Spacer top={10} />
-        <ReactMarkdown>
-          {article.content}
-        </ReactMarkdown>
+        <ReactMarkdown>{article.content}</ReactMarkdown>
         <Spacer top={50} />
         <CommentBoard
           key={JSON.stringify(article).length}
