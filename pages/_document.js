@@ -2,8 +2,8 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
   }
 
   render() {
@@ -11,24 +11,21 @@ class MyDocument extends Document {
       <Html>
         <Head />
 
-        <link 
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800?display=optional"
+          rel="stylesheet"
+          type="text/css"
         />
-        <link 
-          href='https://fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800'
-          rel='stylesheet'
-          type='text/css'
+        <link
+          href="https://fonts.googleapis.com/css?family=Inter:thin,extra-light,light,100,200,300,400,500,600,700,800?display=optional"
+          rel="stylesheet"
+          type="text/css"
         />
-        <link 
-          href='https://fonts.googleapis.com/css?family=Inter:thin,extra-light,light,100,200,300,400,500,600,700,800'
-          rel='stylesheet'
-          type='text/css'
-        />
-        <link 
-          href='https://fonts.googleapis.com/css?family=IBM+Plex+Mono'
-          rel='stylesheet'
-          type='text/css'
+        <link
+          href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono?display=optional"
+          rel="stylesheet"
+          type="text/css"
         />
 
         <body>
@@ -36,8 +33,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;
