@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/Navbar.module.css';
 import { useRouter } from 'next/router';
+import useRefState from '../lib/useRefState';
 
 interface NavbarTypes {
   color: string;
@@ -16,8 +17,29 @@ interface NavbarOptionTypes {
 export default function Navbar(props: NavbarTypes) {
   const router = useRouter();
 
+  const [hidden, setHidden] = React.useState<boolean>(false);
+  const [lastScrollY, setLastScrollY] = useRefState<number>(0);
+
+  function handleScroll() {
+    setHidden(window.scrollY > lastScrollY.current);
+    setLastScrollY(window.scrollY);
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className={styles.navbarContainer}>
+    <div
+      className={styles.navbarContainer}
+      style={{
+        transform: `translate(0, ${hidden ? '-50px' : '0px'})`,
+        transition: 'transform 90ms linear',
+      }}
+    >
       <div style={{ backgroundColor: props.color }}>
         <ul className={styles.navbar}>
           <li className={styles.navbarItem} style={{ float: 'left' }}>

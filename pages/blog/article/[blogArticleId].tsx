@@ -67,7 +67,7 @@ export default function Blog(props: { article: BlogArticle }) {
         imageUrl={article.image}
       />
 
-      <div style={{ marginTop: 40 }} />
+      <Spacer top={100} />
 
       <CenteredContainer>
         <Card

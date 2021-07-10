@@ -34,7 +34,8 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
         description="A collection of tips and stories about software engineering I wish I knew about earlier. I hope this blog inspires your next project or helps squash that bug."
       />
 
-      <div style={{ marginTop: 40 }} />
+      <Spacer top={100} />
+
       <H1 centered marginBottom={40}>
         Recent Articles
       </H1>

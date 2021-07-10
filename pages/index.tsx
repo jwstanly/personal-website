@@ -21,6 +21,8 @@ export default function Home() {
 
       <div id="home" />
 
+      <div style={{ paddingTop: 50, backgroundColor: '#F1F1F1' }} />
+
       <HomeHeader />
 
       <div style={{ padding: '3vw' }} />
