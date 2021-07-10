@@ -88,8 +88,38 @@ h6 {
   font-weight: 300 !important;
 }
 
+ul {
+  list-style: none;
+  margin-bottom: 25px;
+}
+
+ol {
+  list-style: none;
+  margin-bottom: 25px;
+}
+
+ul li::before {
+  content: '•';
+  color: black;
+  display: inline-block;
+  width: 1em;
+  margin-left: 1em;
+}
+
+ol li::before {
+  content: counter(li);
+  color: black;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1.5em;
+  margin-right: 0.5em;
+  text-align: right;
+  direction: rtl;
+}
+
 p {
   text-align: left;
+  word-break: break-word;
   color: #222;
   font-size: 16px;
   font-weight: 400 !important;
@@ -122,10 +152,13 @@ blockquote {
 }
 
 pre {
-  word-break: break-all;
-  word-wrap: break-word;
+  display: block;
   overflow: auto;
-  white-space: nowrap;
+  /* word-break: normal; */
+  white-space: pre-wrap !important;
+  border: 1px solid #999;
+  /* page-break-inside: avoid; */
+  overflow: auto;
   color: #222 !important;
   background: #f1f1f1;
   border: 1px solid #e1e1e1;
@@ -139,8 +172,8 @@ pre {
 }
 
 code {
-  word-wrap: break-word;
-  white-space: nowrap;
+  word-break: break-word;
+  white-space: break-spaces;
   color: #222 !important;
   padding: 0.2rem 0rem;
   font-weight: 100;
