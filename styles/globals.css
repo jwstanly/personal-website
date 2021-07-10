@@ -6,9 +6,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 
-    'Helvetica Neue', sans-serif !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
 }
 
 a {
@@ -30,7 +30,7 @@ a {
 }
 
 .App-header {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -41,14 +41,13 @@ a {
 }
 
 .App-body {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-
 
 h1 {
   font-size: 60px !important;
@@ -71,7 +70,7 @@ h3 {
 h4 {
   font-size: 25px !important;
   font-weight: 800 !important;
-  
+
   margin-top: 50px !important;
   margin-bottom: 30px !important;
 }
@@ -94,10 +93,12 @@ p {
   color: #222;
   font-size: 16px;
   font-weight: 400 !important;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   line-height: 1.6;
   letter-spacing: -0.02em;
-  margin-block-end: 0.0em;
+  margin-block-end: 0em;
 
   margin-bottom: 15px !important;
 }
@@ -126,12 +127,12 @@ pre {
   overflow: auto;
   white-space: nowrap;
   color: #222 !important;
-  background: #F1F1F1;
-  border: 1px solid #E1E1E1;
+  background: #f1f1f1;
+  border: 1px solid #e1e1e1;
   border-radius: 4px;
   font-size: 90%;
-  padding: .2rem .5rem;
-  
+  padding: 0.2rem 0.5rem;
+
   margin-top: 25px !important;
   margin-bottom: 30px !important;
   margin-left: -0.1rem !important;
@@ -139,93 +140,93 @@ pre {
 
 code {
   word-wrap: break-word;
+  white-space: nowrap;
   color: #222 !important;
-  padding: .2rem 0.0rem;
+  padding: 0.2rem 0rem;
   font-weight: 100;
   /* margin: 0 0.1rem; */
   font-size: 90%;
-  /* white-space: nowrap; */
-  background: #F1F1F1;
+  background: #f1f1f1;
   /* border: 1px solid #E1E1E1; */
   border-radius: 4px;
 }
 
 .animated-1 {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
 }
 
 .animated-05 {
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-    -webkit-animation-duration: 0.5s;
-    -webkit-animation-fill-mode: both
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
 }
 
 .animation-delay-350 {
-    animation-delay: 350ms;
+  animation-delay: 350ms;
 }
 
 .animation-delay-450 {
-    animation-delay: 450ms;
+  animation-delay: 450ms;
 }
 
 .fadeInUp {
-    opacity: 0;
-    animation-name: fadeInUp;
-    animation-timing-function: ease;
-    -webkit-animation-name: fadeInUp;
+  opacity: 0;
+  animation-name: fadeInUp;
+  animation-timing-function: ease;
+  -webkit-animation-name: fadeInUp;
 }
 
 .fadeInUpFar {
-    opacity: 0;
-    animation-name: fadeInUpFar;
-    animation-timing-function: ease;
-    -webkit-animation-name: fadeInUpFar;
+  opacity: 0;
+  animation-name: fadeInUpFar;
+  animation-timing-function: ease;
+  -webkit-animation-name: fadeInUpFar;
 }
 
 @keyframes fadeInUp {
   from {
-    transform: translate3d(0,50px,0)
+    transform: translate3d(0, 50px, 0);
   }
 
   to {
-    transform: translate3d(0,0,0);
-    opacity: 1
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
   }
 }
 
 @-webkit-keyframes fadeInUp {
-    from {
-        transform: translate3d(0,50px,0)
-    }
+  from {
+    transform: translate3d(0, 50px, 0);
+  }
 
-    to {
-        transform: translate3d(0,0,0);
-        opacity: 1
-    }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUpFar {
   from {
-    transform: translate3d(0,100px,0)
+    transform: translate3d(0, 100px, 0);
   }
 
   to {
-    transform: translate3d(0,0,0);
-    opacity: 1
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
   }
 }
 
 @-webkit-keyframes fadeInUpFar {
-    from {
-        transform: translate3d(0,100px,0)
-    }
+  from {
+    transform: translate3d(0, 100px, 0);
+  }
 
-    to {
-        transform: translate3d(0,0,0);
-        opacity: 1
-    }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
 }
