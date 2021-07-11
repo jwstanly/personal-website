@@ -14,6 +14,7 @@ import TextField from './TextField';
 import { H2, H6 } from './Titles';
 import API from '../lib/Api';
 import Spacer from './Spacer';
+import isValidEmail from '../lib/isValidEmail';
 
 interface CommentBoardProps {
   article: BlogArticle;
@@ -58,12 +59,7 @@ export default function CommentBoard(props: CommentBoardProps) {
       return 'Comments cannot be longer than 2000 characters';
     } else if (name && name.length > 100) {
       return 'Names cannot be longer than 100 characters';
-    } else if (
-      email &&
-      !email.match(
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      )
-    ) {
+    } else if (email && !isValidEmail(email)) {
       return 'Please submit a valid email';
     }
     return '';

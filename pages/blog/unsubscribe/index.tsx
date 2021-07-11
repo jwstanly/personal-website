@@ -48,7 +48,7 @@ export default function Unsubscribe(props: any) {
     <>
       <HeadTags title="Unsubscribe Email - John Wright Stanly" />
 
-      <Spacer top={50} />
+      <Spacer top={100} />
       <CenteredContainer>
         <H1 centered marginBottom={20}>
           Remove Your Email

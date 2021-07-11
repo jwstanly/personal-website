@@ -5,6 +5,7 @@ interface TextAreaProps {
   value: string;
   setValue: (string) => void;
   label?: string;
+  lines?: number;
   onEnter?: () => void;
 }
 
@@ -22,7 +23,7 @@ export default function TextArea(props: TextAreaProps) {
       </div>
       <div className={styles.textAreaComment}>
         <textarea
-          rows={3}
+          rows={props.lines || 3}
           className={styles.textAreaInput}
           value={props.value}
           onInput={e => props.setValue((e.target as HTMLTextAreaElement).value)}
