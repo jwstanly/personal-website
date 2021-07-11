@@ -9,6 +9,7 @@ import CenteredContainer from '../../components/CenteredContainer';
 import HeadTags from '../../components/HeadTags';
 import TextArea from '../../components/TextArea';
 import isValidEmail from '../../lib/isValidEmail';
+import { ContactMessage } from '../../lib/Types';
 
 export default function Unsubscribe(props: any) {
   const [email, setEmail] = React.useState<string>('');
@@ -30,6 +31,17 @@ export default function Unsubscribe(props: any) {
       setLoading(false);
       return;
     }
+
+    const inputMessage: ContactMessage = {
+      user: {
+        id: localStorage.getItem('userId'),
+        name: name,
+        email: email,
+      },
+      message: message,
+    };
+
+    await API.postContact(inputMessage);
 
     setSuccess('Your message has been sent');
     setLoading(false);
