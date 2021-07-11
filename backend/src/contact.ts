@@ -3,7 +3,6 @@ import SES from 'aws-sdk/clients/ses';
 import { ContactMessage } from '../../lib/Types';
 import validateHttpMethod from '../lib/validateHttpMethod';
 import parseType from '../lib/parseType';
-import isType from '../lib/isType';
 import logEvent from '../lib/logEvent';
 import logInput from '../lib/logInput';
 import getSuccessRes from '../lib/getSuccessRes';

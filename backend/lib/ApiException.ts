@@ -1,12 +1,12 @@
-type ApiExceptionData = {
+interface ApiExceptionData {
   message: string;
   [any: string]: any;
-};
+}
 
-type ApiExceptionConstructor = {
+interface ApiExceptionConstructor {
   statusCode: number;
   res: string | ApiExceptionData;
-};
+}
 
 export default class ApiException extends Error {
   public readonly statusCode: number;

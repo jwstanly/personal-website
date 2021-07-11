@@ -1,240 +1,263 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "ApiException": {
-      "additionalProperties": false,
-      "properties": {
-        "message": {
-          "type": "string"
-        },
-        "statusCode": {
-          "type": "number"
-        }
-      },
-      "required": ["message", "statusCode"],
-      "type": "object"
-    },
-    "BlogArticle": {
-      "additionalProperties": false,
-      "properties": {
-        "comments": {
-          "items": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "BlogArticle": {
             "additionalProperties": false,
             "properties": {
-              "comment": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "number"
-              },
-              "id": {
-                "type": "string"
-              },
-              "lastModifiedAt": {
-                "type": "number"
-              },
-              "replies": {
-                "items": {
-                  "$ref": "#/definitions/BlogCommentReply"
+                "comments": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replies": {
+                                "items": {
+                                    "$ref": "#/definitions/BlogCommentReply"
+                                },
+                                "type": "array"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
                 },
-                "type": "array"
-              },
-              "user": {
-                "additionalProperties": false,
-                "properties": {
-                  "email": {
+                "content": {
                     "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
                 },
-                "required": ["id"],
-                "type": "object"
-              }
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "subheader": {
+                    "type": "string"
+                },
+                "tags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "votes": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "userId": {
+                                "type": "string"
+                            },
+                            "vote": {
+                                "enum": [
+                                    "DISLIKE",
+                                    "LIKE",
+                                    "NEUTRAL"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "userId",
+                            "vote"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
             },
-            "required": ["comment", "user"],
+            "required": [
+                "content",
+                "createdAt",
+                "id",
+                "lastModifiedAt",
+                "subheader",
+                "tags",
+                "title"
+            ],
             "type": "object"
-          },
-          "type": "array"
         },
-        "content": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "number"
-        },
-        "id": {
-          "type": "string"
-        },
-        "image": {
-          "type": "string"
-        },
-        "lastModifiedAt": {
-          "type": "number"
-        },
-        "subheader": {
-          "type": "string"
-        },
-        "tags": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "title": {
-          "type": "string"
-        },
-        "votes": {
-          "items": {
+        "BlogComment": {
             "additionalProperties": false,
             "properties": {
-              "createdAt": {
-                "type": "number"
-              },
-              "lastModifiedAt": {
-                "type": "number"
-              },
-              "userId": {
-                "type": "string"
-              },
-              "vote": {
-                "enum": ["DISLIKE", "LIKE", "NEUTRAL"],
-                "type": "string"
-              }
+                "comment": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "replies": {
+                    "items": {
+                        "$ref": "#/definitions/BlogCommentReply"
+                    },
+                    "type": "array"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
             },
-            "required": ["userId", "vote"],
+            "required": [
+                "comment",
+                "user"
+            ],
             "type": "object"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "content",
-        "createdAt",
-        "id",
-        "lastModifiedAt",
-        "subheader",
-        "tags",
-        "title"
-      ],
-      "type": "object"
-    },
-    "BlogComment": {
-      "additionalProperties": false,
-      "properties": {
-        "comment": {
-          "type": "string"
         },
-        "createdAt": {
-          "type": "number"
-        },
-        "id": {
-          "type": "string"
-        },
-        "lastModifiedAt": {
-          "type": "number"
-        },
-        "replies": {
-          "items": {
+        "BlogCommentReply": {
             "$ref": "#/definitions/BlogCommentReply"
-          },
-          "type": "array"
         },
-        "user": {
-          "additionalProperties": false,
-          "properties": {
-            "email": {
-              "type": "string"
+        "BlogUser": {
+            "additionalProperties": false,
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
             },
-            "id": {
-              "type": "string"
+            "required": [
+                "id"
+            ],
+            "type": "object"
+        },
+        "BlogVote": {
+            "additionalProperties": false,
+            "properties": {
+                "createdAt": {
+                    "type": "number"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "vote": {
+                    "enum": [
+                        "DISLIKE",
+                        "LIKE",
+                        "NEUTRAL"
+                    ],
+                    "type": "string"
+                }
             },
-            "name": {
-              "type": "string"
-            }
-          },
-          "required": ["id"],
-          "type": "object"
-        }
-      },
-      "required": ["comment", "user"],
-      "type": "object"
-    },
-    "BlogCommentReply": {
-      "$ref": "#/definitions/BlogCommentReply"
-    },
-    "BlogUser": {
-      "additionalProperties": false,
-      "properties": {
-        "email": {
-          "type": "string"
+            "required": [
+                "userId",
+                "vote"
+            ],
+            "type": "object"
         },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["id"],
-      "type": "object"
-    },
-    "BlogVote": {
-      "additionalProperties": false,
-      "properties": {
-        "createdAt": {
-          "type": "number"
-        },
-        "lastModifiedAt": {
-          "type": "number"
-        },
-        "userId": {
-          "type": "string"
-        },
-        "vote": {
-          "enum": ["DISLIKE", "LIKE", "NEUTRAL"],
-          "type": "string"
-        }
-      },
-      "required": ["userId", "vote"],
-      "type": "object"
-    },
-    "ContactMessage": {
-      "additionalProperties": false,
-      "properties": {
-        "message": {
-          "type": "string"
-        },
-        "subject": {
-          "type": "string"
-        },
-        "user": {
-          "additionalProperties": false,
-          "properties": {
-            "email": {
-              "type": "string"
+        "ContactMessage": {
+            "additionalProperties": false,
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
             },
-            "id": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            }
-          },
-          "required": ["id"],
-          "type": "object"
+            "required": [
+                "message",
+                "user"
+            ],
+            "type": "object"
+        },
+        "VoteType": {
+            "enum": [
+                "DISLIKE",
+                "LIKE",
+                "NEUTRAL"
+            ],
+            "type": "string"
         }
-      },
-      "required": ["message", "user"],
-      "type": "object"
-    },
-    "VoteType": {
-      "enum": ["DISLIKE", "LIKE", "NEUTRAL"],
-      "type": "string"
     }
-  }
 }
+
