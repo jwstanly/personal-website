@@ -285,7 +285,7 @@ Resources:
   ContactLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: out/src/contact.index
+      Handler: out/src/contact.handler
       Description: Contact website owner with form
       Policies:
         - AWSLambdaBasicExecutionRole

@@ -250,6 +250,26 @@
             ],
             "type": "object"
         },
+        "UnsubscribeEmailQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "commentId": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "commentId",
+                "email",
+                "title"
+            ],
+            "type": "object"
+        },
         "VoteType": {
             "enum": [
                 "DISLIKE",

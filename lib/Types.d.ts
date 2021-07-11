@@ -45,3 +45,9 @@ export interface ContactMessage {
   subject?: string;
   message: string;
 }
+
+export interface UnsubscribeEmailQueryParams {
+  title: string;
+  commentId: string;
+  email: string;
+}

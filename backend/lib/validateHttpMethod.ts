@@ -1,18 +1,10 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import ApiException from './ApiException';
+import { HttpMethod } from './createHandler';
 
 export default function validateHttpMethod(
   event: APIGatewayProxyEvent,
-  requestMethod:
-    | 'GET'
-    | 'HEAD'
-    | 'POST'
-    | 'PUT'
-    | 'DELETE'
-    | 'CONNECT'
-    | 'OPTIONS'
-    | 'TRACE'
-    | 'PATCH',
+  requestMethod: HttpMethod,
 ): void {
   if (event.httpMethod !== requestMethod) {
     throw new ApiException({
