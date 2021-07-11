@@ -1,5 +1,8 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
+import shouldLog from './shouldLog';
 
 export default function logEvent(event: APIGatewayProxyEvent): void {
-  console.log('Event:', event);
+  if (shouldLog()) {
+    console.log('Event:', event);
+  }
 }
