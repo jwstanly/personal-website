@@ -280,7 +280,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: handlers/emailLambdas.contact
-      Description: Unsubscribe a user by deleting their email from the comment
+      Description: Contact website owner with form
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
@@ -290,8 +290,8 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref PersonalWebsiteApi
-            Path: /blog/unsubscribe
-            Method: DELETE
+            Path: /contact
+            Method: POST
             Auth:
               ApiKeyRequired: true
 

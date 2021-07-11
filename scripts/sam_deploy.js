@@ -1,6 +1,7 @@
 const sh = require('shelljs');
 
-const { AWS_CLI_PROFILE, DOMAIN_NAME, ACM_CERT_ARN } = process.env;
+const { AWS_CLI_PROFILE, DOMAIN_NAME, EMAIL_ADDRESS, ACM_CERT_ARN } =
+  process.env;
 
 function getStackStatus(stackStdout) {
   const startIndex = stackStdout.indexOf('StackStatus');
@@ -64,6 +65,7 @@ sh.exec(
     `--stack-name ${DOMAIN_NAME.split('.')[0]}-website ` +
     '--parameter-overrides ' +
     `DomainName=${DOMAIN_NAME} ` +
+    `EmailAddress=${EMAIL_ADDRESS}` +
     `AcmCertificateArn=${ACM_CERT_ARN} ` +
     '--resolve-s3 ' +
     '--capabilities CAPABILITY_IAM ' +
