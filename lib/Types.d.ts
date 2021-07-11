@@ -39,3 +39,8 @@ export interface BlogUser {
   email?: string;
   name?: string;
 }
+
+export interface ContactMessage {
+  user: BlogUser;
+  message: string;
+}

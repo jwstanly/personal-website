@@ -5,7 +5,7 @@ Description: >-
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform:
-- AWS::Serverless-2016-10-31
+  - AWS::Serverless-2016-10-31
 
 Parameters:
   DomainName:
@@ -13,12 +13,17 @@ Parameters:
     Description: The domain name including the TLD. Example = YourWebsite.com
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
     ConstraintDescription: Must be a domain name including the TLD.
+  EmailAddress:
+    Type: String
+    Description: Your email address. Contact forms and other notifications will be sent to this address.
+    AllowedPattern: '/[^\s@]+@[^\s@]+\.[^\s@]+/'
+    ConstraintDescription: Must be your email address.
   AcmCertificateArn:
     Type: String
     Description: The Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate. Example = arn:aws:acm:[resource_id_here]
-    AllowedPattern: "arn:aws:acm:.*"
+    AllowedPattern: 'arn:aws:acm:.*'
     ConstraintDescription: Must be the ARN for the ACM certificate.
-    
+
 Globals:
   Function:
     CodeUri: ./
@@ -29,6 +34,7 @@ Globals:
       Variables:
         BLOG_TABLE: !Ref PersonalWebsiteTable
         DOMAIN_NAME: !Ref DomainName
+        EMAIL_ADDRESS: !Ref EmailAddress
 
 Resources:
   PersonalWebsiteApi:
@@ -45,7 +51,7 @@ Resources:
       Cors:
         AllowMethods: "'DELETE,GET,OPTIONS,POST'"
         AllowHeaders: "'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For'"
-        AllowOrigin: "'*'" 
+        AllowOrigin: "'*'"
         # Switch AllowOrigin to your custom domain whenever not developing on localhost
         # !Sub
         #   - "'https://www.${Domain}'"
@@ -54,7 +60,7 @@ Resources:
         DomainName: !Join ['.', [api, !Ref DomainName]]
         CertificateArn: !Ref AcmCertificateArn
         EndpointConfiguration: EDGE
-        Route53: 
+        Route53:
           HostedZoneId: !Ref HostedZone
       MethodSettings:
         - ResourcePath: '/*'
@@ -116,7 +122,7 @@ Resources:
             Method: GET
             Auth:
               ApiKeyRequired: true
-  
+
   UpsertArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -135,7 +141,7 @@ Resources:
             Method: POST
             Auth:
               ApiKeyRequired: true
-  
+
   DeleteArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -151,7 +157,7 @@ Resources:
           Properties:
             RestApiId: !Ref PersonalWebsiteApi
             Path: /blog
-            Method: DELETE 
+            Method: DELETE
             Auth:
               ApiKeyRequired: true
 
@@ -250,11 +256,30 @@ Resources:
             Method: POST
             Auth:
               ApiKeyRequired: truea
-  
+
   UnsubscribeEmailLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: handlers/emailLambdas.unsubscribeEmail
+      Description: Unsubscribe a user by deleting their email from the comment
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PersonalWebsiteTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonalWebsiteApi
+            Path: /blog/unsubscribe
+            Method: DELETE
+            Auth:
+              ApiKeyRequired: true
+
+  ContactLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: handlers/emailLambdas.contact
       Description: Unsubscribe a user by deleting their email from the comment
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -296,15 +321,24 @@ Resources:
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     DependsOn:
-    - Bucket
+      - Bucket
     Properties:
       DistributionConfig:
         Comment: Cloudfront Distribution pointing to S3 website
         Origins:
-        - DomainName: !Join ['', [!Ref DomainName, .s3-website., !Ref AWS::Region, .amazonaws.com]] 
-          Id: CustomS3WebsiteOrigin
-          CustomOriginConfig:
-            OriginProtocolPolicy: http-only  # S3 buckets configured as a website can't use HTTPS
+          - DomainName:
+              !Join [
+                '',
+                [
+                  !Ref DomainName,
+                  .s3-website.,
+                  !Ref AWS::Region,
+                  .amazonaws.com,
+                ],
+              ]
+            Id: CustomS3WebsiteOrigin
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only # S3 buckets configured as a website can't use HTTPS
         Enabled: true
         HttpVersion: 'http2'
         DefaultRootObject: index.html
@@ -313,8 +347,8 @@ Resources:
           - !Join ['.', [www, !Ref DomainName]]
         DefaultCacheBehavior:
           AllowedMethods:
-          - GET
-          - HEAD
+            - GET
+            - HEAD
           Compress: true
           TargetOriginId: CustomS3WebsiteOrigin
           ForwardedValues:
@@ -332,10 +366,10 @@ Resources:
         #   ResponseCode: 200
         #   ResponsePagePath: /index.html
 
-  HostedZone: 
+  HostedZone:
     Type: AWS::Route53::HostedZone
-    Properties: 
-      HostedZoneConfig: 
+    Properties:
+      HostedZoneConfig:
         Comment: 'Hosted zone for my personal website and blog'
       Name: !Ref DomainName
 
@@ -344,22 +378,22 @@ Resources:
     Properties:
       HostedZoneId: !Ref HostedZone
       RecordSets:
-      - Name: !Ref 'DomainName'
-        Type: A
-        AliasTarget:
-          HostedZoneId: Z2FDTNDATAQYW2 #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
-          DNSName: !GetAtt [CloudFrontDistribution, DomainName]
+        - Name: !Ref 'DomainName'
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2 #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+            DNSName: !GetAtt [CloudFrontDistribution, DomainName]
 
   DNSWithWWW:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneId: !Ref HostedZone
       RecordSets:
-      - Name: !Join ['.', [www, !Ref DomainName]]
-        Type: A
-        AliasTarget:
-          HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
-          DNSName: !GetAtt [CloudFrontDistribution, DomainName]
+        - Name: !Join ['.', [www, !Ref DomainName]]
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+            DNSName: !GetAtt [CloudFrontDistribution, DomainName]
 
   EmailDNS:
     Type: AWS::Route53::RecordSetGroup
@@ -393,7 +427,6 @@ Resources:
       ServiceToken: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:binxio-cfn-ses-provider'
       # service token points to lambda function deployed in auto-managed-cfn-ses-provider stack
 
-
 Outputs:
   WebsiteURL:
     Value: !GetAtt
@@ -401,8 +434,8 @@ Outputs:
       - WebsiteURL
     Description: The URL for the S3 bucket.
   CloudFrontDistributionEndpoint:
-      Value: !GetAtt [CloudFrontDistribution, DomainName]
-      Description: The DomainName for CloudFront distribution. This is NOT the CloudFront distribution ID. Use this DomainName to find the distribution ID in the CloudFormation or CloudFront console.
+    Value: !GetAtt [CloudFrontDistribution, DomainName]
+    Description: The DomainName for CloudFront distribution. This is NOT the CloudFront distribution ID. Use this DomainName to find the distribution ID in the CloudFormation or CloudFront console.
   Domain:
     Value: !Ref DomainName
     Description: The custom domain.
@@ -413,5 +446,5 @@ Outputs:
     Value: !Join ['.', [api, !Ref DomainName]]
     Description: The custom API domain.
   APIKey:
-    Value: !GetAtt [PersonalWebsiteApiApiKey , APIKeyId]
+    Value: !GetAtt [PersonalWebsiteApiApiKey, APIKeyId]
     Description: The resource ID for the API Key. This is NOT the actual API key. Use this ID to find the key in the CloudFormation or API Gateway console.

@@ -78,7 +78,7 @@ async function unsubscribeEmail(event) {
       return lambdaUtils_1.default.getErrorRes(
         event,
         500,
-        `A database error occured. ${error}`,
+        `A database error occurred. ${error}`,
       );
     }
   } else {
@@ -122,7 +122,7 @@ async function unsubscribeEmail(event) {
       return lambdaUtils_1.default.getErrorRes(
         event,
         500,
-        `A database error occured. ${error}`,
+        `A database error occurred. ${error}`,
       );
     }
   }

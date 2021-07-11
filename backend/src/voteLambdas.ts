@@ -109,6 +109,6 @@ export async function upsertVote(
 
     return Util.getSuccessRes(event, res);
   } catch (error) {
-    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+    return Util.getErrorRes(event, 500, `A database error occurred. ${error}`);
   }
 }

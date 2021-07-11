@@ -134,7 +134,7 @@ async function upsertComment(event) {
     return lambdaUtils_1.default.getErrorRes(
       event,
       500,
-      `A database error occured. ${error}`,
+      `A database error occurred. ${error}`,
     );
   }
 }
@@ -336,7 +336,7 @@ async function upsertCommentReply(event) {
     return lambdaUtils_1.default.getErrorRes(
       event,
       500,
-      `A database error occured. ${error}`,
+      `A database error occurred. ${error}`,
     );
   }
 }
@@ -405,7 +405,7 @@ async function deleteComment(event) {
     return lambdaUtils_1.default.getErrorRes(
       event,
       500,
-      `A database error occured. ${error}`,
+      `A database error occurred. ${error}`,
     );
   }
 }
@@ -490,7 +490,7 @@ async function deleteCommentReply(event) {
     return lambdaUtils_1.default.getErrorRes(
       event,
       500,
-      `A database error occured. ${error}`,
+      `A database error occurred. ${error}`,
     );
   }
 }
