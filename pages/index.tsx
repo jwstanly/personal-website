@@ -104,19 +104,6 @@ export default function Home() {
         imageUrl="https://i.imgur.com/ITWU7N2.png"
         imageAlt="Audiodub logo"
       />
-
-      <div style={{ padding: '20px' }} />
-
-      <H1 centered marginBottom={40} id="contact">
-        Contact Me
-      </H1>
-
-      <p
-        className={styles.headerContentText}
-        style={{ marginRight: 15, marginLeft: 15 }}
-      >
-        I'm always down to chat. Send me an email at jwstanly[at]gmail.com
-      </p>
     </>
   );
 }
