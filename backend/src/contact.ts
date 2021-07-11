@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import SES from 'aws-sdk/clients/ses';
-import { ApiError, ContactMessage } from '../../lib/Types';
+import { ApiException, ContactMessage } from '../../lib/Types';
 import validateHttpMethod from '../lib/validateHttpMethod';
 import parseType from '../lib/parseType';
 import isType from '../lib/isType';
@@ -64,9 +64,9 @@ export async function index(
     const res = await sesClient.sendEmail(emailParams).promise();
     return getSuccessRes(event, res);
   } catch (e) {
-    if (isType(e, 'ApiError')) {
-      const error: ApiError = e;
-      return getErrorRes(event, error.statusCode, error.message);
+    if (isType(e, 'ApiException')) {
+      const error: ApiException = e;
+      return getErrorRes(event, error.statusCode, error.res);
     } else {
       return getErrorRes(event, 500, `An unknown error occurred: ${e}`);
     }

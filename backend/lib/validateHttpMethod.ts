@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
-import { ApiError } from '../../lib/Types';
+import { ApiException } from '../../lib/Types';
 
 export default function validateHttpMethod(
   event: APIGatewayProxyEvent,
@@ -16,8 +16,8 @@ export default function validateHttpMethod(
 ): void {
   if (event.httpMethod !== requestMethod) {
     throw {
-      message: `Must invoke with ${requestMethod}, not ${event.httpMethod}`,
+      res: `Must invoke with ${requestMethod}, not ${event.httpMethod}`,
       statusCode: 500,
-    } as ApiError;
+    } as ApiException;
   }
 }

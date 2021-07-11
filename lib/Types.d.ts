@@ -46,7 +46,14 @@ export interface ContactMessage {
   message: string;
 }
 
-export interface ApiError {
+export type ApiExceptionRes =
+  | string
+  | {
+      message: string;
+      [any: any]: any;
+    };
+
+export interface ApiException {
   statusCode: number;
-  message: string;
+  res: ApiExceptionRes;
 }

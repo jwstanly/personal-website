@@ -10,6 +10,7 @@ export default function getSuccessRes(
   res: object | string,
 ): APIGatewayProxyResult {
   const body = typeof res === 'string' ? { message: res } : res;
+
   const response = {
     ...getCommonHeaders(),
     statusCode: 200,
