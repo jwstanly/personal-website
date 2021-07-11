@@ -9,7 +9,8 @@
     "preserveConstEnums": true,
     "outDir": "./out",
     "skipLibCheck": true,
-    "sourceMap": false
+    "sourceMap": false,
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

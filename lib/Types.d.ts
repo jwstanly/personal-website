@@ -45,3 +45,8 @@ export interface ContactMessage {
   subject?: string;
   message: string;
 }
+
+export interface ApiError {
+  statusCode: number;
+  message: string;
+}

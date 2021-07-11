@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "aws-sdk": "^2.437.0"
+    "ajv": "^8.6.1",
+    "aws-sdk": "^2.437.0",
+    "typescript-is": "^0.18.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.51",
