@@ -12,8 +12,9 @@ import isValidEmail from '../../lib/isValidEmail';
 import { ContactMessage } from '../../lib/Types';
 
 export default function Unsubscribe(props: any) {
-  const [email, setEmail] = React.useState<string>('');
   const [name, setName] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('');
+  const [subject, setSubject] = React.useState<string>('');
   const [message, setMessage] = React.useState<string>('');
 
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -40,8 +41,14 @@ export default function Unsubscribe(props: any) {
       },
       message: message,
     };
+    if (subject) inputMessage.subject = subject;
 
     await API.postContact(inputMessage);
+
+    setName('');
+    setEmail('');
+    setSubject('');
+    setMessage('');
 
     setSuccess('Your message has been sent');
     setLoading(false);
@@ -97,6 +104,11 @@ export default function Unsubscribe(props: any) {
           setValue={setEmail}
           label="Email"
           type="email"
+        />
+        <TextField
+          value={subject}
+          setValue={setSubject}
+          label="Subject (optional)"
         />
         <TextArea
           value={message}

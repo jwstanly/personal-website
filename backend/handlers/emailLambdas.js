@@ -155,7 +155,8 @@ async function contact(event) {
             },
             Subject: {
                 Charset: 'UTF-8',
-                Data: `${inputMessage.user.name} has contacted you from ${domainName}`,
+                Data: inputMessage.subject ||
+                    `${inputMessage.user.name} has contacted you from ${domainName}`,
             },
         },
         Source: `contact@${domainName}`,

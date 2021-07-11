@@ -3,13 +3,7 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import SES, { SendEmailRequest } from 'aws-sdk/clients/ses';
 
 import Util from './lambdaUtils';
-import {
-  BlogComment,
-  BlogArticle,
-  BlogCommentReply,
-  BlogUser,
-  ContactMessage,
-} from '../../lib/Types';
+import { ContactMessage } from '../../lib/Types';
 
 const blogTable = process.env.BLOG_TABLE;
 const awsRegion = process.env.AWS_REGION;
@@ -200,7 +194,9 @@ export async function contact(
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `${inputMessage.user.name} has contacted you from ${domainName}`,
+        Data:
+          inputMessage.subject ||
+          `${inputMessage.user.name} has contacted you from ${domainName}`,
       },
     },
     Source: `contact@${domainName}`,

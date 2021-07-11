@@ -42,5 +42,6 @@ export interface BlogUser {
 
 export interface ContactMessage {
   user: BlogUser;
+  subject?: string;
   message: string;
 }
