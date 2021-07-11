@@ -16,7 +16,7 @@ Parameters:
   EmailAddress:
     Type: String
     Description: Your email address. Contact forms and other notifications will be sent to this address.
-    AllowedPattern: '/[^\s@]+@[^\s@]+\.[^\s@]+/'
+    AllowedPattern: '^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$'
     ConstraintDescription: Must be your email address.
   AcmCertificateArn:
     Type: String

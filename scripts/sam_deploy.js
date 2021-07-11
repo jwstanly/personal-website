@@ -65,7 +65,7 @@ sh.exec(
     `--stack-name ${DOMAIN_NAME.split('.')[0]}-website ` +
     '--parameter-overrides ' +
     `DomainName=${DOMAIN_NAME} ` +
-    `EmailAddress=${EMAIL_ADDRESS}` +
+    `EmailAddress=${EMAIL_ADDRESS} ` +
     `AcmCertificateArn=${ACM_CERT_ARN} ` +
     '--resolve-s3 ' +
     '--capabilities CAPABILITY_IAM ' +
