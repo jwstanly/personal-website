@@ -7,7 +7,7 @@
     "moduleResolution": "Node",
     "declaration": true,
     "preserveConstEnums": true,
-    "outDir": "./handlers",
+    "outDir": "./lib",
     "skipLibCheck": true,
     "sourceMap": true
   },

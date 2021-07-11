@@ -1,9 +1,10 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import SES, { SendEmailRequest } from 'aws-sdk/clients/ses';
+import SES from 'aws-sdk/clients/ses';
 
 import Util from './lambdaUtils';
 import { ContactMessage } from '../../lib/Types';
+import getEmailHtml, { EmailType } from '../../lib/getEmailHtml';
 
 const blogTable = process.env.BLOG_TABLE;
 const awsRegion = process.env.AWS_REGION;
@@ -181,15 +182,23 @@ export async function contact(
     );
   }
 
-  const emailParams: SendEmailRequest = {
+  console.log('received:', inputMessage);
+
+  const emailParams: SES.SendEmailRequest = {
     Destination: {
       ToAddresses: [myEmailAddress],
     },
     Message: {
       Body: {
-        Text: {
+        Html: {
           Charset: 'UTF-8',
-          Data: inputMessage.message,
+          Data: getEmailHtml({
+            domainName: domainName,
+            type: EmailType.Contact,
+            contactInfo: {
+              inputMessage: inputMessage,
+            },
+          }),
         },
       },
       Subject: {
