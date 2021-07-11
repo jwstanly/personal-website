@@ -15,8 +15,8 @@ Parameters:
     ConstraintDescription: Must be a domain name including the TLD.
   EmailAddress:
     Type: String
-    Description: Your email address. Contact forms and other notifications will be sent to this address.
-    AllowedPattern: '^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$'
+    Description: Your email address. Contact forms and other notifications will be sent to this address. Example = yourEmail@email.com
+    AllowedPattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
     ConstraintDescription: Must be your email address.
   AcmCertificateArn:
     Type: String
@@ -283,6 +283,7 @@ Resources:
       Description: Contact website owner with form
       Policies:
         - AWSLambdaBasicExecutionRole
+        - AmazonSESFullAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref PersonalWebsiteTable
       Events:

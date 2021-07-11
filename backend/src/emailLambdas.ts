@@ -173,9 +173,11 @@ export async function contact(
   const missingAttributes: string[] = [];
   if (!inputMessage.user || typeof inputMessage.user !== 'object')
     missingAttributes.push('user object');
-  if (inputMessage.user && !inputMessage.user.id)
-    missingAttributes.push('user.id');
-  if (!inputMessage.message) missingAttributes.push('message');
+  if (!inputMessage.user?.id) missingAttributes.push('user.id');
+  if (!inputMessage.user?.name) missingAttributes.push('user.name');
+  if (!inputMessage.user?.email) missingAttributes.push('user.email');
+  if (!inputMessage.message || typeof inputMessage.message !== 'string')
+    missingAttributes.push('message');
 
   if (missingAttributes.length !== 0) {
     return Util.getErrorRes(

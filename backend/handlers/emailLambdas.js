@@ -114,6 +114,7 @@ async function unsubscribeEmail(event) {
 }
 exports.unsubscribeEmail = unsubscribeEmail;
 async function contact(event) {
+    var _a, _b, _c;
     if (event.httpMethod !== 'POST') {
         return lambdaUtils_1.default.getErrorRes(event, 405, `Must call unsubscribeEmail with POST, not: ${event.httpMethod}`);
     }
@@ -130,9 +131,13 @@ async function contact(event) {
     const missingAttributes = [];
     if (!inputMessage.user || typeof inputMessage.user !== 'object')
         missingAttributes.push('user object');
-    if (inputMessage.user && !inputMessage.user.id)
+    if (!((_a = inputMessage.user) === null || _a === void 0 ? void 0 : _a.id))
         missingAttributes.push('user.id');
-    if (!inputMessage.message)
+    if (!((_b = inputMessage.user) === null || _b === void 0 ? void 0 : _b.name))
+        missingAttributes.push('user.name');
+    if (!((_c = inputMessage.user) === null || _c === void 0 ? void 0 : _c.email))
+        missingAttributes.push('user.email');
+    if (!inputMessage.message || typeof inputMessage.message !== 'string')
         missingAttributes.push('message');
     if (missingAttributes.length !== 0) {
         return lambdaUtils_1.default.getErrorRes(event, 400, `Missing body attributes: ${missingAttributes.join(', ')}`);
