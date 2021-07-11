@@ -144,7 +144,7 @@ export async function upsertComment(
 
     return Util.getSuccessRes(event, res);
   } catch (error) {
-    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+    return Util.getErrorRes(event, 500, `A database error occurred. ${error}`);
   }
 }
 
@@ -354,7 +354,7 @@ export async function upsertCommentReply(
 
     return Util.getSuccessRes(event, res);
   } catch (error) {
-    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+    return Util.getErrorRes(event, 500, `A database error occurred. ${error}`);
   }
 }
 
@@ -425,7 +425,7 @@ export async function deleteComment(
     const res = await docClient.update(params).promise();
     return Util.getSuccessRes(event, res);
   } catch (error) {
-    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+    return Util.getErrorRes(event, 500, `A database error occurred. ${error}`);
   }
 }
 
@@ -518,6 +518,6 @@ export async function deleteCommentReply(
     const res = await docClient.update(params).promise();
     return Util.getSuccessRes(event, res);
   } catch (error) {
-    return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+    return Util.getErrorRes(event, 500, `A database error occurred. ${error}`);
   }
 }

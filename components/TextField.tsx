@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/Form.module.css';
 
 interface TextFieldProps {
-  type: string;
+  type?: string;
   value: string;
   setValue: (string) => void;
   label?: string;
@@ -24,7 +24,7 @@ export default function TextField(props: TextFieldProps) {
       </div>
       <div className={styles.formInput}>
         <input
-          type={props.type}
+          type={props.type || 'text'}
           value={props.value}
           onInput={e => props.setValue((e.target as HTMLTextAreaElement).value)}
           onKeyPress={enterAction}

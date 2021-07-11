@@ -1,21 +1,17 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import SES from 'aws-sdk/clients/ses';
+import SES, { SendEmailRequest } from 'aws-sdk/clients/ses';
 
 import Util from './lambdaUtils';
-import {
-  BlogComment,
-  BlogArticle,
-  BlogCommentReply,
-  BlogUser,
-} from '../../lib/Types';
+import { ContactMessage } from '../../lib/Types';
 
 const blogTable = process.env.BLOG_TABLE;
 const awsRegion = process.env.AWS_REGION;
 const domainName = process.env.DOMAIN_NAME;
+const myEmailAddress = process.env.EMAIL_ADDRESS;
 
 const docClient = new DocumentClient();
-const ses = new SES({ region: awsRegion });
+const sesClient = new SES({ region: awsRegion });
 
 export async function unsubscribeEmail(
   event: APIGatewayProxyEvent,
@@ -85,7 +81,11 @@ export async function unsubscribeEmail(
       const res = await docClient.update(params).promise();
       return Util.getSuccessRes(event, res);
     } catch (error) {
-      return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+      return Util.getErrorRes(
+        event,
+        500,
+        `A database error occurred. ${error}`,
+      );
     }
   } else {
     // user was from a reply comment; delete email from reply comment in root comment
@@ -128,7 +128,84 @@ export async function unsubscribeEmail(
       const res = await docClient.update(params).promise();
       return Util.getSuccessRes(event, res);
     } catch (error) {
-      return Util.getErrorRes(event, 500, `A database error occured. ${error}`);
+      return Util.getErrorRes(
+        event,
+        500,
+        `A database error occurred. ${error}`,
+      );
     }
+  }
+}
+
+export async function contact(
+  event: APIGatewayProxyEvent,
+): Promise<APIGatewayProxyResult> {
+  if (event.httpMethod !== 'POST') {
+    return Util.getErrorRes(
+      event,
+      405,
+      `Must call unsubscribeEmail with POST, not: ${event.httpMethod}`,
+    );
+  }
+
+  let inputMessage: ContactMessage;
+
+  try {
+    inputMessage = JSON.parse(event.body);
+  } catch (error) {
+    return Util.getErrorRes(
+      event,
+      400,
+      `Failed to parse JSON. Error info: ${error}`,
+    );
+  }
+
+  if (!inputMessage) {
+    return Util.getErrorRes(event, 400, 'No message posted');
+  }
+
+  const missingAttributes: string[] = [];
+  if (!inputMessage.user || typeof inputMessage.user !== 'object')
+    missingAttributes.push('user object');
+  if (!inputMessage.user?.id) missingAttributes.push('user.id');
+  if (!inputMessage.user?.name) missingAttributes.push('user.name');
+  if (!inputMessage.user?.email) missingAttributes.push('user.email');
+  if (!inputMessage.message || typeof inputMessage.message !== 'string')
+    missingAttributes.push('message');
+
+  if (missingAttributes.length !== 0) {
+    return Util.getErrorRes(
+      event,
+      400,
+      `Missing body attributes: ${missingAttributes.join(', ')}`,
+    );
+  }
+
+  const emailParams: SendEmailRequest = {
+    Destination: {
+      ToAddresses: [myEmailAddress],
+    },
+    Message: {
+      Body: {
+        Text: {
+          Charset: 'UTF-8',
+          Data: inputMessage.message,
+        },
+      },
+      Subject: {
+        Charset: 'UTF-8',
+        Data:
+          inputMessage.subject ||
+          `${inputMessage.user.name} has contacted you from ${domainName}`,
+      },
+    },
+    Source: `contact@${domainName}`,
+  };
+
+  try {
+    const res = await sesClient.sendEmail(emailParams).promise();
+    return Util.getSuccessRes(event, res);
+  } catch (error) {
+    return Util.getErrorRes(event, 500, `An email error occurred. ${error}`);
   }
 }

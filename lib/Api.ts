@@ -1,19 +1,26 @@
-import { BlogArticle, BlogComment, BlogCommentReply, BlogVote } from './Types';
+import {
+  BlogArticle,
+  BlogComment,
+  BlogCommentReply,
+  BlogVote,
+  ContactMessage,
+} from './Types';
 import Util from './Util';
 import env from '../.env-cmdrc.js';
 
 const API_URL = `https://api.${env.production.DOMAIN_NAME}`;
 
 export default {
-  getAllArticles: getAllArticles,
-  getArticleByTitle: getArticleByTitle,
-  upsertArticle: upsertArticle,
-  upsertComment: upsertComment,
-  deleteComment: deleteComment,
-  upsertCommentReply: upsertCommentReply,
-  deleteCommentReply: deleteCommentReply,
-  upsertVote: upsertVote,
-  unsubscribeEmail: unsubscribeEmail,
+  getAllArticles,
+  getArticleByTitle,
+  upsertArticle,
+  upsertComment,
+  deleteComment,
+  upsertCommentReply,
+  deleteCommentReply,
+  upsertVote,
+  unsubscribeEmail,
+  postContact,
 };
 
 function getKeyParams() {
@@ -188,6 +195,24 @@ async function unsubscribeEmail(
   return fetch(url, {
     ...getKeyParams(),
     method: 'DELETE',
+  })
+    .then(res => res.json())
+    .then(data => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+async function postContact(message: ContactMessage): Promise<any> {
+  const url = `${API_URL}/contact`;
+  // console.log(url, team);
+  return fetch(url, {
+    ...getKeyParams(),
+    method: 'POST',
+    body: JSON.stringify(message),
   })
     .then(res => res.json())
     .then(data => {

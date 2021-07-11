@@ -20,7 +20,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <Navbar
         color="#FFF"
         options={[
-          { label: 'Contact', href: '/#contact' },
+          { label: 'Contact', href: '/contact' },
           { label: 'Blog', href: '/blog' },
           { label: 'Home', href: '/' },
         ]}
