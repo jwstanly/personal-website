@@ -23,6 +23,11 @@ Parameters:
     Description: The Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate. Example = arn:aws:acm:[resource_id_here]
     AllowedPattern: 'arn:aws:acm:.*'
     ConstraintDescription: Must be the ARN for the ACM certificate.
+  DebugMode:
+    Type: String
+    Description: Determines if Lambdas will forward logs to CloudWatch. At scale this can cost money.
+    AllowedPattern: '^(?i)(true|false)$'
+    ConstraintDescription: Must be true or false.
 
 Globals:
   Function:
@@ -35,6 +40,7 @@ Globals:
         BLOG_TABLE: !Ref PersonalWebsiteTable
         DOMAIN_NAME: !Ref DomainName
         EMAIL_ADDRESS: !Ref EmailAddress
+        DEBUG_MODE: !Ref DebugMode
 
 Resources:
   PersonalWebsiteApi:

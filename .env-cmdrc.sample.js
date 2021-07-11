@@ -7,10 +7,12 @@ const env = {
     ACM_CERT_ARN: 'YourACMCertificateARN',
     CF_DISTRIBUTION_ID: 'YourCloudFrontDistributionID',
     API_KEY: 'YourAPIKey',
+    DEBUG_MODE: false,
   },
   local: {
     ENV_NAME: 'LOCAL',
     AWS_CLI_PROFILE: 'default',
+    DEBUG_MODE: true,
   },
 };
 
