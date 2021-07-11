@@ -192,13 +192,16 @@ export async function contact(
       Body: {
         Html: {
           Charset: 'UTF-8',
-          Data: getEmailHtml({
-            domainName: domainName,
-            type: EmailType.Contact,
-            contactInfo: {
-              inputMessage: inputMessage,
-            },
-          }),
+          Data: `Name: ${inputMessage.user.name} (${inputMessage.user.id})
+          Email: ${inputMessage.user.email}\n\n
+          Message:${inputMessage.message}`,
+          // getEmailHtml({
+          //   domainName: domainName,
+          //   type: EmailType.Contact,
+          //   contactInfo: {
+          //     inputMessage: inputMessage,
+          //   },
+          // }),
         },
       },
       Subject: {

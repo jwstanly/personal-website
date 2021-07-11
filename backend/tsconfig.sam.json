@@ -7,9 +7,9 @@
     "moduleResolution": "Node",
     "declaration": true,
     "preserveConstEnums": true,
-    "outDir": "./lib",
+    "outDir": "./out",
     "skipLibCheck": true,
-    "sourceMap": true
+    "sourceMap": false
   },
   "include": ["src"],
   "exclude": ["node_modules"]
