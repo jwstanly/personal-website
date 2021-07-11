@@ -45,15 +45,3 @@ export interface ContactMessage {
   subject?: string;
   message: string;
 }
-
-export type ApiExceptionRes =
-  | string
-  | {
-      message: string;
-      [any: any]: any;
-    };
-
-export interface ApiException {
-  statusCode: number;
-  res: ApiExceptionRes;
-}

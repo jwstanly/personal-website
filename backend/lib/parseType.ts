@@ -1,4 +1,4 @@
-import { ApiException } from '../../lib/Types';
+import ApiException from './ApiException';
 import getTypeDefinition from './getTypeDefinition';
 import isType from './isType';
 
@@ -7,19 +7,19 @@ export default function parseType<T>(json: string, type: string): T {
   try {
     input = JSON.parse(json);
   } catch (e) {
-    throw {
+    throw new ApiException({
       res: 'Unable to parse JSON',
       statusCode: 400,
-    } as ApiException;
+    });
   }
   if (!isType(input, type)) {
-    throw {
-      statusCode: 400,
+    throw new ApiException({
       res: {
         message: `Incorrect type. Must match ${type} schema`,
         schema: getTypeDefinition(type),
       },
-    } as ApiException;
+      statusCode: 400,
+    });
   }
 
   return input;

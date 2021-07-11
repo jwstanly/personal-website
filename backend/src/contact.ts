@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import SES from 'aws-sdk/clients/ses';
-import { ApiException, ContactMessage } from '../../lib/Types';
+import { ContactMessage } from '../../lib/Types';
 import validateHttpMethod from '../lib/validateHttpMethod';
 import parseType from '../lib/parseType';
 import isType from '../lib/isType';
@@ -8,6 +8,7 @@ import logEvent from '../lib/logEvent';
 import logInput from '../lib/logInput';
 import getSuccessRes from '../lib/getSuccessRes';
 import getErrorRes from '../lib/getErrorRes';
+import ApiException from '../lib/ApiException';
 
 const { AWS_REGION, DOMAIN_NAME, EMAIL_ADDRESS } = process.env;
 
@@ -63,12 +64,17 @@ export async function index(
 
     const res = await sesClient.sendEmail(emailParams).promise();
     return getSuccessRes(event, res);
-  } catch (e) {
-    if (isType(e, 'ApiException')) {
-      const error: ApiException = e;
-      return getErrorRes(event, error.statusCode, error.res);
+  } catch (error) {
+    if (error instanceof ApiException) {
+      return getErrorRes(event, error);
     } else {
-      return getErrorRes(event, 500, `An unknown error occurred: ${e}`);
+      return getErrorRes(
+        event,
+        new ApiException({
+          statusCode: 500,
+          res: `An unknown error occurred. Error: ${error}`,
+        }),
+      );
     }
   }
 }
