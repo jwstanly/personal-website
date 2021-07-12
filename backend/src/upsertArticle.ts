@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { BlogArticle, UpsertArticleQueryParams } from '../../lib/Types';
+import { BlogArticle, TitleQueryParam } from '../../lib/Types';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
 
 const { BLOG_TABLE } = process.env;
@@ -10,7 +10,7 @@ export async function handler(event: APIGatewayProxyEvent) {
   return await createHandler({
     event,
     httpMethod: HttpMethod.POST,
-    queryParamType: 'UpsertArticleQueryParams',
+    queryParamType: 'TitleQueryParam',
     bodyParamType: 'BlogArticle',
     service,
   });
@@ -19,7 +19,7 @@ export async function handler(event: APIGatewayProxyEvent) {
 export async function service({
   queryParams,
   body: inputArticle,
-}: ServiceParams<UpsertArticleQueryParams, BlogArticle>) {
+}: ServiceParams<TitleQueryParam, BlogArticle>) {
   const existingArticleRes = await docClient
     .get({
       TableName: BLOG_TABLE,

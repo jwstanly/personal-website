@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { BlogArticle, UpsertArticleQueryParams } from '../../lib/Types';
+import { BlogArticle, TitleQueryParam } from '../../lib/Types';
 import ApiException from '../lib/ApiException';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
 import stripEmails from '../lib/stripEmails';
@@ -12,14 +12,14 @@ export async function handler(event: APIGatewayProxyEvent) {
   return await createHandler({
     event,
     httpMethod: HttpMethod.GET,
-    queryParamType: 'UpsertArticleQueryParams',
+    queryParamType: 'TitleQueryParam',
     service,
   });
 }
 
 export async function service({
   queryParams,
-}: ServiceParams<UpsertArticleQueryParams, null>) {
+}: ServiceParams<TitleQueryParam, null>) {
   const { title } = queryParams;
 
   const params = {

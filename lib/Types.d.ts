@@ -21,6 +21,12 @@ interface BlogCommentCore {
   replies?: BlogCommentReply[];
 }
 
+export interface BlogCommentReplyCore extends BlogCommentCore {
+  replyToId: string;
+  rootCommentId: string;
+  replies: never;
+}
+
 interface Id {
   id: string;
 }
@@ -36,21 +42,28 @@ type Complete<T> = {
     : T[P] | undefined;
 };
 
+type Optional<T> = {
+  [P in keyof T]?: T[P];
+};
+
+type RecursiveOptional<T> = {
+  [P in keyof T]?: T[P] extends object ? RecursiveOptional<T[P]> : T[P];
+};
+
 // FULL STACK TYPES
 
-export interface BlogArticle extends BlogArticleCore, Timestamps, Id {}
+export interface BlogArticle extends BlogArticleCore, Id, Timestamps {}
 
 export interface BlogVote extends BlogVoteCore, Timestamps {}
 
 export type VoteType = 'LIKE' | 'DISLIKE' | 'NEUTRAL';
 
-export interface BlogComment extends BlogCommentCore, Timestamps, Id {}
+export interface BlogComment extends BlogCommentCore, Id, Timestamps {}
 
-export interface BlogCommentReply extends BlogComment {
-  replyToId: string;
-  rootCommentId: string;
-  replies: never;
-}
+export interface BlogCommentReply
+  extends BlogCommentReplyCore,
+    Timestamps,
+    Id {}
 
 export interface BlogUser extends Id {
   email?: string;
@@ -60,25 +73,36 @@ export interface BlogUser extends Id {
 export type BlogUserWithInfo = Complete<BlogUser>;
 
 export interface ContactMessage {
-  user: BlogUser;
+  user: BlogUserWithInfo;
   subject?: string;
   message: string;
 }
 
-// BACKEND TYPES
+// BACKEND ONLY TYPES
+
+export interface BlogArticleSubmit
+  extends BlogArticleCore,
+    Optional<Id>,
+    Optional<Timestamps> {}
+
+export interface BlogCommentSubmit
+  extends BlogCommentCore,
+    Optional<Id>,
+    Optional<Timestamps> {}
+
+export interface BlogCommentReplySubmit
+  extends BlogCommentReplyCore,
+    Optional<Id>,
+    Optional<Timestamps> {}
+
+export interface BlogVoteSubmit extends BlogVoteCore, Optional<Timestamps> {}
+
+export interface TitleQueryParam {
+  title: string;
+}
 
 export interface UnsubscribeEmailQueryParams {
   title: string;
   commentId: string;
   email: string;
-}
-
-export interface UpsertArticleQueryParams {
-  title: string;
-}
-
-export interface BlogArticleCore extends BlogArticle {
-  id?: number;
-  createdAt?: number;
-  lastModifiedAt?: number;
 }
