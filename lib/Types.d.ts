@@ -1,3 +1,5 @@
+import { VoteType } from './enums';
+
 // ABSTRACT/CORE TYPES
 
 interface BlogArticleCore {
@@ -55,8 +57,6 @@ type RecursiveOptional<T> = {
 export interface BlogArticle extends BlogArticleCore, Id, Timestamps {}
 
 export interface BlogVote extends BlogVoteCore, Timestamps {}
-
-export type VoteType = 'LIKE' | 'DISLIKE' | 'NEUTRAL';
 
 export interface BlogComment extends BlogCommentCore, Id, Timestamps {}
 

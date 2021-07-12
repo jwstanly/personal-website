@@ -2,6 +2,7 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
 } from 'aws-lambda/trigger/api-gateway-proxy';
+import { HttpMethod } from '../../lib/enums';
 import { ServiceParams } from '../../lib/Types';
 import ApiException from './ApiException';
 import getErrorRes from './getErrorRes';
@@ -10,18 +11,6 @@ import logEvent from './logEvent';
 import logInput from './logInput';
 import parseType from './parseType';
 import validateHttpMethod from './validateHttpMethod';
-
-export enum HttpMethod {
-  GET = 'GET',
-  HEAD = 'HEAD',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-  CONNECT = 'CONNECT',
-  OPTIONS = 'OPTIONS',
-  TRACE = 'TRACE',
-  PATCH = 'PATCH',
-}
 
 interface HandlerOptions {
   event: APIGatewayProxyEvent;

@@ -1,7 +1,8 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import SES from 'aws-sdk/clients/ses';
-import { ContactMessage } from '../../lib/Types';
-import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
+import { HttpMethod } from '../../lib/enums';
+import { ContactMessage, ServiceParams } from '../../lib/Types';
+import createHandler from '../lib/createHandler';
 
 const { AWS_REGION, DOMAIN_NAME, EMAIL_ADDRESS } = process.env;
 
