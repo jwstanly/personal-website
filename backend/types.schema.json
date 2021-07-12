@@ -1080,6 +1080,42 @@
             ],
             "type": "object"
         },
+        "DeleteCommentQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "commentId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "commentId",
+                "title"
+            ],
+            "type": "object"
+        },
+        "DeleteCommentReplyQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "replyCommentId": {
+                    "type": "string"
+                },
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "replyCommentId",
+                "rootCommentId",
+                "title"
+            ],
+            "type": "object"
+        },
         "Id": {
             "additionalProperties": false,
             "properties": {

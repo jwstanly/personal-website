@@ -247,7 +247,7 @@ Resources:
   UpsertVoteLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/voteLambdas.upsertVote
+      Handler: out/backend/src/upsertVote.handler
       Description: Upsert a vote for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
