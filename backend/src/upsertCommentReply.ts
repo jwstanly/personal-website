@@ -1,7 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import SES from 'aws-sdk/clients/ses';
-import serializeTitle from '../../lib/serializeTitle';
 import {
   BlogArticle,
   BlogComment,
@@ -13,6 +12,7 @@ import {
 import ApiException from '../lib/ApiException';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
 import getEmailHtml, { EmailType } from '../lib/getEmailHtml';
+import getKeyByArticleTitle from '../lib/getKeyByArticleTitle';
 import stripEmails from '../lib/stripEmails';
 
 const { BLOG_TABLE, DOMAIN_NAME, AWS_REGION } = process.env;
@@ -25,7 +25,7 @@ export async function handler(event: APIGatewayProxyEvent) {
     event,
     httpMethod: HttpMethod.POST,
     queryParamType: 'UpsertCommentReplyQueryParams',
-    bodyParamType: 'BlogCommentSubmit',
+    bodyParamType: 'BlogCommentReplySubmit',
     service,
   });
 }
@@ -46,7 +46,7 @@ export async function service({
     .get({
       TableName: BLOG_TABLE,
       Key: {
-        PartitionKey: `BlogArticle|${serializeTitle(queryParams.title)}`,
+        PartitionKey: getKeyByArticleTitle(queryParams.title),
       },
     })
     .promise();
@@ -158,7 +158,7 @@ export async function service({
   const params: DocumentClient.UpdateItemInput = {
     TableName: BLOG_TABLE,
     Key: {
-      PartitionKey: `BlogArticle|${serializeTitle(queryParams.title)}`,
+      PartitionKey: getKeyByArticleTitle(queryParams.title),
     },
     ReturnValues: 'ALL_NEW',
     UpdateExpression:

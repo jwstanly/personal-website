@@ -266,7 +266,7 @@ Resources:
   UnsubscribeEmailLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/emailLambdas.unsubscribeEmail
+      Handler: out/backend/src/unsubscribeEmail.handler
       Description: Unsubscribe a user by deleting their email from the comment
       Policies:
         - AWSLambdaBasicExecutionRole

@@ -4,6 +4,7 @@ import serializeTitle from '../../lib/serializeTitle';
 import { DeleteCommentQueryParams } from '../../lib/Types';
 import ApiException from '../lib/ApiException';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
+import getKeyByArticleTitle from '../lib/getKeyByArticleTitle';
 
 const { BLOG_TABLE } = process.env;
 const docClient = new DocumentClient();
@@ -22,12 +23,19 @@ export async function service({
 }: ServiceParams<DeleteCommentQueryParams, null>) {
   const { title, commentId } = queryParams;
 
+  console.log(
+    'bruh',
+    BLOG_TABLE,
+    'ddddd',
+    `BlogArticle|${serializeTitle(title)}}`,
+  );
+
   // first retrieve the entire article and find the index of the comment...
   const articleRes = await docClient
     .get({
       TableName: BLOG_TABLE,
       Key: {
-        PartitionKey: `BlogArticle|${serializeTitle(title)}}`,
+        PartitionKey: getKeyByArticleTitle(title),
       },
     })
     .promise();

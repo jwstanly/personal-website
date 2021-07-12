@@ -1,10 +1,8 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import serializeTitle from '../../lib/serializeTitle';
-import { BlogArticle, TitleQueryParam } from '../../lib/Types';
-import ApiException from '../lib/ApiException';
+import { TitleQueryParam } from '../../lib/Types';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
-import stripEmails from '../lib/stripEmails';
+import getKeyByArticleTitle from '../lib/getKeyByArticleTitle';
 
 const { BLOG_TABLE } = process.env;
 const docClient = new DocumentClient();
@@ -24,7 +22,7 @@ export async function service({
   const params: DocumentClient.DeleteItemInput = {
     TableName: BLOG_TABLE,
     Key: {
-      PartitionKey: `BlogArticle|${serializeTitle(queryParams.title)}`,
+      PartitionKey: getKeyByArticleTitle(queryParams.title),
     },
   };
 
