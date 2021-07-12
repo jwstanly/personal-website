@@ -12,7 +12,7 @@ const docClient = new DocumentClient();
 export async function handler(event: APIGatewayProxyEvent) {
   return await createHandler({
     event,
-    httpMethod: HttpMethod.GET,
+    httpMethod: HttpMethod.DELETE,
     queryParamType: 'TitleQueryParam',
     service,
   });
