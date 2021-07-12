@@ -28,9 +28,13 @@ export async function service({
       Body: {
         Text: {
           Charset: 'UTF-8',
-          Data: `Name: ${inputMessage.user.name} (${inputMessage.user.id})\n
-                  Email: ${inputMessage.user.email}\n\n
-                  Message: ${inputMessage.message}`,
+          Data: [
+            `Name: ${inputMessage.user.name}`,
+            `Email: ${inputMessage.user.email}`,
+            `UserId: ${inputMessage.user.id}`,
+            '\n',
+            inputMessage.message,
+          ].join('\n'),
         },
         // Html: {
         //   Charset: 'UTF-8',
