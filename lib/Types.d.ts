@@ -105,6 +105,15 @@ export interface UpsertCommentReplyQueryParams extends TitleQueryParam {
   rootCommentId: string;
 }
 
+export interface DeleteCommentQueryParams extends TitleQueryParam {
+  commentId: string;
+}
+
+export interface DeleteCommentReplyQueryParams
+  extends UpsertCommentReplyQueryParams {
+  replyCommentId: string;
+}
+
 export interface UnsubscribeEmailQueryParams {
   title: string;
   commentId: string;

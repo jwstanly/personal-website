@@ -209,7 +209,7 @@ Resources:
   DeleteCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.deleteComment
+      Handler: out/backend/src/deleteComment.handler
       Description: Delete a comment in a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -228,7 +228,7 @@ Resources:
   DeleteCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.deleteCommentReply
+      Handler: out/backend/src/deleteCommentReply.handler
       Description: Delete a comment in a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
