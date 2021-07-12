@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
+import { HttpMethod } from '../../lib/enums';
 import ApiException from './ApiException';
-import { HttpMethod } from './createHandler';
 
 export default function validateHttpMethod(
   event: APIGatewayProxyEvent,

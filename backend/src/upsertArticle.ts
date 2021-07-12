@@ -1,12 +1,13 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { HttpMethod } from '../../lib/enums';
 import {
   BlogArticle,
   BlogArticleSubmit,
   ServiceParams,
   TitleQueryParam,
 } from '../../lib/Types';
-import createHandler, { HttpMethod } from '../lib/createHandler';
+import createHandler from '../lib/createHandler';
 import getKeyByArticleTitle from '../lib/getKeyByArticleTitle';
 
 const { BLOG_TABLE } = process.env;

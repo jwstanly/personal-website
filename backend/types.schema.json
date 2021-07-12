@@ -1136,6 +1136,20 @@
             "additionalProperties": false,
             "type": "object"
         },
+        "ServiceParams": {
+            "additionalProperties": false,
+            "properties": {
+                "body": {
+                    "additionalProperties": false,
+                    "type": "object"
+                },
+                "queryParams": {
+                    "additionalProperties": false,
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
         "Timestamps": {
             "additionalProperties": false,
             "properties": {
@@ -1199,14 +1213,6 @@
                 "title"
             ],
             "type": "object"
-        },
-        "VoteType": {
-            "enum": [
-                "DISLIKE",
-                "LIKE",
-                "NEUTRAL"
-            ],
-            "type": "string"
         }
     }
 }
