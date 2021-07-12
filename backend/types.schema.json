@@ -1148,6 +1148,22 @@
             ],
             "type": "object"
         },
+        "UpsertCommentReplyQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "rootCommentId",
+                "title"
+            ],
+            "type": "object"
+        },
         "VoteType": {
             "enum": [
                 "DISLIKE",

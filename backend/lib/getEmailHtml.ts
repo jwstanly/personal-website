@@ -3,6 +3,7 @@ import {
   BlogArticle,
   BlogComment,
   BlogCommentReply,
+  BlogCommentReplySubmit,
   ContactMessage,
 } from '../../lib/Types';
 
@@ -22,9 +23,9 @@ export default function getEmailHtml({
   commentReplyInfo?: {
     article: BlogArticle;
     originalComment: BlogComment | BlogCommentReply;
-    commentReply: BlogCommentReply;
+    commentReply: BlogCommentReplySubmit;
   };
-  contactInfo: {
+  contactInfo?: {
     inputMessage: ContactMessage;
   };
 }): string {

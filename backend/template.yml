@@ -170,7 +170,7 @@ Resources:
   UpsertCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.upsertComment
+      Handler: out/backend/src/upsertComment.handler
       Description: Upsert a comment for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -189,7 +189,7 @@ Resources:
   UpsertCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.upsertCommentReply
+      Handler: out/backend/src/upsertCommentReply.handler
       Description: Upsert a comment reply for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole

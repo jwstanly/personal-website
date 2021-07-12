@@ -41,7 +41,7 @@ export async function service({
     .get({
       TableName: BLOG_TABLE,
       Key: {
-        PartitionKey: `BlogArticle|${queryParams.title.split(' ').join('+')}`,
+        PartitionKey: `BlogArticle|${serializeTitle(queryParams.title)}`,
       },
     })
     .promise();
@@ -53,7 +53,7 @@ export async function service({
     ? articleRes.Item.comments.findIndex(({ id }) => id === inputComment.id)
     : -1;
 
-  // preserve email accross edits (client-side never gets email back to edit)
+  // preserve email across edits (client-side never gets email back to edit)
   const outputUser: BlogUser = inputComment.user;
   if (
     !inputComment.user.email &&
@@ -81,7 +81,7 @@ export async function service({
   const params: DocumentClient.UpdateItemInput = {
     TableName: BLOG_TABLE,
     Key: {
-      PartitionKey: `BlogArticle|${queryParams.title.split(' ').join('+')}`,
+      PartitionKey: `BlogArticle|${serializeTitle(queryParams.title)}`,
     },
     ReturnValues: 'ALL_NEW',
     UpdateExpression:
