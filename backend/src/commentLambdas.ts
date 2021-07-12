@@ -10,7 +10,7 @@ import {
   BlogUser,
 } from '../../lib/Types';
 
-const blogTable = process.env.BLOG_TABLE;
+const BLOG_TABLE = process.env.BLOG_TABLE;
 const awsRegion = process.env.AWS_REGION;
 const domainName = process.env.DOMAIN_NAME;
 
@@ -74,7 +74,7 @@ export async function upsertComment(
   // first retrieve the entire article and find the index of the comment...
   const articleRes = await docClient
     .get({
-      TableName: blogTable,
+      TableName: BLOG_TABLE,
       Key: {
         PartitionKey: `BlogArticle|${event.queryStringParameters.title
           .split(' ')
@@ -116,7 +116,7 @@ export async function upsertComment(
 
   // ...then using the index to upsert that element of the comment list
   const params: DocumentClient.UpdateItemInput = {
-    TableName: blogTable,
+    TableName: BLOG_TABLE,
     Key: {
       PartitionKey: `BlogArticle|${event.queryStringParameters.title
         .split(' ')
@@ -221,7 +221,7 @@ export async function upsertCommentReply(
   // first retrieve the entire article and find the index of the comment...
   const articleRes = await docClient
     .get({
-      TableName: blogTable,
+      TableName: BLOG_TABLE,
       Key: {
         PartitionKey: `BlogArticle|${event.queryStringParameters.title
           .split(' ')
@@ -326,7 +326,7 @@ export async function upsertCommentReply(
 
   // ...then using the index to upsert that element of the comment list
   const params: DocumentClient.UpdateItemInput = {
-    TableName: blogTable,
+    TableName: BLOG_TABLE,
     Key: {
       PartitionKey: `BlogArticle|${event.queryStringParameters.title
         .split(' ')
@@ -390,7 +390,7 @@ export async function deleteComment(
   // first retrieve the entire article and find the index of the comment...
   const articleRes = await docClient
     .get({
-      TableName: blogTable,
+      TableName: BLOG_TABLE,
       Key: {
         PartitionKey: `BlogArticle|${title.split(' ').join('+')}`,
       },
@@ -406,7 +406,7 @@ export async function deleteComment(
 
   // ...then using the index to delete that element of the comment list
   const params: DocumentClient.UpdateItemInput = {
-    TableName: blogTable,
+    TableName: BLOG_TABLE,
     Key: {
       PartitionKey: `BlogArticle|${title.split(' ').join('+')}`,
     },
@@ -464,7 +464,7 @@ export async function deleteCommentReply(
   // first retrieve the entire article and find the index of the root comment and reply...
   const articleRes = await docClient
     .get({
-      TableName: blogTable,
+      TableName: BLOG_TABLE,
       Key: {
         PartitionKey: `BlogArticle|${title.split(' ').join('+')}`,
       },
@@ -499,7 +499,7 @@ export async function deleteCommentReply(
 
   // ...then using the index to delete that element from the comment list
   const params: DocumentClient.UpdateItemInput = {
-    TableName: blogTable,
+    TableName: BLOG_TABLE,
     Key: {
       PartitionKey: `BlogArticle|${title.split(' ').join('+')}`,
     },

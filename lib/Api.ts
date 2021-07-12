@@ -40,7 +40,7 @@ async function getAllArticles(): Promise<BlogArticle[]> {
     .then(res => res.json())
     .then(data => {
       console.log('GET ALL ARTICLES', url, data);
-      return data.Items;
+      return data;
     })
     .catch(error => {
       console.error(error);
@@ -53,7 +53,7 @@ async function getArticleByTitle(title: string): Promise<BlogArticle> {
     .then(res => res.json())
     .then(data => {
       // console.log(url, data);
-      return data.Item;
+      return data;
     })
     .catch(error => {
       console.error(error);
