@@ -3,6 +3,8 @@ import {
   BlogArticle,
   BlogComment,
   BlogCommentReply,
+  BlogCommentReplySubmit,
+  BlogCommentSubmit,
   BlogUser,
 } from '../lib/Types';
 import styles from '../styles/comment.module.css';
@@ -85,7 +87,7 @@ export default function CommentBoard(props: CommentBoardProps) {
     localStorage.setItem('userEmail', email);
 
     if (mode === Mode.COMMENT) {
-      const blogComment: BlogComment = {
+      const blogComment: BlogCommentSubmit = {
         user: blogUser,
         comment: comment,
       };
@@ -98,7 +100,7 @@ export default function CommentBoard(props: CommentBoardProps) {
         setLoading(false);
       }
     } else if (mode === Mode.REPLY) {
-      const blogCommentReply: BlogCommentReply = {
+      const blogCommentReply: BlogCommentReplySubmit = {
         user: blogUser,
         replyToId: highlightedComment.id,
         rootCommentId: highlightedComment.replies

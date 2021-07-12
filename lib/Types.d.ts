@@ -26,7 +26,7 @@ interface BlogCommentCore {
 export interface BlogCommentReplyCore extends BlogCommentCore {
   replyToId: string;
   rootCommentId: string;
-  replies: never;
+  replies?: never;
 }
 
 interface Id {

@@ -1,8 +1,12 @@
 import {
   BlogArticle,
+  BlogArticleSubmit,
   BlogComment,
   BlogCommentReply,
+  BlogCommentReplySubmit,
+  BlogCommentSubmit,
   BlogVote,
+  BlogVoteSubmit,
   ContactMessage,
 } from './Types';
 import env from '../.env-cmdrc.js';
@@ -60,7 +64,7 @@ async function getArticleByTitle(title: string): Promise<BlogArticle> {
     });
 }
 
-async function upsertArticle(article: BlogArticle): Promise<any> {
+async function upsertArticle(article: BlogArticleSubmit): Promise<any> {
   const url = `${API_URL}/blog`;
   // console.log(url, team);
   return fetch(url, {
@@ -80,7 +84,7 @@ async function upsertArticle(article: BlogArticle): Promise<any> {
 
 async function upsertComment(
   title: string,
-  comment: BlogComment,
+  comment: BlogCommentSubmit,
 ): Promise<any> {
   const url = `${API_URL}/blog/comment?title=${serializeTitle(title)}`;
   // console.log(url, team);
@@ -121,7 +125,7 @@ async function deleteComment(title: string, commentId: string): Promise<any> {
 async function upsertCommentReply(
   title: string,
   rootCommentId: string,
-  reply: BlogCommentReply,
+  reply: BlogCommentReplySubmit,
 ): Promise<any> {
   const url = `${API_URL}/blog/comment/reply?title=${serializeTitle(
     title,
@@ -165,7 +169,7 @@ async function deleteCommentReply(
     });
 }
 
-async function upsertVote(title: string, vote: BlogVote) {
+async function upsertVote(title: string, vote: BlogVoteSubmit) {
   const url = `${API_URL}/blog/vote?title=${serializeTitle(title)}`;
   // console.log(url, vote);
   return fetch(url, {
