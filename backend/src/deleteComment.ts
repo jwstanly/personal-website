@@ -31,6 +31,14 @@ export async function service({
       },
     })
     .promise();
+
+  if (!articleRes.Item) {
+    throw new ApiException({
+      statusCode: 404,
+      res: 'No article found to delete comment from',
+    });
+  }
+
   const existingCommentIndex = articleRes.Item.comments.findIndex(
     ({ id }) => id === commentId,
   );
