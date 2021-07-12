@@ -1,15 +1,6 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import SES from 'aws-sdk/clients/ses';
-
-import Util from './lambdaUtils';
-import logEvent from '../lib/logEvent';
-import validateHttpMethod from '../lib/validateHttpMethod';
-import parseType from '../lib/parseType';
 import { UnsubscribeEmailQueryParams } from '../../lib/Types';
-import ApiException from '../lib/ApiException';
-import getErrorRes from '../lib/getErrorRes';
-import getSuccessRes from '../lib/getSuccessRes';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
 
 const { BLOG_TABLE } = process.env;

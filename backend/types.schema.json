@@ -22,7 +22,52 @@
                             },
                             "replies": {
                                 "items": {
-                                    "$ref": "#/definitions/BlogCommentReply"
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "comment": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "number"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "lastModifiedAt": {
+                                            "type": "number"
+                                        },
+                                        "replyToId": {
+                                            "type": "string"
+                                        },
+                                        "rootCommentId": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "comment",
+                                        "replyToId",
+                                        "rootCommentId",
+                                        "user"
+                                    ],
+                                    "type": "object"
                                 },
                                 "type": "array"
                             },
@@ -139,7 +184,52 @@
                 },
                 "replies": {
                     "items": {
-                        "$ref": "#/definitions/BlogCommentReply"
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replyToId": {
+                                "type": "string"
+                            },
+                            "rootCommentId": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "replyToId",
+                            "rootCommentId",
+                            "user"
+                        ],
+                        "type": "object"
                     },
                     "type": "array"
                 },
@@ -169,7 +259,52 @@
             "type": "object"
         },
         "BlogCommentReply": {
-            "$ref": "#/definitions/BlogCommentReply"
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "replyToId": {
+                    "type": "string"
+                },
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "replyToId",
+                "rootCommentId",
+                "user"
+            ],
+            "type": "object"
         },
         "BlogUser": {
             "additionalProperties": false,
@@ -266,6 +401,18 @@
             "required": [
                 "commentId",
                 "email",
+                "title"
+            ],
+            "type": "object"
+        },
+        "UpsertArticleQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
                 "title"
             ],
             "type": "object"

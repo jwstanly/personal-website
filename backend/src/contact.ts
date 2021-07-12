@@ -1,7 +1,4 @@
-import {
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult,
-} from 'aws-lambda/trigger/api-gateway-proxy';
+import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import SES from 'aws-sdk/clients/ses';
 import { ContactMessage } from '../../lib/Types';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
