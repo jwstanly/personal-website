@@ -7,9 +7,10 @@
     "moduleResolution": "Node",
     "declaration": true,
     "preserveConstEnums": true,
-    "outDir": "./handlers",
+    "outDir": "./out",
     "skipLibCheck": true,
-    "sourceMap": true
+    "sourceMap": false,
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

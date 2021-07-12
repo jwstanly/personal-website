@@ -1,0 +1,1219 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "BlogArticle": {
+            "additionalProperties": false,
+            "properties": {
+                "comments": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replies": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "comment": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "number"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "lastModifiedAt": {
+                                            "type": "number"
+                                        },
+                                        "replyToId": {
+                                            "type": "string"
+                                        },
+                                        "rootCommentId": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "comment",
+                                        "createdAt",
+                                        "id",
+                                        "lastModifiedAt",
+                                        "replyToId",
+                                        "rootCommentId",
+                                        "user"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "createdAt",
+                            "id",
+                            "lastModifiedAt",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "subheader": {
+                    "type": "string"
+                },
+                "tags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "votes": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "userId": {
+                                "type": "string"
+                            },
+                            "vote": {
+                                "enum": [
+                                    "DISLIKE",
+                                    "LIKE",
+                                    "NEUTRAL"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "createdAt",
+                            "lastModifiedAt",
+                            "userId",
+                            "vote"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "content",
+                "createdAt",
+                "id",
+                "image",
+                "lastModifiedAt",
+                "subheader",
+                "tags",
+                "title"
+            ],
+            "type": "object"
+        },
+        "BlogArticleCore": {
+            "additionalProperties": false,
+            "properties": {
+                "comments": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replies": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "comment": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "number"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "lastModifiedAt": {
+                                            "type": "number"
+                                        },
+                                        "replyToId": {
+                                            "type": "string"
+                                        },
+                                        "rootCommentId": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "comment",
+                                        "createdAt",
+                                        "id",
+                                        "lastModifiedAt",
+                                        "replyToId",
+                                        "rootCommentId",
+                                        "user"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "createdAt",
+                            "id",
+                            "lastModifiedAt",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "subheader": {
+                    "type": "string"
+                },
+                "tags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "votes": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "userId": {
+                                "type": "string"
+                            },
+                            "vote": {
+                                "enum": [
+                                    "DISLIKE",
+                                    "LIKE",
+                                    "NEUTRAL"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "createdAt",
+                            "lastModifiedAt",
+                            "userId",
+                            "vote"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "content",
+                "image",
+                "subheader",
+                "tags",
+                "title"
+            ],
+            "type": "object"
+        },
+        "BlogArticleSubmit": {
+            "additionalProperties": false,
+            "properties": {
+                "comments": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replies": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "comment": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "number"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "lastModifiedAt": {
+                                            "type": "number"
+                                        },
+                                        "replyToId": {
+                                            "type": "string"
+                                        },
+                                        "rootCommentId": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "comment",
+                                        "createdAt",
+                                        "id",
+                                        "lastModifiedAt",
+                                        "replyToId",
+                                        "rootCommentId",
+                                        "user"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "createdAt",
+                            "id",
+                            "lastModifiedAt",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "subheader": {
+                    "type": "string"
+                },
+                "tags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "votes": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "userId": {
+                                "type": "string"
+                            },
+                            "vote": {
+                                "enum": [
+                                    "DISLIKE",
+                                    "LIKE",
+                                    "NEUTRAL"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "createdAt",
+                            "lastModifiedAt",
+                            "userId",
+                            "vote"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "content",
+                "image",
+                "subheader",
+                "tags",
+                "title"
+            ],
+            "type": "object"
+        },
+        "BlogComment": {
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "replies": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replyToId": {
+                                "type": "string"
+                            },
+                            "rootCommentId": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "createdAt",
+                            "id",
+                            "lastModifiedAt",
+                            "replyToId",
+                            "rootCommentId",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "createdAt",
+                "id",
+                "lastModifiedAt",
+                "user"
+            ],
+            "type": "object"
+        },
+        "BlogCommentCore": {
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "replies": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replyToId": {
+                                "type": "string"
+                            },
+                            "rootCommentId": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "createdAt",
+                            "id",
+                            "lastModifiedAt",
+                            "replyToId",
+                            "rootCommentId",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "user"
+            ],
+            "type": "object"
+        },
+        "BlogCommentReply": {
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "replyToId": {
+                    "type": "string"
+                },
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "createdAt",
+                "id",
+                "lastModifiedAt",
+                "replyToId",
+                "rootCommentId",
+                "user"
+            ],
+            "type": "object"
+        },
+        "BlogCommentReplyCore": {
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "replyToId": {
+                    "type": "string"
+                },
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "replyToId",
+                "rootCommentId",
+                "user"
+            ],
+            "type": "object"
+        },
+        "BlogCommentReplySubmit": {
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "replyToId": {
+                    "type": "string"
+                },
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "replyToId",
+                "rootCommentId",
+                "user"
+            ],
+            "type": "object"
+        },
+        "BlogCommentSubmit": {
+            "additionalProperties": false,
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "replies": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "comment": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "number"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastModifiedAt": {
+                                "type": "number"
+                            },
+                            "replyToId": {
+                                "type": "string"
+                            },
+                            "rootCommentId": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "comment",
+                            "createdAt",
+                            "id",
+                            "lastModifiedAt",
+                            "replyToId",
+                            "rootCommentId",
+                            "user"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "comment",
+                "user"
+            ],
+            "type": "object"
+        },
+        "BlogUser": {
+            "additionalProperties": false,
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "type": "object"
+        },
+        "BlogUserWithInfo": {
+            "additionalProperties": false,
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "id",
+                "name"
+            ],
+            "type": "object"
+        },
+        "BlogVote": {
+            "additionalProperties": false,
+            "properties": {
+                "createdAt": {
+                    "type": "number"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "vote": {
+                    "enum": [
+                        "DISLIKE",
+                        "LIKE",
+                        "NEUTRAL"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "createdAt",
+                "lastModifiedAt",
+                "userId",
+                "vote"
+            ],
+            "type": "object"
+        },
+        "BlogVoteCore": {
+            "additionalProperties": false,
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "vote": {
+                    "enum": [
+                        "DISLIKE",
+                        "LIKE",
+                        "NEUTRAL"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "userId",
+                "vote"
+            ],
+            "type": "object"
+        },
+        "BlogVoteSubmit": {
+            "additionalProperties": false,
+            "properties": {
+                "createdAt": {
+                    "type": "number"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "vote": {
+                    "enum": [
+                        "DISLIKE",
+                        "LIKE",
+                        "NEUTRAL"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "userId",
+                "vote"
+            ],
+            "type": "object"
+        },
+        "Complete": {
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "ContactMessage": {
+            "additionalProperties": false,
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "user": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "email",
+                        "id",
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "message",
+                "user"
+            ],
+            "type": "object"
+        },
+        "DeleteCommentQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "commentId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "commentId",
+                "title"
+            ],
+            "type": "object"
+        },
+        "DeleteCommentReplyQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "replyCommentId": {
+                    "type": "string"
+                },
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "replyCommentId",
+                "rootCommentId",
+                "title"
+            ],
+            "type": "object"
+        },
+        "Id": {
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "type": "object"
+        },
+        "Optional": {
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "RecursiveOptional": {
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "ServiceParams": {
+            "additionalProperties": false,
+            "properties": {
+                "body": {
+                    "additionalProperties": false,
+                    "type": "object"
+                },
+                "queryParams": {
+                    "additionalProperties": false,
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Timestamps": {
+            "additionalProperties": false,
+            "properties": {
+                "createdAt": {
+                    "type": "number"
+                },
+                "lastModifiedAt": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "createdAt",
+                "lastModifiedAt"
+            ],
+            "type": "object"
+        },
+        "TitleQueryParam": {
+            "additionalProperties": false,
+            "properties": {
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "title"
+            ],
+            "type": "object"
+        },
+        "UnsubscribeEmailQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "commentId": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "commentId",
+                "email",
+                "title"
+            ],
+            "type": "object"
+        },
+        "UpsertCommentReplyQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "rootCommentId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "rootCommentId",
+                "title"
+            ],
+            "type": "object"
+        }
+    }
+}
+

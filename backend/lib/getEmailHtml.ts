@@ -1,50 +1,35 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    getSuccessRes: getSuccessRes,
-    getErrorRes: getErrorRes,
-    stripEmails: stripEmails,
-    getEmailHTML: getEmailHTML,
-};
-function stripEmails(article) {
-    if (article.comments) {
-        for (let i = 0; i < article.comments.length; i++) {
-            if (article.comments[i].user && article.comments[i].user.email) {
-                delete article.comments[i].user.email;
-            }
-            if (article.comments[i].replies) {
-                for (let j = 0; j < article.comments[i].replies.length; j++) {
-                    delete article.comments[i].replies[j].user.email;
-                }
-            }
-        }
-    }
+import serializeTitle from '../../lib/serializeTitle';
+import {
+  BlogArticle,
+  BlogComment,
+  BlogCommentReply,
+  BlogCommentReplySubmit,
+  ContactMessage,
+} from '../../lib/Types';
+
+export enum EmailType {
+  CommentReply = 'CommentReply',
+  Contact = 'Contact',
 }
-function getSuccessRes(event, body) {
-    const response = Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: 200, body: JSON.stringify(body) });
-    // Prints in CloudWatch
-    console.info(`SUCCESS: response from: ${event.path} statusCode: ${response.statusCode} response: ${JSON.stringify(response)}`);
-    return response;
-}
-function getErrorRes(event, statusCode, message) {
-    const response = Object.assign(Object.assign({}, getCommonHeaders()), { statusCode: statusCode, body: JSON.stringify({
-            error: message,
-        }) });
-    // Prints in CloudWatch
-    console.info(`ERROR: response from: ${event.path} statusCode: ${statusCode} response: ${JSON.stringify(response)}`);
-    return response;
-}
-function getCommonHeaders() {
-    return {
-        headers: {
-            'Access-Control-Allow-Headers': 'Accept,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Forwarded-For',
-            'Access-Control-Allow-Methods': 'DELETE,GET,OPTIONS,POST',
-            'Access-Control-Allow-Origin': '*', //'https://www.jwstanly.com'
-        },
-    };
-}
-function getEmailHTML(domainName, article, originalComment, commentReply) {
-    return `
+
+export default function getEmailHtml({
+  domainName,
+  type,
+  commentReplyInfo,
+  contactInfo,
+}: {
+  domainName: string;
+  type: EmailType;
+  commentReplyInfo?: {
+    article: BlogArticle;
+    originalComment: BlogComment | BlogCommentReply;
+    commentReply: BlogCommentReplySubmit;
+  };
+  contactInfo?: {
+    inputMessage: ContactMessage;
+  };
+}): string {
+  return `
     <!DOCTYPE html
       PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -266,7 +251,18 @@ function getEmailHTML(domainName, article, originalComment, commentReply) {
                                 style="line-height: 1.2; font-size: 12px; color: #222222; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 14px;">
                                 <p dir="ltr"
                                   style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
-                                  Your comment on ${article.title} has gotten a response${commentReply.user.name ? ` from ${commentReply.user.name}` : ''}:
+                                  ${
+                                    type === EmailType.CommentReply
+                                      ? `Your comment on ${
+                                          commentReplyInfo.article.title
+                                        } has gotten a response${
+                                          commentReplyInfo.commentReply.user
+                                            .name
+                                            ? ` from ${commentReplyInfo.commentReply.user.name}`
+                                            : ''
+                                        }`
+                                      : `${contactInfo.inputMessage.user.name} has contacted you`
+                                  }:
                                 </p>
                               </div>
                             </div>
@@ -278,36 +274,51 @@ function getEmailHTML(domainName, article, originalComment, commentReply) {
                                 style="font-size: 12px; line-height: 1.2; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 14px;">
                                 <p dir="ltr"
                                   style="font-size: 12px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 14px; margin: 0;">
-                                  <em>${commentReply.comment}</em></p>
+                                  <em>${
+                                    type === EmailType.CommentReply
+                                      ? commentReplyInfo.commentReply.comment
+                                      : `Name: ${contactInfo.inputMessage.user.name}
+                                      Email: ${contactInfo.inputMessage.user.email}
+                                      Subject: ${contactInfo.inputMessage.subject}
+                                      \n
+                                      ${contactInfo.inputMessage.message}`
+                                  }</em></p>
                               </div>
                             </div>
                             <!--[if mso]></td></tr></table><![endif]-->
-                            <div align="left" class="button-container"
-                              style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
-                              <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="left"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://${domainName}/blog/article/${article.title
-        .split(' ')
-        .join('+')}" style="height:31.5pt;width:111pt;v-text-anchor:middle;" arcsize="20%" stroke="false" fillcolor="#222222"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:14px"><![endif]--><a
-                                href="https://${domainName}/blog/article/${article.title
-        .split(' ')
-        .join('+')}"
-                                style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #222222; border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; width: auto; width: auto; border-top: 1px solid #222222; border-right: 1px solid #222222; border-bottom: 1px solid #222222; border-left: 1px solid #222222; padding-top: 5px; padding-bottom: 5px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
-                                target="_blank"><span
-                                  style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:undefined;"><span
-                                    style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><span
-                                      data-mce-style="font-size: 14px; line-height: 28px;"
-                                      style="font-size: 14px; line-height: 28px;">View Reply</span></span></span></a>
-                              <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
-                            </div>
-                            <!--[if (!mso)&(!IE)]><!-->
-                            <div style="margin-top:5px;"></div>
-                            <a href="https://${domainName}/blog/unsubscribe?title=${article.title
-        .split(' ')
-        .join('+')}&commentId=${originalComment.id}&email=${originalComment.user.email}"
-                              style="text-decoration:none;cursor:pointer;color:#666;font-size:11px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
-                              Unsubscribe
-                            </a>
-                          </div>
-                          <!--<![endif]-->
+                            ${
+                              type === EmailType.CommentReply &&
+                              `<div align="left" class="button-container"
+                                style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="left"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://${domainName}/blog/article/${serializeTitle(
+                                commentReplyInfo.article.title,
+                              )}" style="height:31.5pt;width:111pt;v-text-anchor:middle;" arcsize="20%" stroke="false" fillcolor="#222222"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:14px"><![endif]--><a
+                                  href="https://${domainName}/blog/article/${serializeTitle(
+                                commentReplyInfo.article.title,
+                              )}"
+                                  style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #222222; border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; width: auto; width: auto; border-top: 1px solid #222222; border-right: 1px solid #222222; border-bottom: 1px solid #222222; border-left: 1px solid #222222; padding-top: 5px; padding-bottom: 5px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
+                                  target="_blank"><span
+                                    style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:undefined;"><span
+                                      style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><span
+                                        data-mce-style="font-size: 14px; line-height: 28px;"
+                                        style="font-size: 14px; line-height: 28px;">View Reply</span></span></span></a>
+                                <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
+                              </div>
+                              <!--[if (!mso)&(!IE)]><!-->
+                              <div style="margin-top:5px;"></div>
+                                <a href="https://${domainName}/blog/unsubscribe?title=${serializeTitle(
+                                commentReplyInfo.article.title,
+                              )}&commentId=${
+                                commentReplyInfo.originalComment.id
+                              }&email=${
+                                commentReplyInfo.originalComment.user.email
+                              }"
+                                  style="text-decoration:none;cursor:pointer;color:#666;font-size:11px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+                                  Unsubscribe
+                                </a>
+                              </div>
+                              <!--<![endif]-->`
+                            }
                         </div>
                       </div>
                       <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
@@ -366,4 +377,3 @@ function getEmailHTML(domainName, article, originalComment, commentReply) {
       </html>
   `.replace(/(\r\n|\n|\r|\t|  )/gm, '');
 }
-//# sourceMappingURL=lambdaUtils.js.map

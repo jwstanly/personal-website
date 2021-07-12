@@ -11,10 +11,12 @@ import Link from 'next/link';
 import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
 import API from '../../lib/Api';
-import Util from '../../lib/Util';
+import Util from '../../lib/formatPureText';
 import Spacer from '../../components/Spacer';
 import CenteredContainer from '../../components/CenteredContainer';
 import HeadTags from '../../components/HeadTags';
+import serializeTitle from '../../lib/serializeTitle';
+import formatPureText from '../../lib/formatPureText';
 
 export async function getStaticProps(context) {
   const articles: BlogArticle[] = await API.getAllArticles();
@@ -47,7 +49,7 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
               <div key={article.id}>
                 <CenteredContainer>
                   <Link
-                    href={`/blog/article/${Util.serializeTitle(article.title)}`}
+                    href={`/blog/article/${serializeTitle(article.title)}`}
                     passHref
                   >
                     <div className={styles.blogCard}>
@@ -62,7 +64,7 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
                         header={article.title}
                         subheader={article.subheader}
                         tags={article.tags}
-                        content={Util.formatPureText(
+                        content={formatPureText(
                           article.content.length > 400
                             ? article.content.substring(0, 400) + '...'
                             : article.content,

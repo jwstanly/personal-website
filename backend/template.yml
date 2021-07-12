@@ -23,6 +23,11 @@ Parameters:
     Description: The Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate. Example = arn:aws:acm:[resource_id_here]
     AllowedPattern: 'arn:aws:acm:.*'
     ConstraintDescription: Must be the ARN for the ACM certificate.
+  DebugMode:
+    Type: String
+    Description: Determines if Lambdas will forward logs to CloudWatch. At scale this can cost money.
+    AllowedPattern: '^(?i)(true|false)$'
+    ConstraintDescription: Must be true or false.
 
 Globals:
   Function:
@@ -35,6 +40,7 @@ Globals:
         BLOG_TABLE: !Ref PersonalWebsiteTable
         DOMAIN_NAME: !Ref DomainName
         EMAIL_ADDRESS: !Ref EmailAddress
+        DEBUG_MODE: !Ref DebugMode
 
 Resources:
   PersonalWebsiteApi:
@@ -88,7 +94,7 @@ Resources:
   GetAllArticlesLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/blogLambdas.getAllArticles
+      Handler: out/backend/src/getAllArticles.handler
       Description: Get all the blog articles
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -107,7 +113,7 @@ Resources:
   GetArticleByTitleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/blogLambdas.getArticleByTitle
+      Handler: out/backend/src/getArticleByTitle.handler
       Description: Get the blog article given its URL encoded title
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -126,7 +132,7 @@ Resources:
   UpsertArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/blogLambdas.upsertArticle
+      Handler: out/backend/src/upsertArticle.handler
       Description: Upsert a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -145,7 +151,7 @@ Resources:
   DeleteArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/blogLambdas.deleteArticle
+      Handler: out/backend/src/deleteArticle.handler
       Description: Delete the blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -164,7 +170,7 @@ Resources:
   UpsertCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.upsertComment
+      Handler: out/backend/src/upsertComment.handler
       Description: Upsert a comment for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -183,7 +189,7 @@ Resources:
   UpsertCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.upsertCommentReply
+      Handler: out/backend/src/upsertCommentReply.handler
       Description: Upsert a comment reply for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -203,7 +209,7 @@ Resources:
   DeleteCommentLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.deleteComment
+      Handler: out/backend/src/deleteComment.handler
       Description: Delete a comment in a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -222,7 +228,7 @@ Resources:
   DeleteCommentReplyLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/commentLambdas.deleteCommentReply
+      Handler: out/backend/src/deleteCommentReply.handler
       Description: Delete a comment in a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -241,7 +247,7 @@ Resources:
   UpsertVoteLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/voteLambdas.upsertVote
+      Handler: out/backend/src/upsertVote.handler
       Description: Upsert a vote for a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -260,7 +266,7 @@ Resources:
   UnsubscribeEmailLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/emailLambdas.unsubscribeEmail
+      Handler: out/backend/src/unsubscribeEmail.handler
       Description: Unsubscribe a user by deleting their email from the comment
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -279,7 +285,7 @@ Resources:
   ContactLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/emailLambdas.contact
+      Handler: out/backend/src/contact.handler
       Description: Contact website owner with form
       Policies:
         - AWSLambdaBasicExecutionRole

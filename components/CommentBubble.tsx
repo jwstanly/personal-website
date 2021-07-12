@@ -3,7 +3,6 @@ import styles from '../styles/comment.module.css';
 
 import { Code, H1, H2, H3, Text } from './Titles';
 import { BlogComment, BlogCommentReply } from '../lib/Types';
-import Util from '../lib/Util';
 import DateUtil from '../lib/Date';
 
 interface CommentProps {
