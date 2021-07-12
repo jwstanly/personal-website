@@ -5,8 +5,8 @@ import {
   BlogVote,
   ContactMessage,
 } from './Types';
-import Util from './Util';
 import env from '../.env-cmdrc.js';
+import serializeTitle from './serializeTitle';
 
 const API_URL = `https://api.${env.production.DOMAIN_NAME}`;
 
@@ -48,7 +48,7 @@ async function getAllArticles(): Promise<BlogArticle[]> {
 }
 
 async function getArticleByTitle(title: string): Promise<BlogArticle> {
-  const url = `${API_URL}/blog?title=${Util.serializeTitle(title)}`;
+  const url = `${API_URL}/blog?title=${serializeTitle(title)}`;
   return fetch(url, getKeyParams())
     .then(res => res.json())
     .then(data => {
@@ -82,7 +82,7 @@ async function upsertComment(
   title: string,
   comment: BlogComment,
 ): Promise<any> {
-  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(title)}`;
+  const url = `${API_URL}/blog/comment?title=${serializeTitle(title)}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
@@ -100,7 +100,7 @@ async function upsertComment(
 }
 
 async function deleteComment(title: string, commentId: string): Promise<any> {
-  const url = `${API_URL}/blog/comment?title=${Util.serializeTitle(
+  const url = `${API_URL}/blog/comment?title=${serializeTitle(
     title,
   )}&commentId=${commentId}`;
   // console.log(url, team);
@@ -123,7 +123,7 @@ async function upsertCommentReply(
   rootCommentId: string,
   reply: BlogCommentReply,
 ): Promise<any> {
-  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(
+  const url = `${API_URL}/blog/comment/reply?title=${serializeTitle(
     title,
   )}&rootCommentId=${rootCommentId}`;
   // console.log(url, team);
@@ -147,7 +147,7 @@ async function deleteCommentReply(
   rootCommentId: string,
   replyCommentId: string,
 ): Promise<any> {
-  const url = `${API_URL}/blog/comment/reply?title=${Util.serializeTitle(
+  const url = `${API_URL}/blog/comment/reply?title=${serializeTitle(
     title,
   )}&rootCommentId=${rootCommentId}&replyCommentId=${replyCommentId}`;
   // console.log(url, team);
@@ -166,7 +166,7 @@ async function deleteCommentReply(
 }
 
 async function upsertVote(title: string, vote: BlogVote) {
-  const url = `${API_URL}/blog/vote?title=${Util.serializeTitle(title)}`;
+  const url = `${API_URL}/blog/vote?title=${serializeTitle(title)}`;
   // console.log(url, vote);
   return fetch(url, {
     ...getKeyParams(),
@@ -188,7 +188,7 @@ async function unsubscribeEmail(
   commentId: string,
   confirmEmail: string,
 ): Promise<any> {
-  const url = `${API_URL}/blog/unsubscribe?title=${Util.serializeTitle(
+  const url = `${API_URL}/blog/unsubscribe?title=${serializeTitle(
     title,
   )}&commentId=${commentId}&email=${confirmEmail}`;
   // console.log(url, team);

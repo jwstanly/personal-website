@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { Card } from '../../../components/Card';
 import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogArticle, BlogVote } from '../../../lib/Types';
-import Util from '../../../lib/Util';
 import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
 import ReactMarkdown from 'react-markdown';
@@ -19,9 +18,10 @@ import { LikeDislikePanel } from '../../../components/LikeDislikePanel';
 import CenteredContainer from '../../../components/CenteredContainer';
 import Spacer from '../../../components/Spacer';
 import HeadTags from '../../../components/HeadTags';
+import getBlogArticlePaths from '../../../lib/getBlogArticlePaths';
 
 export async function getStaticPaths() {
-  const paths = await Util.getBlogArticlePaths();
+  const paths = await getBlogArticlePaths();
 
   return {
     paths: paths,
