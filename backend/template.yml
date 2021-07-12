@@ -94,7 +94,7 @@ Resources:
   GetAllArticlesLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/blogLambdas.getAllArticles
+      Handler: out/backend/src/getAllArticles.handler
       Description: Get all the blog articles
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -151,7 +151,7 @@ Resources:
   DeleteArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handlers/blogLambdas.deleteArticle
+      Handler: out/backend/src/deleteArticle.handler
       Description: Delete the blog article
       Policies:
         - AWSLambdaBasicExecutionRole
