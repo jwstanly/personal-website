@@ -5,10 +5,11 @@ import {
   BlogComment,
   BlogCommentSubmit,
   BlogUser,
+  ServiceParams,
   TitleQueryParam,
 } from '../../lib/Types';
 import ApiException from '../lib/ApiException';
-import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
+import createHandler, { HttpMethod } from '../lib/createHandler';
 import getKeyByArticleTitle from '../lib/getKeyByArticleTitle';
 import stripEmails from '../lib/stripEmails';
 

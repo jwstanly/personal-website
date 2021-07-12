@@ -2,6 +2,7 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
 } from 'aws-lambda/trigger/api-gateway-proxy';
+import { ServiceParams } from '../../lib/Types';
 import ApiException from './ApiException';
 import getErrorRes from './getErrorRes';
 import getSuccessRes from './getSuccessRes';
@@ -20,14 +21,6 @@ export enum HttpMethod {
   OPTIONS = 'OPTIONS',
   TRACE = 'TRACE',
   PATCH = 'PATCH',
-}
-
-export interface ServiceParams<
-  queryParamType extends object,
-  bodyType extends object,
-> {
-  queryParams?: queryParamType;
-  body?: bodyType;
 }
 
 interface HandlerOptions {

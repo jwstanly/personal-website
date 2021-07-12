@@ -1,8 +1,8 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { DeleteCommentReplyQueryParams } from '../../lib/Types';
+import { DeleteCommentReplyQueryParams, ServiceParams } from '../../lib/Types';
 import ApiException from '../lib/ApiException';
-import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
+import createHandler, { HttpMethod } from '../lib/createHandler';
 import getKeyByArticleTitle from '../lib/getKeyByArticleTitle';
 
 const { BLOG_TABLE } = process.env;

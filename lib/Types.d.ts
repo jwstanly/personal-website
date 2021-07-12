@@ -97,6 +97,13 @@ export interface BlogCommentReplySubmit
 
 export interface BlogVoteSubmit extends BlogVoteCore, Optional<Timestamps> {}
 
+export interface ServiceParams<
+  queryParamType extends object,
+  bodyType extends object,
+> {
+  queryParams?: queryParamType;
+  body?: bodyType;
+}
 export interface TitleQueryParam {
   title: string;
 }

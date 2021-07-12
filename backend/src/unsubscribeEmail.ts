@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { UnsubscribeEmailQueryParams } from '../../lib/Types';
-import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
+import { ServiceParams, UnsubscribeEmailQueryParams } from '../../lib/Types';
+import createHandler, { HttpMethod } from '../lib/createHandler';
 
 const { BLOG_TABLE } = process.env;
 
