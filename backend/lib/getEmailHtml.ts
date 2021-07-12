@@ -1,3 +1,4 @@
+import serializeTitle from '../../lib/serializeTitle';
 import {
   BlogArticle,
   BlogComment,
@@ -288,14 +289,12 @@ export default function getEmailHtml({
                               type === EmailType.CommentReply &&
                               `<div align="left" class="button-container"
                                 style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
-                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="left"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://${domainName}/blog/article/${commentReplyInfo.article.title
-                                .split(' ')
-                                .join(
-                                  '+',
-                                )}" style="height:31.5pt;width:111pt;v-text-anchor:middle;" arcsize="20%" stroke="false" fillcolor="#222222"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:14px"><![endif]--><a
-                                  href="https://${domainName}/blog/article/${commentReplyInfo.article.title
-                                .split(' ')
-                                .join('+')}"
+                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="left"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://${domainName}/blog/article/${serializeTitle(
+                                commentReplyInfo.article.title,
+                              )}" style="height:31.5pt;width:111pt;v-text-anchor:middle;" arcsize="20%" stroke="false" fillcolor="#222222"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:14px"><![endif]--><a
+                                  href="https://${domainName}/blog/article/${serializeTitle(
+                                commentReplyInfo.article.title,
+                              )}"
                                   style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #222222; border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; width: auto; width: auto; border-top: 1px solid #222222; border-right: 1px solid #222222; border-bottom: 1px solid #222222; border-left: 1px solid #222222; padding-top: 5px; padding-bottom: 5px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
                                   target="_blank"><span
                                     style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:undefined;"><span
@@ -306,9 +305,9 @@ export default function getEmailHtml({
                               </div>
                               <!--[if (!mso)&(!IE)]><!-->
                               <div style="margin-top:5px;"></div>
-                                <a href="https://${domainName}/blog/unsubscribe?title=${commentReplyInfo.article.title
-                                .split(' ')
-                                .join('+')}&commentId=${
+                                <a href="https://${domainName}/blog/unsubscribe?title=${serializeTitle(
+                                commentReplyInfo.article.title,
+                              )}&commentId=${
                                 commentReplyInfo.originalComment.id
                               }&email=${
                                 commentReplyInfo.originalComment.user.email

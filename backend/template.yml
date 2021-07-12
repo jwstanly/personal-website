@@ -113,7 +113,7 @@ Resources:
   GetArticleByTitleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: out/src/getArticleByTitle.handler
+      Handler: out/backend/src/getArticleByTitle.handler
       Description: Get the blog article given its URL encoded title
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -132,7 +132,7 @@ Resources:
   UpsertArticleLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: out/src/upsertArticle.handler
+      Handler: out/backend/src/upsertArticle.handler
       Description: Upsert a blog article
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -285,7 +285,7 @@ Resources:
   ContactLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: out/src/contact.handler
+      Handler: out/backend/src/contact.handler
       Description: Contact website owner with form
       Policies:
         - AWSLambdaBasicExecutionRole

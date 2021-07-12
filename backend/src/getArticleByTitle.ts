@@ -1,5 +1,6 @@
 import { APIGatewayProxyEvent } from 'aws-lambda/trigger/api-gateway-proxy';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import serializeTitle from '../../lib/serializeTitle';
 import { BlogArticle, TitleQueryParam } from '../../lib/Types';
 import ApiException from '../lib/ApiException';
 import createHandler, { HttpMethod, ServiceParams } from '../lib/createHandler';
@@ -20,12 +21,10 @@ export async function handler(event: APIGatewayProxyEvent) {
 export async function service({
   queryParams,
 }: ServiceParams<TitleQueryParam, null>) {
-  const { title } = queryParams;
-
   const params = {
     TableName: BLOG_TABLE,
     Key: {
-      PartitionKey: `BlogArticle|${title.split(' ').join('+')}`,
+      PartitionKey: `BlogArticle|${serializeTitle(queryParams.title)}`,
     },
   };
 
