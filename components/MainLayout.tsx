@@ -16,13 +16,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }, []);
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        minHeight: '100vh',
-      }}
-    >
-      <div style={{ paddingBottom: '2.5rem' }}>
+    <div className="flex flex-col h-screen">
+      <div className="flex-grow">
         <Navbar
           color="#FFF"
           options={[
@@ -34,16 +29,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         {children}
         <Spacer top={50} />
       </div>
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          height: '2.5rem',
-        }}
-      >
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }
