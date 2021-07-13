@@ -16,18 +16,34 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }, []);
 
   return (
-    <div>
-      <Navbar
-        color="#FFF"
-        options={[
-          { label: 'Contact', href: '/contact' },
-          { label: 'Blog', href: '/blog' },
-          { label: 'Home', href: '/' },
-        ]}
-      />
-      {children}
-      <Spacer top={100} />
-      <Footer />
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+      }}
+    >
+      <div style={{ paddingBottom: '2.5rem' }}>
+        <Navbar
+          color="#FFF"
+          options={[
+            { label: 'Contact', href: '/contact' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Home', href: '/' },
+          ]}
+        />
+        {children}
+        <Spacer top={50} />
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          height: '2.5rem',
+        }}
+      >
+        <Footer />
+      </div>
     </div>
   );
 }
