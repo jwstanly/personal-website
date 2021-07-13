@@ -1,7 +1,15 @@
-import Link from 'next/link';
 import React from 'react';
-import styles from '../styles/Home.module.css';
-import CenteredContainer from './CenteredContainer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faInstagram,
+  faTwitter,
+  faSnapchatGhost,
+  faGithub,
+  faLinkedin,
+  faStrava,
+} from '@fortawesome/free-brands-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -198,25 +206,49 @@ export default function Footer() {
             </div>
 
             <div className="md:flex-auto md:flex-row-reverse mt-2 flex-row flex">
-              <a href="#" className="w-6 mx-1">
-                <i className="uil uil-facebook-f"></i>
-              </a>
-              <a href="#" className="w-6 mx-1">
-                <i className="uil uil-twitter-alt"></i>
-              </a>
-              <a href="#" className="w-6 mx-1">
-                <i className="uil uil-youtube"></i>
-              </a>
-              <a href="#" className="w-6 mx-1">
-                <i className="uil uil-linkedin"></i>
-              </a>
-              <a href="#" className="w-6 mx-1">
-                <i className="uil uil-instagram"></i>
-              </a>
+              <Icon
+                href="https://www.strava.com/athletes/22312632"
+                icon={faStrava}
+              />
+              <Icon
+                href="https://www.strava.com/athletes/22312632"
+                icon={faSnapchatGhost}
+              />
+              <Icon
+                href="https://www.strava.com/athletes/22312632"
+                icon={faInstagram}
+              />
+              <Icon
+                href="https://www.strava.com/athletes/22312632"
+                icon={faTwitter}
+              />
+              <Icon
+                href="https://www.strava.com/athletes/22312632"
+                icon={faLinkedin}
+              />
+              <Icon
+                href="https://www.strava.com/athletes/22312632"
+                icon={faGithub}
+              />
             </div>
           </div>
         </div>
       </footer>
     </footer>
+  );
+}
+
+interface IconProps {
+  href: string;
+  icon: IconDefinition;
+}
+
+function Icon(props: IconProps) {
+  return (
+    <Link href={props.href} passHref>
+      <div className="w-6 mx-1 cursor-pointer transition duration-200 ease-in-out hover:text-gray-100">
+        <FontAwesomeIcon icon={props.icon} size="xs" />
+      </div>
+    </Link>
   );
 }
