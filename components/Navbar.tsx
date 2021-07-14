@@ -3,18 +3,14 @@ import React from 'react';
 import styles from '../styles/Navbar.module.css';
 import { useRouter } from 'next/router';
 import useRefState from '../lib/useRefState';
+import { MenuOption } from '../lib/Types';
 
-interface NavbarTypes {
+interface NavbarProps {
   color: string;
-  options: NavbarOptionTypes[];
+  options: MenuOption[];
 }
 
-interface NavbarOptionTypes {
-  label: string;
-  href: string;
-}
-
-export default function Navbar(props: NavbarTypes) {
+export default function Navbar(props: NavbarProps) {
   const router = useRouter();
 
   const [hidden, setHidden] = React.useState<boolean>(false);
