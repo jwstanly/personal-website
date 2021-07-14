@@ -126,3 +126,10 @@ export interface UnsubscribeEmailQueryParams {
   commentId: string;
   email: string;
 }
+
+// FRONTEND ONLY TYPES
+
+export interface MenuOption {
+  label: string;
+  href: string;
+}
