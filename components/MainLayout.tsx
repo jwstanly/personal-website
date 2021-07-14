@@ -89,7 +89,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             rowOptions: [
               { label: 'Contact Me', href: '/contact' },
               { label: 'Email Unsubscribe', href: '/blog/unsubscribe' },
-              { label: 'Privacy Policy', href: '/privacyPolicy' },
+              { label: 'Privacy Policy', href: '/privacy-policy' },
             ],
           },
           {
