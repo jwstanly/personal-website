@@ -7,6 +7,7 @@ const env = {
     ACM_CERT_ARN: 'YourACMCertificateARN',
     CF_DISTRIBUTION_ID: 'YourCloudFrontDistributionID',
     API_KEY: 'YourAPIKey',
+    GOOGLE_ANALYTICS_MEASUREMENT_ID: 'YourGaIdHere',
     DEBUG_MODE: false,
   },
   local: {
