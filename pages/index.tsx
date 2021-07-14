@@ -25,6 +25,8 @@ export default function Home() {
 
       <HomeHeader />
 
+      <div id="about" />
+
       <div style={{ padding: '3vw' }} />
 
       <CenteredContainer>
@@ -44,6 +46,8 @@ export default function Home() {
           enjoy running, biking, and golfing.
         </p>
       </CenteredContainer>
+
+      <div id="experience" />
 
       <div style={{ padding: '3vw' }} />
 
