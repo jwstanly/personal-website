@@ -72,7 +72,6 @@ export default function Unsubscribe(props: any) {
         <Spacer top={30} />
         <Button text="Confirm" onPress={onUnsubscribe} loading={loading} />
       </CenteredContainer>
-      <div style={{ marginTop: '50vh' }} />
     </>
   );
 }
