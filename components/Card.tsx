@@ -1,9 +1,7 @@
 import React, { ObjectHTMLAttributes } from 'react';
-import styles from '../styles/Home.module.css';
 
 import { Code, H1, H2, H3, H6, Tag, Text } from './Titles';
 import Spacer from './Spacer';
-import { LikeDislikePanel } from './LikeDislikePanel';
 
 interface CardProps {
   header: string;
@@ -20,15 +18,8 @@ export function Card(props: CardProps) {
       <H6 marginTop={3} marginBottom={10}>
         {props.subheader}
       </H6>
-      <div style={{ display: 'flex' }}>
-        <div
-          style={{
-            flex: 10,
-            display: 'inline-block',
-            marginBottom: 5,
-            marginTop: 10,
-          }}
-        >
+      <div className="flex">
+        <div className="flex-10 display-inline-block mb-1 mt-2">
           {props.tags ? (
             props.tags.map(tag => {
               return <Tag key={tag}>{tag}</Tag>;
