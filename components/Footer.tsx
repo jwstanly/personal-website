@@ -46,7 +46,7 @@ export default function Footer(props: FooterProps) {
             flex-col md:flex-row max-w-6xl"
         >
           <Link href="https://github.com/jwstanly/personal-website" passHref>
-            <div className="mt-2 cursor-pointer">
+            <div className="mt-2 cursor-pointer text-gray-400 hover:text-gray-300 duration-700">
               Like this website? Check out the source code here...
             </div>
           </Link>

@@ -2,7 +2,6 @@ import React from 'react';
 import { LargeIcon } from './LargeIcon';
 import { Card } from './Card';
 
-import styles from '../styles/Card.module.css';
 import CenteredContainer from './CenteredContainer';
 
 interface ExperienceCardProps {
@@ -17,11 +16,11 @@ interface ExperienceCardProps {
 export function ExperienceCard(props: ExperienceCardProps) {
   return (
     <CenteredContainer>
-      <div className={styles.cardContainer}>
-        <div style={{ float: 'left' }}>
+      <div className="sm:inline md:flex mb-8 ">
+        <div className="float-left">
           <LargeIcon imageUrl={props.imageUrl} alt={props.imageAlt} />
         </div>
-        <div style={{ float: 'left' }} className={styles.cardTextContainer}>
+        <div className="float-left mt-5 mb-10 md:ml-10 md:mt-0">
           <Card
             header={props.header}
             subheader={props.subheader}
