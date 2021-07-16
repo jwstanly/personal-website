@@ -1,8 +1,7 @@
 import React from 'react';
-import { LargeIcon } from './LargeIcon';
 import { Card } from './Card';
-
 import CenteredContainer from './CenteredContainer';
+import { LargeIcon } from './LargeIcon';
 
 interface ExperienceCardProps {
   header: string;

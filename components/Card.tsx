@@ -1,7 +1,6 @@
-import React, { ObjectHTMLAttributes } from 'react';
-
-import { Code, H1, H2, H3, H6, Tag, Text } from './Titles';
+import React from 'react';
 import Spacer from './Spacer';
+import { H2, H6, Tag, Code, Text } from './Titles';
 
 interface CardProps {
   header: string;
