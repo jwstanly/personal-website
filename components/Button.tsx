@@ -9,7 +9,10 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
   return (
-    <div className={styles.button} onClick={props.onPress}>
+    <div
+      className={`cursor-pointer inline-block py-3 px-12 text-white rounded-lg bg-gray-900 hover:bg-gray-800 duration-100`}
+      onClick={props.onPress}
+    >
       <div className={styles.buttonText}>
         {props.loading ? 'Loading' : props.text}
       </div>

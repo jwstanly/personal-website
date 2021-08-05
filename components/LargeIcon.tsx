@@ -8,13 +8,8 @@ interface LargeIconProps {
 export function LargeIcon(props: LargeIconProps) {
   return (
     <img
-      style={{
-        borderRadius: 20,
-        maxWidth: 120,
-        width: 120,
-        margin: '0px 0px 0px 0px',
-        boxShadow: '0px 0px 40px 5px #CCC',
-      }}
+      className="rounded-3xl w-36 max-w-xl m-0 mt-2"
+      style={{ boxShadow: '0px 0px 40px 5px #CCC' }}
       src={props.imageUrl}
       alt={props.alt}
     />

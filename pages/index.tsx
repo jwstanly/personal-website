@@ -1,15 +1,12 @@
 import React from 'react';
-import Head from 'next/head';
-
 import styles from '../styles/Home.module.css';
-
-import HomeHeader from '../components/HomeHeader';
-import HeadTags from '../components/HeadTags';
-
-import { Code, H1, H2, H3, Text } from '../components/Titles';
-import { ExperienceCard } from '../components/ExperienceCard';
-import Link from 'next/link';
 import CenteredContainer from '../components/CenteredContainer';
+import { ExperienceCard } from '../components/ExperienceCard';
+import HeadTags from '../components/HeadTags';
+import HomeHeader from '../components/HomeHeader';
+import { H1 } from '../components/Titles';
+import { homedir } from 'os';
+import Spacer from '../components/Spacer';
 
 export default function Home() {
   return (
@@ -55,7 +52,7 @@ export default function Home() {
         Experience
       </H1>
 
-      <div style={{ padding: '5px' }} />
+      <Spacer top={5} />
 
       <ExperienceCard
         header="Winsight"

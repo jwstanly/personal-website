@@ -17,7 +17,9 @@ export default function Navbar(props: NavbarProps) {
   const [lastScrollY, setLastScrollY] = useRefState<number>(0);
 
   function handleScroll() {
-    setHidden(window.scrollY > lastScrollY.current);
+    setHidden(
+      window.scrollY < 30 ? false : window.scrollY > lastScrollY.current,
+    );
     setLastScrollY(window.scrollY);
   }
 
@@ -38,7 +40,7 @@ export default function Navbar(props: NavbarProps) {
     >
       <div style={{ backgroundColor: props.color }}>
         <ul className={styles.navbar}>
-          <li className={styles.navbarItem} style={{ float: 'left' }}>
+          <li className={`${styles.navbarItem} float-left`}>
             <Link href="/" passHref>
               <div className={styles.navbarBrand}>jwstanly.com</div>
             </Link>
@@ -47,8 +49,7 @@ export default function Navbar(props: NavbarProps) {
           {props.options.map(option => {
             return (
               <li
-                className={styles.navbarItem}
-                style={{ float: 'right' }}
+                className={`${styles.navbarItem} float-right`}
                 key={option.href}
               >
                 <Link href={option.href} passHref>

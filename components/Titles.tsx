@@ -116,7 +116,14 @@ export function Text(props: TitleProps) {
 }
 
 export function Code(props: TitleProps) {
-  return <div className={styles.codeText}>{props.children}</div>;
+  return (
+    <div
+      className="float-left font-extrabold text-xs mx-0 mt-0 mb-1 pr-5 text-left"
+      style={{ fontFamily: 'IBM Plex Mono', color: '#888' }}
+    >
+      {props.children}
+    </div>
+  );
 }
 
 export function Tag(props: TitleProps) {

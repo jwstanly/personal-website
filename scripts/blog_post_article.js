@@ -24,7 +24,6 @@ async function publishArticle() {
     },
   )
     .then(res => res.json())
-    .then(res => res.Item)
     .catch(() => {});
 
   const subheader = input(
