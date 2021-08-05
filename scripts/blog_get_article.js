@@ -23,7 +23,7 @@ fetch(`https://api.${DOMAIN_NAME}/blog?title=${title.split(' ').join('+')}`, {
   .then(res => {
     fs.writeFileSync(
       contentsFile.length ? contentsFile : './edit.md',
-      res.Item.content,
+      res.content,
     );
     console.log(
       `SUCCESS: ${title} was fetched to ${

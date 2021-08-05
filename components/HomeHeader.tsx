@@ -3,7 +3,14 @@ import styles from '../styles/HomeHeader.module.css';
 
 export default function HomeHeader() {
   return (
-    <div className={styles.header}>
+    <div
+      className="flex flex-row"
+      style={{
+        background: '#f1f1f1',
+        boxShadow: '0px 5px 10px #ddd',
+        height: '30vw',
+      }}
+    >
       <div style={{ flex: 2, flexDirection: 'column', marginTop: '6vw' }}>
         <div
           className={`${styles.headerFirstLineText} ${styles.greyGradientText}`}

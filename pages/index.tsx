@@ -6,6 +6,7 @@ import HeadTags from '../components/HeadTags';
 import HomeHeader from '../components/HomeHeader';
 import { H1 } from '../components/Titles';
 import { homedir } from 'os';
+import Spacer from '../components/Spacer';
 
 export default function Home() {
   return (
@@ -51,7 +52,7 @@ export default function Home() {
         Experience
       </H1>
 
-      <div style={{ padding: '5px' }} />
+      <Spacer top={5} />
 
       <ExperienceCard
         header="Winsight"
