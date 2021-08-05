@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import Head from 'next/head';
 
 import styles from '../../../styles/Home.module.css';
@@ -13,12 +13,14 @@ import { BlogMarkdown } from '../../../components/BlogMarkdown';
 import { BlogArticle, BlogVote } from '../../../lib/Types';
 import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { Renderers } from 'react-markdown';
 import { LikeDislikePanel } from '../../../components/LikeDislikePanel';
 import CenteredContainer from '../../../components/CenteredContainer';
 import Spacer from '../../../components/Spacer';
 import HeadTags from '../../../components/HeadTags';
 import getBlogArticlePaths from '../../../lib/getBlogArticlePaths';
+import ImageRenderer from '../../../components/markdown/ImageRenderer';
+import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
 
 export async function getStaticPaths() {
   const paths = await getBlogArticlePaths();
@@ -82,7 +84,15 @@ export default function Blog(props: { article: BlogArticle }) {
           onArticleModify={fetchArticle}
         />
         <Spacer top={10} />
-        <ReactMarkdown>{article.content}</ReactMarkdown>
+        <ReactMarkdown
+          source={article.content}
+          escapeHtml={false}
+          renderers={{
+            // image: ImageRenderer,
+            code: CodeBlockRenderer,
+          }}
+        />
+
         <Spacer top={50} />
         <CommentBoard
           key={JSON.stringify(article).length}
