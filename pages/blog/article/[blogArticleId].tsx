@@ -1,16 +1,6 @@
-import React, { ElementType } from 'react';
-import Head from 'next/head';
-
-import styles from '../../../styles/Home.module.css';
-
-import HomeHeader from '../../../components/HomeHeader';
-
-import { Code, H1, H2, H3, H4, H5, H6, Text } from '../../../components/Titles';
-import { ExperienceCard } from '../../../components/ExperienceCard';
-import Link from 'next/link';
+import React from 'react';
 import { Card } from '../../../components/Card';
-import { BlogMarkdown } from '../../../components/BlogMarkdown';
-import { BlogArticle, BlogVote } from '../../../lib/Types';
+import { BlogArticle } from '../../../lib/Types';
 import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
 import ReactMarkdown, { Renderers } from 'react-markdown';

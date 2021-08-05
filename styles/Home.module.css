@@ -5,26 +5,12 @@
 .headerContentText {
   text-align: center;
   color: #222;
-  font-weight: 500;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   line-height: 1.6;
   letter-spacing: -0.04em;
   margin-block-end: 0em;
   margin: 15px 5px;
   font-size: 18px;
-}
-
-.codeText {
-  float: left;
-  padding-right: 20px;
-  text-align: left;
-  color: #888;
-  font-weight: 800;
-  font-size: 12px;
-  margin: 0px 0px 5px 0px;
-  font-family: 'IBM Plex Mono';
+  font-weight: 400;
 }
 
 .tagText {

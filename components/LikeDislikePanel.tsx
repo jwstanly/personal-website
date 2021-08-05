@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlogArticle, BlogVote, BlogVoteSubmit } from '../lib/Types';
+import { BlogArticle, BlogVoteSubmit } from '../lib/Types';
 import styles from '../styles/Home.module.css';
 import Spacer from './Spacer';
 import API from '../lib/Api';

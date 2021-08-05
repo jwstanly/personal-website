@@ -18,7 +18,8 @@ export default function CodeBlockRenderer(props: CodeBlockRendererProps) {
       customStyle={
         {
           fontSize: 14,
-          paddingLeft: 0,
+          padding: 20,
+          paddingTop: 15,
         } as React.CSSProperties
       }
       useInlineStyles={true}
