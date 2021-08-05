@@ -186,6 +186,15 @@ pre code {
   border: none;
 }
 
+input[type] {
+  -webkit-appearance: none;
+  outline: none;
+}
+
+textarea {
+  -webkit-appearance: none;
+}
+
 .animated-1 {
   animation-duration: 1s;
   animation-fill-mode: both;

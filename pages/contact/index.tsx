@@ -108,9 +108,10 @@ export default function Unsubscribe(props: any) {
         <TextField
           value={subject}
           setValue={setSubject}
-          label="Subject (optional)"
+          label="Subject"
+          optional
         />
-        <TextArea
+        <TextField
           value={message}
           setValue={setMessage}
           label="Message"

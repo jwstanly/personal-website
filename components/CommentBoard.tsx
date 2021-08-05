@@ -238,7 +238,13 @@ export default function CommentBoard(props: CommentBoardProps) {
       <div className={styles.commentError}>{error}</div>
       <div className="flex">
         <div className="flex-1">
-          <TextArea value={comment} setValue={setComment} label="Comment" />
+          <TextField
+            value={comment}
+            setValue={setComment}
+            label="Comment"
+            lines={3}
+            required
+          />
         </div>
       </div>
       <div className="sm:flex">
