@@ -1,17 +1,9 @@
 import React from 'react';
-import Head from 'next/head';
-
 import styles from '../../styles/Card.module.css';
-
-import HomeHeader from '../../components/HomeHeader';
-
-import { Code, H1, H2, H3, Text } from '../../components/Titles';
-import { ExperienceCard } from '../../components/ExperienceCard';
 import Link from 'next/link';
 import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
 import API from '../../lib/Api';
-import Util from '../../lib/formatPureText';
 import Spacer from '../../components/Spacer';
 import CenteredContainer from '../../components/CenteredContainer';
 import HeadTags from '../../components/HeadTags';
@@ -38,10 +30,6 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
 
       <Spacer top={100} />
 
-      <H1 centered marginBottom={40}>
-        Recent Articles
-      </H1>
-
       {articles &&
         articles
           .map((article: BlogArticle) => {
@@ -56,10 +44,13 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
                       <img
                         src={article.image}
                         style={{
+                          width: '100%',
+                          aspectRatio: '16 / 9',
                           objectFit: 'cover',
                         }}
                         alt={article.title}
                       />
+                      <Spacer top={20} />
                       <Card
                         header={article.title}
                         subheader={article.subheader}

@@ -1,5 +1,3 @@
-import { NONAME } from 'dns';
-import { CSSProperties } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus';
 
@@ -19,7 +17,7 @@ export default function CodeBlockRenderer(props: CodeBlockRendererProps) {
         {
           fontSize: 14,
           padding: 20,
-          paddingTop: 15,
+          borderRadius: 8,
         } as React.CSSProperties
       }
       useInlineStyles={true}

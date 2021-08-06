@@ -5,7 +5,6 @@ import { ExperienceCard } from '../components/ExperienceCard';
 import HeadTags from '../components/HeadTags';
 import HomeHeader from '../components/HomeHeader';
 import { H1 } from '../components/Titles';
-import { homedir } from 'os';
 import Spacer from '../components/Spacer';
 
 export default function Home() {

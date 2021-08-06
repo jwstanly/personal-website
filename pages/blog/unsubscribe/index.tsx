@@ -1,8 +1,7 @@
 import React from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { Code, H1, H2, H3, H6, Text } from '../../../components/Titles';
+import { H1, H6 } from '../../../components/Titles';
 import TextField from '../../../components/TextField';
 import Button from '../../../components/Button';
 import Spacer from '../../../components/Spacer';

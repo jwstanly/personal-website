@@ -9,9 +9,7 @@ import {
 } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';
-import CenteredContainer from './CenteredContainer';
 import CommentBubble from './CommentBubble';
-import TextArea from './TextArea';
 import TextField from './TextField';
 import { H2, H6 } from './Titles';
 import API from '../lib/Api';
@@ -238,11 +236,17 @@ export default function CommentBoard(props: CommentBoardProps) {
       <div className={styles.commentError}>{error}</div>
       <div className="flex">
         <div className="flex-1">
-          <TextArea value={comment} setValue={setComment} label="Comment" />
+          <TextField
+            value={comment}
+            setValue={setComment}
+            label="Comment"
+            lines={3}
+            required
+          />
         </div>
       </div>
-      <div className="sm:flex">
-        <div className="sm:flex-shrink-2">
+      <div className="sm:flex justify-between">
+        <div className="sm:flex-2">
           <TextField value={name} setValue={setName} label="Name" type="text" />
         </div>
         <Spacer left={20} />

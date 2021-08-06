@@ -21,7 +21,7 @@ interface FooterProps {
 
 export default function Footer(props: FooterProps) {
   return (
-    <footer className="bg-gray-800 pt-10 sm:mt-10 pt-10">
+    <footer className="bg-gray-800 pt-10 mt-10 pt-10">
       <div className="max-w-6xl m-auto text-gray-800 flex flex-wrap justify-left">
         {props.columnOptions.map(column => (
           <div className="p-5 w-1/2 sm:w-4/12 md:w-3/12" key={column.label}>
@@ -43,7 +43,7 @@ export default function Footer(props: FooterProps) {
         <div
           className="flex pb-5 px-3 m-auto pt-5 
             border-t border-gray-500 text-gray-400 text-sm 
-            flex-col md:flex-row max-w-6xl"
+            flex-col md:flex-row max-w-6xl mb-5 md:mb-0"
         >
           <Link href="https://github.com/jwstanly/personal-website" passHref>
             <div className="mt-2 cursor-pointer text-gray-400 hover:text-gray-300 duration-700">

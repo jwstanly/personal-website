@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '../styles/Home.module.css';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import Spacer from './Spacer';
@@ -39,9 +38,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           .splice(0, 3)
           .map(article => ({
             label: article.title,
-            href: `http://${DOMAIN_NAME}/blog/article/${serializeTitle(
-              article.title,
-            )}`,
+            href: `/blog/article/${serializeTitle(article.title)}`,
           })),
       );
     });

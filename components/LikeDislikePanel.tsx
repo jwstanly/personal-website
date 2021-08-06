@@ -103,7 +103,12 @@ export function LikeDislikePanel(props: LikeDislikePanelProps) {
   }, [props.article]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'stretch' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'stretch',
+      }}
+    >
       <p
         className={styles.likeText}
         style={userCurrentVote === VoteType.LIKE ? { color: '#222' } : {}}
