@@ -56,6 +56,8 @@ type RecursiveOptional<T> = {
 
 export interface BlogArticle extends BlogArticleCore, Id, Timestamps {}
 
+export interface BlogAuthor extends BlogAuthorCore, Id {}
+
 export interface BlogVote extends BlogVoteCore, Timestamps {}
 
 export interface BlogComment extends BlogCommentCore, Id, Timestamps {}
