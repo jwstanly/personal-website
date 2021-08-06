@@ -1,5 +1,6 @@
 {
   "extends": ["next", "prettier"],
+  "plugins": ["unused-imports"],
   "rules": {
     "import/no-anonymous-default-export": "off",
     "react-hooks/exhaustive-deps": "off",
