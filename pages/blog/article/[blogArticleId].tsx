@@ -109,7 +109,14 @@ export default function Blog(props: { article: BlogArticle }) {
           renderers={{
             image: ImageRenderer,
             code: CodeBlockRenderer,
+            // inlineCode: p => <div>{p.value}</div>,
+            // link: p => <div>{p.value}</div>,
           }}
+          // components={{
+          //   code: ({ node, ...props }) => (
+          //     <i style={{ color: 'red' }} {...props} />
+          //   ),
+          // }}
         />
 
         <Spacer top={50} />

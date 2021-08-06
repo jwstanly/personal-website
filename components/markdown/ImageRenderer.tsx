@@ -7,8 +7,6 @@ interface ImageRendererProps {
 }
 
 export default function ImageRenderer(props: ImageRendererProps) {
-  console.log('props', props);
-
   const hasCaption = props.alt.toLowerCase() !== 'image';
 
   const style: CSSProperties = {
