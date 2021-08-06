@@ -1,9 +1,5 @@
 import React from 'react';
-
 import styles from '../../styles/Card.module.css';
-
-
-import { H1 } from '../../components/Titles';
 import Link from 'next/link';
 import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
@@ -34,10 +30,6 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
 
       <Spacer top={100} />
 
-      <H1 centered marginBottom={40}>
-        Recent Articles
-      </H1>
-
       {articles &&
         articles
           .map((article: BlogArticle) => {
@@ -52,10 +44,13 @@ export default function Blog({ articles }: { articles: BlogArticle[] }) {
                       <img
                         src={article.image}
                         style={{
+                          width: '100%',
+                          aspectRatio: '16 / 9',
                           objectFit: 'cover',
                         }}
                         alt={article.title}
                       />
+                      <Spacer top={20} />
                       <Card
                         header={article.title}
                         subheader={article.subheader}
