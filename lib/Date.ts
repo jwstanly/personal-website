@@ -1,12 +1,6 @@
-export default {
-  getFormattedDate: getFormattedDate,
-  getFormattedTime: getFormattedTime,
-  getAMPMHours: getAMPMHours,
-  getMonthString: getMonthString,
-  getMonthStringAbr: getMonthStringAbr,
-};
-
-function getFormattedDate(eventDateParam: Date | number | string): string {
+export function getFormattedDate(
+  eventDateParam: Date | number | string,
+): string {
   const eventDate =
     eventDateParam instanceof Date ? eventDateParam : new Date(eventDateParam);
   return (
@@ -14,10 +8,16 @@ function getFormattedDate(eventDateParam: Date | number | string): string {
     ' ' +
     eventDate.getDate() +
     ', ' +
-    eventDate.getFullYear() +
-    ' at ' +
-    getFormattedTime(eventDate)
+    eventDate.getFullYear()
   );
+}
+
+export function getFormattedDateTime(
+  eventDateParam: Date | number | string,
+): string {
+  const eventDate =
+    eventDateParam instanceof Date ? eventDateParam : new Date(eventDateParam);
+  return getFormattedDate(eventDate) + ' at ' + getFormattedTime(eventDate);
 }
 
 function getFormattedTime(eventDateParam: Date): string {
@@ -34,7 +34,7 @@ function getFormattedTime(eventDateParam: Date): string {
   );
 }
 
-function getAMPMHours(eventDateParam: Date | number | string): string {
+export function getAMPMHours(eventDateParam: Date | number | string): string {
   const eventDate =
     eventDateParam instanceof Date ? eventDateParam : new Date(eventDateParam);
   let militaryHour: number = eventDate.getHours();

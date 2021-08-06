@@ -10,6 +10,8 @@ import Spacer from '../../../components/Spacer';
 import HeadTags from '../../../components/HeadTags';
 import getBlogArticlePaths from '../../../lib/getBlogArticlePaths';
 import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
+import ImageRenderer from '../../../components/markdown/ImageRenderer';
+import * as DateUtil from '../../../lib/Date';
 
 export async function getStaticPaths() {
   const paths = await getBlogArticlePaths();
@@ -67,17 +69,45 @@ export default function Blog(props: { article: BlogArticle }) {
           tags={article.tags}
           content={[]}
         />
-        <LikeDislikePanel
-          key={JSON.stringify(article).length}
-          article={fetchedArticle}
-          onArticleModify={fetchArticle}
-        />
-        <Spacer top={10} />
+        <div className="sm:flex">
+          <div className="sm:flex-shrink-2">
+            <div className="inline-flex mb-5">
+              <img
+                style={{
+                  width: 45,
+                  height: 45,
+                  left: 0,
+                  top: 0,
+                }}
+                src="/images/profileClipped.png"
+                alt="John Wright Stanly"
+              />
+              <Spacer left={10} />
+              <div className="flex-col">
+                <div className="text-gray-500 text-sm font-normal">
+                  John Wright Stanly
+                </div>
+                <div className="text-gray-500 text-sm font-light">
+                  {DateUtil.getFormattedDate(article.createdAt)}
+                </div>
+              </div>
+            </div>
+          </div>
+          <Spacer left={20} />
+          <div className="flex-1 mr-auto">
+            <LikeDislikePanel
+              // key={JSON.stringify(article).length}
+              article={fetchedArticle}
+              onArticleModify={fetchArticle}
+            />
+          </div>
+        </div>
+        <Spacer top={20} />
         <ReactMarkdown
           source={article.content}
           escapeHtml={false}
           renderers={{
-            // image: ImageRenderer,
+            image: ImageRenderer,
             code: CodeBlockRenderer,
           }}
         />

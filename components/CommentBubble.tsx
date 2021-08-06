@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/comment.module.css';
 
 import { BlogComment, BlogCommentReply } from '../lib/Types';
-import DateUtil from '../lib/Date';
+import * as DateUtil from '../lib/Date';
 
 interface CommentProps {
   commentObj: BlogComment;
@@ -42,7 +42,7 @@ export default function CommentBubble({
             {commentObj.user.name || 'Anonymous User'}
           </div>
           <div className={styles.commentDate}>
-            {DateUtil.getFormattedDate(commentObj.lastModifiedAt)}
+            {DateUtil.getFormattedDateTime(commentObj.lastModifiedAt)}
           </div>
         </div>
 

@@ -245,8 +245,8 @@ export default function CommentBoard(props: CommentBoardProps) {
           />
         </div>
       </div>
-      <div className="sm:flex">
-        <div className="sm:flex-shrink-2">
+      <div className="sm:flex justify-between">
+        <div className="sm:flex-2">
           <TextField value={name} setValue={setName} label="Name" type="text" />
         </div>
         <Spacer left={20} />
