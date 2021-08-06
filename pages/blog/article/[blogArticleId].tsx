@@ -84,17 +84,17 @@ export default function Blog(props: { article: BlogArticle }) {
               />
               <Spacer left={10} />
               <div className="flex-col">
-                <div className="text-gray-500 text-sm font-normal">
+                <div className="text-gray-500 text-sm font-bold">
                   John Wright Stanly
                 </div>
-                <div className="text-gray-500 text-sm font-light">
+                <div className="text-gray-500 text-sm">
                   {DateUtil.getFormattedDate(article.createdAt)}
                 </div>
               </div>
             </div>
           </div>
           <Spacer left={20} />
-          <div className="flex-1 mr-auto">
+          <div className="flex-grow-1 ml-auto mr-0">
             <LikeDislikePanel
               // key={JSON.stringify(article).length}
               article={fetchedArticle}
