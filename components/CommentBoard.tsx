@@ -9,9 +9,7 @@ import {
 } from '../lib/Types';
 import styles from '../styles/comment.module.css';
 import Button from './Button';
-import CenteredContainer from './CenteredContainer';
 import CommentBubble from './CommentBubble';
-import TextArea from './TextArea';
 import TextField from './TextField';
 import { H2, H6 } from './Titles';
 import API from '../lib/Api';
