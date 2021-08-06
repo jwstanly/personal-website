@@ -3,13 +3,12 @@ import { Card } from '../../../components/Card';
 import { BlogArticle } from '../../../lib/Types';
 import API from '../../../lib/Api';
 import CommentBoard from '../../../components/CommentBoard';
-import ReactMarkdown, { Renderers } from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { LikeDislikePanel } from '../../../components/LikeDislikePanel';
 import CenteredContainer from '../../../components/CenteredContainer';
 import Spacer from '../../../components/Spacer';
 import HeadTags from '../../../components/HeadTags';
 import getBlogArticlePaths from '../../../lib/getBlogArticlePaths';
-import ImageRenderer from '../../../components/markdown/ImageRenderer';
 import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
 
 export async function getStaticPaths() {

@@ -1,13 +1,8 @@
 import React from 'react';
-import Head from 'next/head';
-import router, { useRouter } from 'next/router';
 import HeadTags from '../components/HeadTags';
-import { error } from 'console';
-import Button from '../components/Button';
 import CenteredContainer from '../components/CenteredContainer';
 import Spacer from '../components/Spacer';
-import TextField from '../components/TextField';
-import { H1, H4, H6 } from '../components/Titles';
+import { H1, H4 } from '../components/Titles';
 
 export default function NoPageFound() {
   return (

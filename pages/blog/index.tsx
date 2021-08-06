@@ -1,17 +1,13 @@
 import React from 'react';
-import Head from 'next/head';
 
 import styles from '../../styles/Card.module.css';
 
-import HomeHeader from '../../components/HomeHeader';
 
-import { Code, H1, H2, H3, Text } from '../../components/Titles';
-import { ExperienceCard } from '../../components/ExperienceCard';
+import { H1 } from '../../components/Titles';
 import Link from 'next/link';
 import { Card } from '../../components/Card';
 import { BlogArticle } from '../../lib/Types';
 import API from '../../lib/Api';
-import Util from '../../lib/formatPureText';
 import Spacer from '../../components/Spacer';
 import CenteredContainer from '../../components/CenteredContainer';
 import HeadTags from '../../components/HeadTags';

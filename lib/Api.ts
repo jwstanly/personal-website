@@ -1,11 +1,8 @@
 import {
   BlogArticle,
   BlogArticleSubmit,
-  BlogComment,
-  BlogCommentReply,
   BlogCommentReplySubmit,
   BlogCommentSubmit,
-  BlogVote,
   BlogVoteSubmit,
   ContactMessage,
 } from './Types';

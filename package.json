@@ -37,7 +37,7 @@
   },
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "build": "next build && next export",
     "index-html": "node ./scripts/index_html",
     "sync-s3": "env-cmd -e production node ./scripts/upload_bucket",
