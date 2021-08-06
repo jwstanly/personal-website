@@ -72,7 +72,13 @@ export default function CommentBubble({
                       />
                     </svg>
                   </div>
-                  <div style={{ display: 'table-cell', paddingLeft: 5 }}>
+                  <div
+                    style={{
+                      display: 'table-cell',
+                      paddingLeft: 10,
+                      verticalAlign: 'middle',
+                    }}
+                  >
                     Reply
                   </div>
                 </div>
