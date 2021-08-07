@@ -1,43 +1,86 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: #f1f1f1;
+  box-shadow: 0px 5px 10px #ddd;
+
+  justify-content: center;
+  padding: 5vw 6vw;
+  align-items: center;
+}
+
+.textContainer {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  width: 100%;
+}
+
+.imageContainer {
+  width: 20vw;
+  height: 20vw;
+}
+
 .greyGradientText {
   background-color: #f3ec78;
   background-image: linear-gradient(45deg, #acacac, #f0f0f0);
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
 
 .colorGradientText {
-  background-color: #f3ec78;
   background-image: linear-gradient(45deg, #3b3db6, #68f0d9);
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
   filter: drop-shadow(1px 1px 5px #ddd);
 }
 
 .headerFirstLineText {
-  font-size: 72px;
   font-weight: 300;
-  margin-left: 6vw;
   font-size: 4.5vw;
 
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   letter-spacing: -0.02em;
 }
 
 .headerSecondLineText {
   line-height: 9.3vw;
-  margin-left: 6vw;
   font-weight: 900;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   letter-spacing: -0.02em;
   font-size: 8vw;
+}
+
+@media (max-width: 640px) {
+  .container {
+    flex-direction: column;
+    padding-bottom: 8vw;
+  }
+
+  .imageContainer {
+    width: 45vw;
+    height: 45vw;
+  }
+
+  .colorGradientText {
+    background-image: linear-gradient(45deg, #3b3db6, #68d5f0);
+  }
+
+  .headerFirstLineText {
+    background-image: linear-gradient(45deg, #acacac, #acacac);
+    font-size: 10vw;
+    text-align: center;
+  }
+
+  .headerSecondLineText {
+    font-size: 14vw;
+    padding: 5vw 0 10vw 0;
+    margin-left: 2vw;
+  }
 }
