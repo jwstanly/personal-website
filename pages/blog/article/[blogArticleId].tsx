@@ -12,6 +12,7 @@ import getBlogArticlePaths from '../../../lib/getBlogArticlePaths';
 import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
 import ImageRenderer from '../../../components/markdown/ImageRenderer';
 import * as DateUtil from '../../../lib/Date';
+import CodeInlineRenderer from '../../../components/markdown/CodeInlineRenderer';
 
 export async function getStaticPaths() {
   const paths = await getBlogArticlePaths();
@@ -109,7 +110,7 @@ export default function Blog(props: { article: BlogArticle }) {
           renderers={{
             image: ImageRenderer,
             code: CodeBlockRenderer,
-            // inlineCode: p => <div>{p.value}</div>,
+            inlineCode: CodeInlineRenderer,
             // link: p => <div>{p.value}</div>,
           }}
           // components={{

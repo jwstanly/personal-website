@@ -34,7 +34,7 @@ async function publishArticle() {
   );
   const tags = input(
     `Tags (split by \`${TAG_DELIMITER}\`)${
-      currentArticle ? ` [${currentArticle.tags.join(TAG_DELIMITER)}]` : ''
+      currentArticle ? ` [${currentArticle.tags?.join(TAG_DELIMITER)}]` : ''
     }: `,
   );
 
