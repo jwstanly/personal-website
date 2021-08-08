@@ -13,6 +13,7 @@ import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
 import ImageRenderer from '../../../components/markdown/ImageRenderer';
 import * as DateUtil from '../../../lib/Date';
 import CodeInlineRenderer from '../../../components/markdown/CodeInlineRenderer';
+import HeadingRenderer from '../../../components/markdown/HeadingRenderer';
 
 export async function getStaticPaths() {
   const paths = await getBlogArticlePaths();
@@ -111,13 +112,37 @@ export default function Blog(props: { article: BlogArticle }) {
             image: ImageRenderer,
             code: CodeBlockRenderer,
             inlineCode: CodeInlineRenderer,
-            // link: p => <div>{p.value}</div>,
+            heading: HeadingRenderer,
+            /*
+              break: 'br',
+              paragraph: 'p',
+              emphasis: 'em',
+              strong: 'strong',
+              thematicBreak: 'hr',
+              blockquote: 'blockquote',
+              delete: 'del',
+              link: 'a',
+              image: 'img',
+              linkReference: 'a',
+              imageReference: 'img',
+              table: SimpleRenderer.bind(null, 'table'),
+              tableHead: SimpleRenderer.bind(null, 'thead'),
+              tableBody: SimpleRenderer.bind(null, 'tbody'),
+              tableRow: SimpleRenderer.bind(null, 'tr'),
+              tableCell: TableCell,
+              root: Root,
+              text: TextRenderer,
+              list: List,
+              listItem: ListItem,
+              definition: NullRenderer,
+              heading: Heading,
+              inlineCode: InlineCode,
+              code: CodeBlock,
+              html: Html,
+              virtualHtml: VirtualHtml,
+              parsedHtml: ParsedHtml
+             */
           }}
-          // components={{
-          //   code: ({ node, ...props }) => (
-          //     <i style={{ color: 'red' }} {...props} />
-          //   ),
-          // }}
         />
 
         <Spacer top={50} />
