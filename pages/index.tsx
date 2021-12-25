@@ -27,15 +27,12 @@ export default function Home() {
 
       <CenteredContainer>
         <p className={styles.headerContentText}>
-          I'm John Wright Stanly, a{' '}
-          {Math.floor((Date.now() / 1000 - 1000497300) / 31536000)} year old
-          from Jacksonville, Florida.
+          I'm John Wright Stanly, a freshman at Georgia Tech from Jacksonville,
+          Florida.
         </p>
         <p className={styles.headerContentText}>
-          I graduated from Stanton College Prep in May 2020. I plan to study
-          aerospace engineering at Georgia Tech. However, I decided to take a
-          gap year thanks to Covid-19. In the meantime, I've been working on
-          some pretty cool projects.
+          Before college, I took a gap year thanks to Covid-19. Over the last
+          year, I've been working on some pretty cool projects.
         </p>
         <p className={styles.headerContentText}>
           My passions are software development and commercial aviation. I also

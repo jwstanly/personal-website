@@ -35,6 +35,7 @@ interface HeadTagsProps {
 
 export default function HeadTags(props: HeadTagsProps) {
   const description = props.description || 'Blog for John Wright Stanly';
+  const imageUrl = props.imageUrl || '/website_banner.png';
 
   return (
     <Head>
@@ -53,18 +54,9 @@ export default function HeadTags(props: HeadTagsProps) {
       <meta property="og:type" content={props.type || 'website'} />
       <meta property="og:locale" content="en_US" />
 
-      <meta
-        property="og:image"
-        content={props.imageUrl || 'https://jwstanly.com/logo192.png'}
-      />
-      <meta
-        property="og:image:url"
-        content={props.imageUrl || 'https://jwstanly.com/logo192.png'}
-      />
-      <meta
-        property="og:image:secure_url"
-        content={props.imageUrl || 'https://jwstanly.com/logo192.png'}
-      />
+      <meta property="og:image" content={imageUrl} />
+      <meta property="og:image:url" content={imageUrl} />
+      <meta property="og:image:secure_url" content={imageUrl} />
       <meta property="og:image:alt" content={props.imageAlt || props.title} />
       {props.imageType && (
         <meta property="og:image:type" content={props.imageType} />
@@ -80,10 +72,7 @@ export default function HeadTags(props: HeadTagsProps) {
       <meta name="twitter:site" content="@jwstanly" />
       <meta name="twitter:title" content={props.title} />
       <meta name="twitter:description" content={description} />
-      <meta
-        name="twitter:image"
-        content={props.imageUrl || 'https://jwstanly.com/logo192.png'}
-      />
+      <meta name="twitter:image" content={imageUrl} />
       <meta name="twitter:image:alt" content={props.imageAlt || props.title} />
 
       {props.videoUrl && (
