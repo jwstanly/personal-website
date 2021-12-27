@@ -4,7 +4,7 @@
 public/images
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -53,3 +53,9 @@ yarn-error.log*
 edit.md
 
 .history/
+
+# Admin pages
+*.log
+.next
+app
+dist
