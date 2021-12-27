@@ -1,11 +1,10 @@
 import React from 'react';
-import styles from '../styles/Form.module.css';
 import Spacer from './Spacer';
 
 interface TextFieldProps {
   type?: string;
   value: string;
-  setValue: (string) => void;
+  setValue: (t: string) => void;
   label?: string;
   onEnter?: () => void;
   placeholder?: string;
@@ -31,7 +30,7 @@ export default function TextField(props: TextFieldProps) {
 
   return (
     <div className="mb-6">
-      <div className={styles.formLabel}>
+      <div>
         <label>
           {`
             ${props.label}
