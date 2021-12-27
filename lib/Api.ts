@@ -15,6 +15,7 @@ export default {
   getAllArticles,
   getArticleByTitle,
   upsertArticle,
+  deleteArticle,
   upsertComment,
   deleteComment,
   upsertCommentReply,
@@ -62,12 +63,28 @@ async function getArticleByTitle(title: string): Promise<BlogArticle> {
 }
 
 async function upsertArticle(article: BlogArticleSubmit): Promise<any> {
-  const url = `${API_URL}/blog`;
+  const url = `${API_URL}/blog?title=${serializeTitle(article.title)}`;
   // console.log(url, team);
   return fetch(url, {
     ...getKeyParams(),
     method: 'POST',
     body: JSON.stringify(article),
+  })
+    .then(res => res.json())
+    .then(data => {
+      // console.log(url, data);
+      return data;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+async function deleteArticle({ title }: BlogArticle): Promise<any> {
+  const url = `${API_URL}/blog?title=${serializeTitle(title)}`;
+  return fetch(url, {
+    ...getKeyParams(),
+    method: 'DELETE',
   })
     .then(res => res.json())
     .then(data => {
