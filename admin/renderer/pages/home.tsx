@@ -3,11 +3,12 @@ import { BlogArticle } from '../../../lib/Types';
 import Api from '../../../lib/Api';
 import getImageUrl from '../../../lib/getImageUrl';
 import TextField from '../../../components/TextField';
-import ArticleText from '../../../components/ArticleText';
 import Button from '../../../components/Button';
 import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
+import ErrorBoundary from '../../../components/ErrorBoundary';
+import ArticleText from '../../../components/ArticleText';
 
 const store = new Store();
 
@@ -121,7 +122,6 @@ function ArticleEditor(props: {
   React.useEffect(() => {
     if (props.isNewArticle) {
       store.set('newArticle', article);
-      console.log(store.get('newArticle'));
     }
   }, [article]);
 
@@ -141,7 +141,6 @@ function ArticleEditor(props: {
     }
 
     delete (article as any).PartitionKey;
-    console.log(article);
     if (props.article.title !== title) {
       await Api.deleteArticle(props.article);
     }
@@ -187,7 +186,15 @@ function ArticleEditor(props: {
           </div>
         </div>
         <div className="flex-grow overflow-auto p-4">
-          <ArticleText article={article} />
+          <ErrorBoundary
+            errorContent={
+              <div className="flex bg-red-200 justify-items-center align-middle">
+                <span>Parsing Error</span>
+              </div>
+            }
+          >
+            <ArticleText content={content} />
+          </ErrorBoundary>
         </div>
       </div>
     </div>
@@ -200,7 +207,6 @@ function Deploy() {
   const [error, setError] = React.useState<string>('');
 
   React.useEffect(() => {
-    console.log('lmao');
     const ls = spawn(
       'cd /Users/jwstanly/personal-website && yarn deploy:frontend',
       {
