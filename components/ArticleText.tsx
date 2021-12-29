@@ -6,14 +6,13 @@ import HeadingRenderer from './markdown/HeadingRenderer';
 import ImageRenderer from './markdown/ImageRenderer';
 
 interface ArticleTextProps {
-  article: BlogArticle;
-  onArticleModify?: () => any;
+  content: string;
 }
 
 export default function ArticleText(props: ArticleTextProps) {
   return (
     <ReactMarkdown
-      source={props.article.content}
+      source={props.content}
       escapeHtml={false}
       renderers={{
         image: ImageRenderer,

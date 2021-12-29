@@ -54,7 +54,7 @@ export default function Article(props: BlogArticleProps) {
         </div>
       </div>
       <Spacer top={20} />
-      <ArticleText article={props.article} />
+      <ArticleText content={props.article.content} />
     </>
   );
 }
