@@ -187,11 +187,7 @@ function ArticleEditor(props: {
         </div>
         <div className="flex-grow overflow-auto p-4">
           <ErrorBoundary
-            errorContent={
-              <div className="flex bg-red-200 justify-items-center align-middle">
-                <span>Parsing Error</span>
-              </div>
-            }
+            errorContent={<div className="text-red-500">Parsing Error</div>}
           >
             <ArticleText content={content} />
           </ErrorBoundary>
