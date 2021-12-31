@@ -1,4 +1,3 @@
-import { CSSProperties } from 'react';
 import getImageUrl from '../../lib/getImageUrl';
 
 interface ImageRendererProps {
@@ -10,7 +9,7 @@ interface ImageRendererProps {
 export default function ImageRenderer(props: ImageRendererProps) {
   const hasCaption = props.alt.toLowerCase() !== 'image';
 
-  const style: CSSProperties = {
+  const style: React.CSSProperties = {
     display: 'block',
     maxWidth: '100%',
     objectFit: 'cover',
