@@ -140,8 +140,11 @@ function ArticleEditor(props: {
       return;
     }
 
-    delete (article as any).PartitionKey;
-    if (props.article.title !== title) {
+    if ((article as any).PartitionKey) {
+      delete (article as any).PartitionKey;
+    }
+
+    if (!props.isNewArticle && props.article.title !== title) {
       await Api.deleteArticle(props.article);
     }
     await Api.upsertArticle(article);

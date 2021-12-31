@@ -1,5 +1,4 @@
 import ReactMarkdown from 'react-markdown';
-import { BlogArticle } from '../lib/Types';
 import CodeBlockRenderer from './markdown/CodeBlockRenderer';
 import CodeInlineRenderer from './markdown/CodeInlineRenderer';
 import HeadingRenderer from './markdown/HeadingRenderer';

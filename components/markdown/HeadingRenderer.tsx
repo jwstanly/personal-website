@@ -33,7 +33,7 @@ export default function HeadingRenderer(props: HeadingRendererProps) {
           display: none;
         }
         .link {
-          margin-top: ${props.level <= 3 ? 20 : 0}px;
+          margin-top: ${props.level <= 3 ? 20 : props.level == 4 ? 15 : 0}px;
           padding: 5px;
           padding-left: 10px;
           cursor: pointer;
