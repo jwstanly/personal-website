@@ -7,7 +7,12 @@ sh.echo(`Deploying the ${ENV_NAME} build to Bucket ${DOMAIN_NAME}`);
 sh.exec(
   `aws s3 sync out s3://${DOMAIN_NAME} ` +
     '--delete ' +
+    '--exclude /images --exclude /resume.pdf ' +
     `--profile ${AWS_CLI_PROFILE} `,
+);
+
+sh.exec(
+  `aws s3 cp out/images s3://${DOMAIN_NAME}/images --recursive --profile ${AWS_CLI_PROFILE} `,
 );
 
 if (CF_DISTRIBUTION_ID) {
