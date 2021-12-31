@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import getImageUrl from '../../lib/getImageUrl';
 
 interface ImageRendererProps {
   src: string;
@@ -9,7 +9,7 @@ interface ImageRendererProps {
 export default function ImageRenderer(props: ImageRendererProps) {
   const hasCaption = props.alt.toLowerCase() !== 'image';
 
-  const style: CSSProperties = {
+  const style: React.CSSProperties = {
     display: 'block',
     maxWidth: '100%',
     objectFit: 'cover',
@@ -19,27 +19,29 @@ export default function ImageRenderer(props: ImageRendererProps) {
     marginBottom: '40px',
   };
 
+  const src = getImageUrl(props.src);
+
   return hasCaption ? (
     <figure className="wp-block-image size-large is-resized">
       <img
         data-loading="lazy"
-        data-orig-file={props.src}
-        data-medium-file={props.src + '?w=300'}
-        data-large-file={props.src + '?w=750'}
-        src={props.src}
+        data-orig-file={src}
+        data-medium-file={src + '?w=300'}
+        data-large-file={src + '?w=750'}
+        src={src}
         alt={props.alt}
         srcSet={
-          props.src +
+          src +
           '?w=1024 1024w, ' +
-          props.src +
+          src +
           '?w=705 705w, ' +
-          props.src +
+          src +
           '?w=150 150w, ' +
-          props.src +
+          src +
           '?w=300 300w, ' +
-          props.src +
+          src +
           '?w=768 768w, ' +
-          props.src +
+          src +
           '?1248w'
         }
         sizes="(max-width: 707px) 100vw, 707px"
@@ -48,6 +50,6 @@ export default function ImageRenderer(props: ImageRendererProps) {
       <figcaption style={{ textAlign: 'center' }}>{props.alt}</figcaption>
     </figure>
   ) : (
-    <img style={style} src={props.src} alt={props.alt} />
+    <img style={style} src={src} alt={props.alt} />
   );
 }

@@ -1,3 +1,3 @@
 export default function serializeTitle(title: string): string {
-  return title.split(' ').join('+');
+  return title?.split(' ').join('+');
 }

@@ -1128,6 +1128,22 @@
             ],
             "type": "object"
         },
+        "MenuOption": {
+            "additionalProperties": false,
+            "properties": {
+                "href": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "href",
+                "label"
+            ],
+            "type": "object"
+        },
         "Optional": {
             "additionalProperties": false,
             "type": "object"

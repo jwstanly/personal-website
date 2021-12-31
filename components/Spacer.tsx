@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SpacerProps {
   top?: number;
   bottom?: number;

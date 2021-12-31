@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '../styles/Home.module.css';
 
 interface TitleProps {
   centered?: boolean;
@@ -43,7 +42,7 @@ export function H1(props: TitleProps) {
   return (
     <h1
       id={props.id}
-      className={props.centered ? styles.centered : ''}
+      className={props.centered ? 'text-center' : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -55,7 +54,7 @@ export function H2(props: TitleProps) {
   return (
     <h2
       id={props.id}
-      className={props.centered ? styles.centered : ''}
+      className={props.centered ? 'text-center' : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -67,7 +66,7 @@ export function H3(props: TitleProps) {
   return (
     <h3
       id={props.id}
-      className={props.centered ? styles.centered : ''}
+      className={props.centered ? 'text-center' : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -79,7 +78,7 @@ export function H4(props: TitleProps) {
   return (
     <h4
       id={props.id}
-      className={props.centered ? styles.centered : ''}
+      className={props.centered ? 'text-center' : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -91,7 +90,7 @@ export function H5(props: TitleProps) {
   return (
     <h5
       id={props.id}
-      className={props.centered ? styles.centered : ''}
+      className={props.centered ? 'text-center' : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -103,7 +102,7 @@ export function H6(props: TitleProps) {
   return (
     <h6
       id={props.id}
-      className={props.centered ? styles.centered : ''}
+      className={props.centered ? 'text-center' : ''}
       style={getCSS(props)}
     >
       {props.children}
@@ -127,5 +126,12 @@ export function Code(props: TitleProps) {
 }
 
 export function Tag(props: TitleProps) {
-  return <div className={styles.tagText}>{props.children}</div>;
+  return (
+    <div
+      style={{ fontSize: 11 }}
+      className="rounded-lg border-solid border border-gray-500 text-gray-500 float-left font-semibold mt-0 ml-0 mb-4 mr-5 py-1.5 px-3"
+    >
+      {props.children}
+    </div>
+  );
 }
