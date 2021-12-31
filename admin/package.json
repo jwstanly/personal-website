@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
+  "name": "jwstanly.com-admin",
+  "description": "Admin page for jwstanly.com",
   "version": "1.0.0",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
+  "author": "John Wright Stanly.js",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
