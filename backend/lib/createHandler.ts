@@ -9,58 +9,72 @@ import getErrorRes from './getErrorRes';
 import getSuccessRes from './getSuccessRes';
 import logEvent from './logEvent';
 import logInput from './logInput';
-import parseType from './parseType';
 import validateHttpMethod from './validateHttpMethod';
+import schema from '../types.schema.json';
+import Ajv from 'ajv';
+import validateSchema from './validateSchema';
 
 interface HandlerOptions {
-  event: APIGatewayProxyEvent;
-  httpMethod: HttpMethod;
   queryParamType?: string;
   bodyParamType?: string;
-  service: (arg?: ServiceParams<any, any>) => Promise<any> | any;
+  httpMethod: HttpMethod;
+  service: (arg: ServiceParams<any, any>) => Promise<any> | any;
 }
 
-export default async function createHandler({
-  event,
-  httpMethod,
+const ajv = new Ajv();
+
+export function createHandle({
   queryParamType,
   bodyParamType,
+  httpMethod,
   service,
-}: HandlerOptions): Promise<APIGatewayProxyResult> {
-  try {
-    logEvent(event);
+}: HandlerOptions): (
+  event: APIGatewayProxyEvent,
+) => Promise<APIGatewayProxyResult> {
+  const queryParamsValidator = ajv.compile(
+    schema.definitions[queryParamType] || {},
+  );
+  const bodyParamsValidator = ajv.compile(
+    schema.definitions[bodyParamType] || {},
+  );
 
-    validateHttpMethod(event, httpMethod);
+  return async event => {
+    try {
+      logEvent(event);
 
-    const serviceParams: ServiceParams<object, object> = {};
+      validateHttpMethod(event, httpMethod);
 
-    if (queryParamType) {
-      serviceParams.queryParams = parseType(
-        event.queryStringParameters,
-        queryParamType,
-      );
+      const serviceParams: ServiceParams<any, any> = {};
+
+      if (queryParamType) {
+        const params = event.queryStringParameters;
+        validateSchema(params, queryParamType, queryParamsValidator);
+        serviceParams.queryParams = params;
+      }
+
+      if (bodyParamType) {
+        const params = JSON.parse(event.body);
+        validateSchema(params, bodyParamType, bodyParamsValidator);
+        serviceParams.queryParams = params;
+      }
+
+      logInput(serviceParams);
+
+      const res = await service(serviceParams);
+
+      return getSuccessRes(event, res);
+    } catch (error) {
+      if (error instanceof ApiException) {
+        return getErrorRes(event, error);
+      } else {
+        return getErrorRes(
+          event,
+          new ApiException({
+            statusCode: 500,
+            res: `An unknown error occurred. Error: ${error}`,
+          }),
+        );
+      }
     }
-
-    if (bodyParamType) {
-      serviceParams.body = parseType(event.body, bodyParamType);
-    }
-
-    logInput(serviceParams);
-
-    const res = await service(serviceParams);
-
-    return getSuccessRes(event, res);
-  } catch (error) {
-    if (error instanceof ApiException) {
-      return getErrorRes(event, error);
-    } else {
-      return getErrorRes(
-        event,
-        new ApiException({
-          statusCode: 500,
-          res: `An unknown error occurred. Error: ${error}`,
-        }),
-      );
-    }
-  }
+  };
 }
