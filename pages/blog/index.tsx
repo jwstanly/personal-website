@@ -13,6 +13,8 @@ import formatPureText from '../../lib/formatPureText';
 export async function getStaticProps(context) {
   const articles: BlogArticle[] = await API.getAllArticles();
 
+  articles.sort((a, b) => b.createdAt - a.createdAt);
+
   return {
     props: {
       articles: articles,
