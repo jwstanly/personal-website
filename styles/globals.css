@@ -170,6 +170,7 @@ code {
   font-size: 90%;
   border: 1px solid #e1e1e1;
   border-radius: 4px;
+  white-space: pre-wrap;
 }
 
 pre code {

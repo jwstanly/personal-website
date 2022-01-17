@@ -27,16 +27,18 @@ export default function Home() {
 
       <CenteredContainer>
         <p className={styles.headerContentText}>
-          I'm John Wright Stanly, a freshman at Georgia Tech from Jacksonville,
-          Florida.
+          I'm John Wright Stanly from Jacksonville, Florida and a freshman at
+          Georgia Tech.
         </p>
         <p className={styles.headerContentText}>
-          Before college, I took a gap year thanks to Covid-19. Over the last
-          year, I've been working on some pretty cool projects.
+          I deferred my admission last year and worked at a startup while also
+          consulting with a local technology company.
         </p>
         <p className={styles.headerContentText}>
-          My passions are software development and commercial aviation. I also
-          enjoy running, biking, and golfing.
+          I'm passionate about the software and aerospace industries.
+        </p>
+        <p className={styles.headerContentText}>
+          In my free time I enjoy running, biking, and golfing.
         </p>
       </CenteredContainer>
 
