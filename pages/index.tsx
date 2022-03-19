@@ -27,15 +27,15 @@ export default function Home() {
 
       <CenteredContainer>
         <p className={styles.headerContentText}>
-          I'm John Wright Stanly from Jacksonville, Florida and a freshman at
-          Georgia Tech.
+          I'm John Wright Stanly, a student at Georgia Tech. I'm from
+          Jacksonville, Florida.
         </p>
         <p className={styles.headerContentText}>
-          I deferred my admission last year and worked at a startup while also
-          consulting with a local technology company.
+          I deferred my admission last year and worked at a startup. I also
+          worked at a local tech company.
         </p>
         <p className={styles.headerContentText}>
-          I'm passionate about the software and aerospace industries.
+          I'm passionate about the entrepreneurship software engineering.
         </p>
         <p className={styles.headerContentText}>
           In my free time I enjoy running, biking, and golfing.
@@ -51,6 +51,28 @@ export default function Home() {
       </H1>
 
       <Spacer top={5} />
+
+      <ExperienceCard
+        header="Cloudflare"
+        subheader="Software Engineer Intern"
+        codeTags={['Incoming Summer 2022']}
+        content={[
+          'I will be joining the Cloudflare Workers team under the Compute division.',
+        ]}
+        imageUrl="https://scontent-atl3-2.xx.fbcdn.net/v/t1.6435-9/120846432_10157903995810432_7860391689235986435_n.png?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=muKufLIzwZEAX8yNRZG&_nc_ht=scontent-atl3-2.xx&oh=00_AT-NaTRZrO7H_80QEIyddDOlW6ZnBCI0YcYqXQTaR6Sbhg&oe=625BD8BE"
+        imageAlt="Cloudflare logo"
+      />
+
+      <ExperienceCard
+        header="IBM Accelerate"
+        subheader="Talent Program Participant"
+        codeTags={['Incoming Summer 2022']}
+        content={[
+          'I was selected for the software track for IBM Accelerate 2022.',
+        ]}
+        imageUrl="https://www.ibm.com/design/language/819fdd52300a64595843ff4186ae5098/core_gray10_on_blue60.svg"
+        imageAlt="IBM logo"
+      />
 
       <ExperienceCard
         header="Winsight"
@@ -77,7 +99,7 @@ export default function Home() {
         codeTags={['React', 'AR', 'E-Commerce', 'Shopify Liquid', 'JavaScript']}
         content={[
           'Synergy is a IT consulting firm that also operates various projects ranging from e-commerce to augmented reality to healthcare.',
-          "I've operated the JavaScript and Liquid codebase for TheWMarketplace, an e-commerce website for women entrepreneurs. I wrote an augmented reality game that takes players on a scavenger hunt accross Jacksonville. I also connected smartwatch API's to Synergy's healthcare app, Project One.",
+          "I've operated the JavaScript and Liquid codebase for TheWMarketplace, an e-commerce website for women entrepreneurs. I wrote an augmented reality game that takes players on a scavenger hunt across Jacksonville. I also connected smartwatch API's to Synergy's healthcare app, Project One.",
         ]}
         imageUrl="https://media-exp1.licdn.com/dms/image/C4D0BAQHx7gtEoMobMQ/company-logo_200_200/0/1603997222550?e=2159024400&v=beta&t=g9nNgT-Pwn890yhcK3IGUZwb6FvzZeBJPlvVkv5GgLk"
         imageAlt="Synergy Technologies logo"
@@ -102,6 +124,32 @@ export default function Home() {
         ]}
         imageUrl="https://i.imgur.com/ITWU7N2.png"
         imageAlt="Audiodub logo"
+      />
+
+      <H1 centered marginBottom={40}>
+        Education
+      </H1>
+
+      <ExperienceCard
+        header="Georgia Tech"
+        subheader="Computer Science"
+        content={[
+          'The Georgia Institute of Technology is a public research university in the heart of Atlanta, Georgia.',
+          "While at Georgia Tech, I've started getting involved with clubs like Startup Exchange and GT Blockchain. In the Fall 2022 semester, I'll be managing Community Membership at Startup Exchange, a new program to foster a community of entrepreneurship at GT.",
+        ]}
+        imageUrl="/images/gt.png"
+        imageAlt="Georgia Tech logo"
+      />
+
+      <ExperienceCard
+        header="Stanton College Prep"
+        subheader="International Baccalaureate"
+        content={[
+          "Stanton is a high school in Jacksonville known for its academics. It consistently ranks as one of the nation's most difficult high schools.",
+          'While at Stanton I served on student government, helping create new events like Mental Health Week and Voter Registration Day. I also was a captain of the varsity cross country and track teams.',
+        ]}
+        imageUrl="/images/stanton.jpg"
+        imageAlt="Stanton College Prep logo"
       />
     </>
   );

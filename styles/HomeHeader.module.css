@@ -17,6 +17,7 @@
 }
 
 .imageContainer {
+  border-radius: 9999px;
   width: 20vw;
   height: 20vw;
 }
