@@ -17,10 +17,10 @@ export default function HomeHeader() {
             John Wright
           </div>
         </div>
-        <div>
+        <div className="rounded-full">
           <img
             className={styles.imageContainer}
-            src="/images/profileClipped.png"
+            src="/images/profilePicYellowstone.jpg"
             alt="John Wright Stanly"
           />
         </div>

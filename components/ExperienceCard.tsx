@@ -6,7 +6,7 @@ import { LargeIcon } from './LargeIcon';
 interface ExperienceCardProps {
   header: string;
   subheader: string;
-  codeTags: string[];
+  codeTags?: string[];
   content: string[];
   imageUrl: string;
   imageAlt: string;
@@ -15,11 +15,11 @@ interface ExperienceCardProps {
 export function ExperienceCard(props: ExperienceCardProps) {
   return (
     <CenteredContainer>
-      <div className="sm:inline md:flex mb-8 ">
-        <div className="float-left">
+      <div className="flex flex-col md:flex-row mb-8 w-full">
+        <div className="flex-none">
           <LargeIcon imageUrl={props.imageUrl} alt={props.imageAlt} />
         </div>
-        <div className="float-left mt-5 mb-10 md:ml-10 md:mt-0">
+        <div className="flex-auto mt-5 mb-10 md:ml-10 md:mt-0">
           <Card
             header={props.header}
             subheader={props.subheader}
