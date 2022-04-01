@@ -145,7 +145,7 @@ export default function Home() {
         header="Stanton College Prep"
         subheader="International Baccalaureate"
         content={[
-          "Stanton is a high school in Jacksonville known for its academics. It consistently ranks as one of the nation's most difficult high schools.",
+          "Stanton is a magnet high school in Jacksonville. Known for it's academics, it ranks as one of the nation's most difficult high schools.",
           'While at Stanton I served on student government, helping create new events like Mental Health Week and Voter Registration Day. I also was a captain of the varsity cross country and track teams.',
         ]}
         imageUrl="/images/stanton.jpg"
