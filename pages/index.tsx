@@ -35,7 +35,7 @@ export default function Home() {
           worked at a local tech company.
         </p>
         <p className={styles.headerContentText}>
-          I'm passionate about the entrepreneurship software engineering.
+          I'm passionate about startups and software engineering.
         </p>
         <p className={styles.headerContentText}>
           In my free time I enjoy running, biking, and golfing.
