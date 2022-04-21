@@ -49,7 +49,7 @@ export default function Article(props: BlogArticleProps) {
         <div className="flex-grow-1 ml-auto mr-0">
           <LikeDislikePanel
             // key={JSON.stringify(props.article).length}
-            article={props.fetchedArticle || props.article}
+            article={props.fetchedArticle}
             onArticleModify={props.onArticleModify}
           />
         </div>

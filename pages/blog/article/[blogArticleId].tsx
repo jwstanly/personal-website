@@ -61,7 +61,11 @@ export default function Blog(props: {
       <Spacer top={100} />
 
       <CenteredContainer>
-        <Article article={article} onArticleModify={fetchArticle} />
+        <Article
+          article={article}
+          fetchedArticle={fetchedArticle}
+          onArticleModify={fetchArticle}
+        />
         <Spacer top={50} />
         <CommentBoard
           key={JSON.stringify(props.article).length}
