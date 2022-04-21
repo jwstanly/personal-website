@@ -37,6 +37,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     Api.getAllArticles().then(articles => {
       setRecentArticles(
         sortBy(articles, 'createdAt')
+          .reverse()
           .splice(0, 3)
           .map(article => ({
             label: article.title,
