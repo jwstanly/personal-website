@@ -92,12 +92,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
             ],
           },
           {
-            label: 'Work',
+            label: 'Featured On',
             rowOptions: [
-              { label: 'Winsight', href: 'https://getwinsight.com' },
+              { label: 'Tech-Blogs.dev', href: 'https://tech-blogs.dev/' },
               {
-                label: 'Synergy Technologies',
-                href: 'https://synergytechs.net/',
+                label: 'Awesome Personal Blogs',
+                href: 'https://github.com/jkup/awesome-personal-blogs',
               },
             ],
           },
