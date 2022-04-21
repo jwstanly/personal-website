@@ -13,7 +13,7 @@ interface TitleProps {
   marginLeft?: number;
   marginRight?: number;
 
-  children: string;
+  children: React.ReactNode;
   id?: string;
 }
 

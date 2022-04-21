@@ -10,6 +10,8 @@ import {
   faLinkedin,
   faStrava,
 } from '@fortawesome/free-brands-svg-icons';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { MenuOption } from '../lib/Types';
 import Api from '../lib/Api';
 import sortBy from '../lib/sortBy';
@@ -108,6 +110,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
           {
             icon: faLinkedin,
             href: 'https://www.linkedin.com/in/jwstanly/',
+          },
+          {
+            icon: faCalendar as IconDefinition,
+            href: 'https://calendly.com/jwstanly/chat',
           },
           {
             icon: faTwitter,

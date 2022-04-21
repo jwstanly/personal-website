@@ -9,6 +9,7 @@ import CenteredContainer from '../../components/CenteredContainer';
 import HeadTags from '../../components/HeadTags';
 import isValidEmail from '../../lib/isValidEmail';
 import { ContactMessage } from '../../lib/Types';
+import Link from 'next/link';
 
 export default function Unsubscribe(props: any) {
   const [name, setName] = React.useState<string>('');
@@ -85,7 +86,11 @@ export default function Unsubscribe(props: any) {
         </H1>
         <H6 centered marginBottom={20}>
           Send me a message and I'll try to respond to your email address within
-          the next couple days
+          the next couple days.
+        </H6>
+        <H6 centered marginBottom={20}>
+          My Calendly is also available{' '}
+          <Link href="https://calendly.com/jwstanly/chat">here</Link>.
         </H6>
         {error && (
           <H6 red marginTop={30} marginBottom={20}>
