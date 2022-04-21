@@ -164,11 +164,12 @@ code {
   word-break: break-word;
   white-space: break-spaces;
   color: #222;
-  padding: 0.2rem 0.3rem;
-  margin: 0rem 0.05rem;
+  padding: 0.25rem 0.3rem;
+  margin: 0rem 0.1rem;
   font-weight: 100;
   font-size: 90%;
-  border: 1px solid #e1e1e1;
+  /* border: 1px solid #e1e1e1; */
+  background-color: #eeeeee;
   border-radius: 4px;
   white-space: pre-wrap;
 }
@@ -177,6 +178,7 @@ pre code {
   padding: 0.2rem 0rem;
   margin: 0rem 0rem;
   border: none;
+  background-color: transparent;
 }
 
 input[type] {
