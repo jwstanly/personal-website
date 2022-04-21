@@ -69,7 +69,7 @@ export default function HeadTags(props: HeadTagsProps) {
       )}
 
       <meta name="twitter:card" content={props.twitterCardType || 'summary'} />
-      <meta name="twitter:site" content="@jwstanly" />
+      <meta name="twitter:site" content="@jwstanlydev" />
       <meta name="twitter:title" content={props.title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />

@@ -111,7 +111,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           },
           {
             icon: faTwitter,
-            href: 'https://twitter.com/jwstanly',
+            href: 'https://twitter.com/jwstanlydev',
           },
           {
             icon: faInstagram,
