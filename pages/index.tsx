@@ -59,7 +59,7 @@ export default function Home() {
         content={[
           'I will be joining the Cloudflare Workers team under the Compute division.',
         ]}
-        imageUrl="https://scontent-atl3-2.xx.fbcdn.net/v/t1.6435-9/120846432_10157903995810432_7860391689235986435_n.png?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=muKufLIzwZEAX8yNRZG&_nc_ht=scontent-atl3-2.xx&oh=00_AT-NaTRZrO7H_80QEIyddDOlW6ZnBCI0YcYqXQTaR6Sbhg&oe=625BD8BE"
+        imageUrl="images/cloudflare.png"
         imageAlt="Cloudflare logo"
       />
 

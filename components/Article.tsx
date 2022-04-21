@@ -29,8 +29,9 @@ export default function Article(props: BlogArticleProps) {
                 height: 45,
                 left: 0,
                 top: 0,
+                borderRadius: 999,
               }}
-              src="/images/profileClipped.png"
+              src="/images/profilePicYellowstone.jpg"
               alt="John Wright Stanly"
             />
             <Spacer left={10} />
