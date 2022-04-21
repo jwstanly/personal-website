@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import CenteredContainer from '../../components/CenteredContainer';
 import HeadTags from '../../components/HeadTags';
@@ -11,7 +12,80 @@ export default function PrivacyPolicy() {
 
       <Spacer top={100} />
       <CenteredContainer>
-        <H1 centered>Privacy Policy</H1>
+        <H1 centered>The "Chill" Privacy Policy</H1>
+        <Spacer top={30} />
+
+        <p>
+          I'm legally required to have an "official" privacy policy because I
+          technically collect personal information.
+        </p>
+
+        <p>
+          However, they're bloated with legal jargon. So here's what I'm
+          actually doing:
+        </p>
+
+        <ul>
+          <li>
+            To manage my blog's likes and comments, I give your browser a user
+            ID
+          </li>
+          <li>
+            If you want notifications when someone replies to your comment, I
+            collect your email
+          </li>
+          <li>I use Google Analytics</li>
+        </ul>
+
+        <p>
+          In order to manage my blog's likes and comments, I give each user an
+          ID stored in your browser's local storage. It's a pretty dumb tracker.
+          For example, your desktop and phone would have different user IDs
+          because they're different devices. The only way it's "smart" is your
+          ID does persist across sessions. The only reason I use IDs is to
+          control who can reply/edit/delete comments and likes. For example, I
+          don't want you deleting random people's comments, but you're more than
+          welcome to delete your own comment. User IDs enable this.
+        </p>
+
+        <p>
+          If you leave a comment, you can optionally leave your email for
+          notifications if someone replies. However, unlike user IDs, these are
+          secure. Emails are NEVER returned back to the client side. I strip all
+          email addresses out of every API response.
+        </p>
+
+        <p>
+          If you're technical, you could have some fun jacking up user IDs with
+          browser dev tools. Someone actually attempted to DoS my blog in May
+          2021 this way... they had a bot override given user IDs to spam likes.
+          Emails are a different story though. Once a reader POSTs their email
+          it doesn't come back to the client.
+        </p>
+
+        <p>
+          Also reminder this entire website is{' '}
+          <Link href="https://github.com/jwstanly/personal-website">
+            open source
+          </Link>
+          , so I'm not hiding anything from y'all. You can see exactly how I
+          handle IDs and emails.
+        </p>
+
+        <p>
+          I do use Google Analytics though. Yeah sorry. It helps me figure out
+          basic stuff, like what articles are doing well, or how successful
+          sharing a link on social media was. Nothing crazy. And no, I'm not
+          exporting my Google Analytics data and selling it to 3rd party
+          vendors. I totally understand that Google Analytics is an ick for many
+          people, but as a junior developer who doesn't have time to build out
+          their own analytics tooling, Google Analytics is an easy way to gain
+          these stats. I use it in about the most harmless way possible.
+        </p>
+
+        <Spacer top={30} />
+
+        <H1 centered>The "Official" Privacy Policy</H1>
 
         <Spacer top={30} />
 
