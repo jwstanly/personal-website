@@ -10,7 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "aws-amplify": "^3.3.20",
-    "next": "^11.0.1",
+    "next": "12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-markdown": "^5.0.3",
@@ -62,14 +62,19 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.3%",
+      "not ie 11",
       "not dead",
       "not op_mini all"
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      ">0.3%",
+      "not ie 11",
+      "not dead",
+      "not op_mini all"
     ]
   }
 }
