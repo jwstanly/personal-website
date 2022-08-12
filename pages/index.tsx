@@ -53,25 +53,30 @@ export default function Home() {
       <Spacer top={5} />
 
       <ExperienceCard
-        header="Cloudflare"
+        header="Google"
         subheader="Software Engineer Intern"
-        codeTags={['Incoming Summer 2022']}
-        content={[
-          'I will be joining the Cloudflare Workers team under the Compute division.',
-        ]}
-        imageUrl="images/cloudflare.png"
-        imageAlt="Cloudflare logo"
+        codeTags={['Android', 'SQL', 'Protobuf', 'Java']}
+        content={['Joining Google Maps. Starting August 2022.']}
+        imageUrl="https://www.techdatacloud.eu/media/2148/education-large.png"
+        imageAlt="Google logo"
       />
 
       <ExperienceCard
-        header="IBM Accelerate"
-        subheader="Talent Program Participant"
-        codeTags={['Incoming Summer 2022']}
-        content={[
-          'I was selected for the software track for IBM Accelerate 2022.',
+        header="Cloudflare"
+        subheader="Software Engineer Intern"
+        codeTags={[
+          'Apache Kafka',
+          'Kubernetes',
+          'Docker',
+          'PostgreSQL',
+          'Golang',
         ]}
-        imageUrl="https://www.ibm.com/design/language/819fdd52300a64595843ff4186ae5098/core_gray10_on_blue60.svg"
-        imageAlt="IBM logo"
+        content={[
+          'Cloudflare is a global network designed to make everything you connect to the Internet secure, private, fast, and reliable.',
+          "I've revamped notifications for Cloudflare Workers by redesigning the architecture for scalability, helping add a new alert type, and automate deployments.",
+        ]}
+        imageUrl="images/cloudflare.png"
+        imageAlt="Cloudflare logo"
       />
 
       <ExperienceCard
