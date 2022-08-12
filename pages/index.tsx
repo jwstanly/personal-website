@@ -57,7 +57,7 @@ export default function Home() {
         subheader="Software Engineer Intern"
         codeTags={['Android', 'SQL', 'Protobuf', 'Java']}
         content={['Joining Google Maps. Starting August 2022.']}
-        imageUrl="https://www.techdatacloud.eu/media/2148/education-large.png"
+        imageUrl="/images/google.png"
         imageAlt="Google logo"
       />
 
@@ -75,7 +75,7 @@ export default function Home() {
           'Cloudflare is a global network designed to make everything you connect to the Internet secure, private, fast, and reliable.',
           "I've revamped notifications for Cloudflare Workers by redesigning the architecture for scalability, helping add a new alert type, and automate deployments.",
         ]}
-        imageUrl="images/cloudflare.png"
+        imageUrl="/images/cloudflare.png"
         imageAlt="Cloudflare logo"
       />
 
@@ -94,7 +94,7 @@ export default function Home() {
           'Winsight is a livestreaming app for youth sports. Friends and family can watch personal highlight reels created just for their athletes.',
           "I've developed the mobile app and website. I've also helped develop our APIs and servers hosted on AWS.",
         ]}
-        imageUrl="https://is2-ssl.mzstatic.com/image/thumb/Purple124/v4/79/f5/86/79f5861c-ea2d-122d-7774-5b7bf93ddc69/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp"
+        imageUrl="/images/winsight.webp"
         imageAlt="Winsight logo"
       />
 
@@ -106,7 +106,7 @@ export default function Home() {
           'Synergy is a IT consulting firm that also operates various projects ranging from e-commerce to augmented reality to healthcare.',
           "I've operated the JavaScript and Liquid codebase for TheWMarketplace, an e-commerce website for women entrepreneurs. I wrote an augmented reality game that takes players on a scavenger hunt across Jacksonville. I also connected smartwatch API's to Synergy's healthcare app, Project One.",
         ]}
-        imageUrl="https://media-exp1.licdn.com/dms/image/C4D0BAQHx7gtEoMobMQ/company-logo_200_200/0/1603997222550?e=2159024400&v=beta&t=g9nNgT-Pwn890yhcK3IGUZwb6FvzZeBJPlvVkv5GgLk"
+        imageUrl="/images/synergy.jpg"
         imageAlt="Synergy Technologies logo"
       />
 
@@ -127,7 +127,7 @@ export default function Home() {
           'Audiodub is a service that uses machine learning to automatically translate and dub YouTube videos into 20+ languages. ',
           'I developed parts of the NLP pipeline, like adding speaker diarization and minimizing API calls with IBM Watson. I also helped with biz-dev with things like writing an email scraper and talking to YouTubers like Minute Physics and 3Blue1Brown.',
         ]}
-        imageUrl="https://i.imgur.com/ITWU7N2.png"
+        imageUrl="/images/audiodub.png"
         imageAlt="Audiodub logo"
       />
 

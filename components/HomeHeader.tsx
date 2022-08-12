@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from '../styles/HomeHeader.module.css';
+import profilePic from '../public/images/profilePicYellowstone.jpg';
+import Image from 'next/image';
 
 export default function HomeHeader() {
   return (
@@ -17,35 +19,15 @@ export default function HomeHeader() {
             John Wright
           </div>
         </div>
-        <div className="rounded-full">
-          <img
-            className={styles.imageContainer}
-            src="/images/profilePicYellowstone.jpg"
-            alt="John Wright Stanly"
+        <div className={styles.imageContainer}>
+          <Image
+            src={profilePic}
+            alt="Picture of John Wright Stanly, the owner of this blog"
+            priority
+            className="rounded-full"
           />
         </div>
       </div>
-      {/* <div className={styles.container}>
-        <div className={styles.textContainer}>
-          <div
-            className={`${styles.headerFirstLineText} ${styles.greyGradientText}`}
-          >
-            Hey, I'm
-          </div>
-          <div
-            className={`${styles.headerSecondLineText} ${styles.colorGradientText}`}
-          >
-            John Wright
-          </div>
-        </div>
-        <div style={{ flex: 1.14 }}>
-          <img
-            className={styles.imageContainer}
-            src="/images/profileClipped.png"
-            alt="John Wright Stanly"
-          />
-        </div>
-      </div> */}
     </>
   );
 }

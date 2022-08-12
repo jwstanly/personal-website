@@ -4,6 +4,8 @@ import { LikeDislikePanel } from './LikeDislikePanel';
 import Spacer from './Spacer';
 import * as DateUtil from '../lib/Date';
 import ArticleText from './ArticleText';
+import profilePic from '../public/images/profilePicYellowstone.jpg';
+import Image from 'next/image';
 
 interface BlogArticleProps {
   article: BlogArticle;
@@ -23,16 +25,12 @@ export default function Article(props: BlogArticleProps) {
       <div className="sm:flex">
         <div className="sm:flex-shrink-2">
           <div className="inline-flex mb-5">
-            <img
-              style={{
-                width: 45,
-                height: 45,
-                left: 0,
-                top: 0,
-                borderRadius: 999,
-              }}
-              src="/images/profilePicYellowstone.jpg"
-              alt="John Wright Stanly"
+            <Image
+              src={profilePic}
+              alt="Picture of John Wright Stanly, the author of this blog article"
+              className="rounded-full"
+              width="45"
+              height="45"
             />
             <Spacer left={10} />
             <div className="flex-col">

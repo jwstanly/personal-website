@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 interface LargeIconProps {
@@ -7,15 +8,21 @@ interface LargeIconProps {
 
 export function LargeIcon(props: LargeIconProps) {
   return (
-    <img
+    <div
       className="rounded-3xl w-36 h-36 max-w-xl m-0 mt-2 object-cover"
       style={{
         boxShadow: '0px 0px 40px 5px #CCC',
         height: '9rem',
         width: '9rem',
       }}
-      src={props.imageUrl}
-      alt={props.alt}
-    />
+    >
+      <Image
+        className="rounded-3xl"
+        src={props.imageUrl}
+        alt={props.alt}
+        width="999%"
+        height="999%"
+      />
+    </div>
   );
 }
