@@ -31,7 +31,7 @@ export default function TextField(props: TextFieldProps) {
   return (
     <div className="mb-6">
       <div>
-        <label>
+        <label htmlFor={props.label}>
           {`
             ${props.label}
             ${props.optional ? '(Optional)' : ''}
@@ -42,6 +42,7 @@ export default function TextField(props: TextFieldProps) {
       </div>
       {props.lines > 1 ? (
         <textarea
+          id={props.label}
           {...style}
           rows={props.lines}
           value={props.value}
@@ -50,6 +51,7 @@ export default function TextField(props: TextFieldProps) {
       ) : (
         <div>
           <input
+            id={props.label}
             {...style}
             type={props.type || 'text'}
             value={props.value}
