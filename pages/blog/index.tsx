@@ -11,7 +11,7 @@ import serializeTitle from '../../lib/serializeTitle';
 import formatPureText from '../../lib/formatPureText';
 
 export async function getStaticProps(context) {
-  const articles: BlogArticle[] = await API.getAllArticles();
+  const articles: BlogArticle[] = await API.getAllPublishedArticles();
 
   articles.sort((a, b) => b.createdAt - a.createdAt);
 

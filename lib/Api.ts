@@ -13,6 +13,7 @@ const API_URL = `https://api.${env.production.DOMAIN_NAME}`;
 
 export default {
   getAllArticles,
+  getAllPublishedArticles,
   getArticleByTitle,
   upsertArticle,
   deleteArticle,
@@ -40,13 +41,13 @@ async function getAllArticles(): Promise<BlogArticle[]> {
   const url = `${API_URL}/blog/all`;
   return fetch(url, getKeyParams())
     .then(res => res.json())
-    .then(data => {
-      console.log('GET ALL ARTICLES', url, data);
-      return data;
-    })
     .catch(error => {
       console.error(error);
     });
+}
+
+async function getAllPublishedArticles(): Promise<BlogArticle[]> {
+  return getAllArticles().then(articles => articles.filter(a => !a.draft));
 }
 
 async function getArticleByTitle(title: string): Promise<BlogArticle> {
