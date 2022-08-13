@@ -9,10 +9,9 @@
 
 .navbar {
   list-style-type: none;
-  margin: 0px 6vw 0px 6vw;
-  padding: 0;
+  margin: 0px;
+  padding: 0px 1rem;
   overflow: hidden;
-  /* width: 0px; */
 }
 
 .navbarItem::before {
@@ -74,14 +73,13 @@ div.navbarLink:hover:before {
   transform: scaleX(1);
 }
 
-@media only screen and (max-width: 480px) {
+@media (min-width: 1024px) {
   .navbar {
-    list-style-type: none;
-    margin: 0px 4vw 0px 4vw;
-    padding: 0;
-    overflow: hidden;
+    margin: 0px 6vw;
   }
+}
 
+@media only screen and (max-width: 480px) {
   div.navbarLink {
     display: block;
     color: black;

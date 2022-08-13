@@ -34,7 +34,7 @@ export default function Navbar(props: NavbarProps) {
     <div
       className={styles.navbarContainer}
       style={{
-        transform: `translate(0, ${hidden ? '-50px' : '0px'})`,
+        transform: `translate(0, ${hidden ? '-60px' : '0px'})`,
         transition: 'transform 90ms linear',
       }}
     >
