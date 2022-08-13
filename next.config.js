@@ -1,5 +1,10 @@
 module.exports = {
   swcMinify: true,
+  experimental: {
+    images: {
+      unoptimized: true,
+    },
+  },
   async headers() {
     return [
       {
