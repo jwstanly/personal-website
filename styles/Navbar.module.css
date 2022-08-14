@@ -76,6 +76,7 @@ div.navbarLink:hover:before {
 @media (min-width: 1024px) {
   .navbar {
     margin: 0px 6vw;
+    padding: 0;
   }
 }
 
