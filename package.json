@@ -49,7 +49,7 @@
     "sam-package": "env-cmd -e production node ./scripts/sam_package",
     "sam-deploy": "env-cmd -e production node ./scripts/sam_deploy",
     "deploy": "yarn run deploy:backend && yarn run deploy:frontend",
-    "deploy:backend": "yarn run compile-lambdas && yarn run generate-schema && yarn run sam-build && yarn run sam-deploy",
+    "deploy:backend": "yarn run generate-schema && yarn run compile-lambdas && yarn run sam-build && yarn run sam-deploy",
     "deploy:frontend": "yarn run build && yarn run index-html && yarn run sync-s3",
     "blog:get": "env-cmd -e production node ./scripts/blog_get_article",
     "blog:post": "env-cmd -e production node ./scripts/blog_post_article"
