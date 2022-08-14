@@ -181,11 +181,6 @@ pre code {
   background-color: transparent;
 }
 
-input[type] {
-  -webkit-appearance: none;
-  outline: none;
-}
-
 textarea {
   -webkit-appearance: none;
 }

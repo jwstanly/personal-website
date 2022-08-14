@@ -3,6 +3,7 @@ import { BlogArticle } from '../../../lib/Types';
 import Api from '../../../lib/Api';
 import getImageUrl from '../../../lib/getImageUrl';
 import TextField from '../../../components/TextField';
+import CheckBox from '../../../components/CheckBox';
 import Button from '../../../components/Button';
 import CodeBlockRenderer from '../../../components/markdown/CodeBlockRenderer';
 import { spawn } from 'child_process';
@@ -105,6 +106,7 @@ function ArticleEditor(props: {
   const [tags, setTags] = React.useState<string>(
     loadedArticle?.tags?.join(', '),
   );
+  const [draft, setDraft] = React.useState<boolean>(!!loadedArticle?.draft);
   const [content, setContent] = React.useState<string>(loadedArticle?.content);
 
   const [publishing, setPublishing] = React.useState<boolean>(false);
@@ -116,6 +118,7 @@ function ArticleEditor(props: {
     subheader: subheader,
     image: image,
     tags: tags?.split(', '),
+    draft: draft,
     content: content,
   };
 
@@ -159,6 +162,7 @@ function ArticleEditor(props: {
         <div className="flex-grow overflow-auto divide-y-2">
           <ul className="p-4 space-y-1 text-sm">
             <div className="text-red-500 mb-4">{error}</div>
+            <CheckBox label="Draft" value={draft} setValue={setDraft} />
             <TextField label="Title" value={title} setValue={setTitle} />
             <TextField
               label="Subheader"

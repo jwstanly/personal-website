@@ -34,7 +34,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }
 
   function fetchRecentArticles() {
-    Api.getAllArticles().then(articles => {
+    Api.getAllPublishedArticles().then(articles => {
       setRecentArticles(
         sortBy(articles, 'createdAt')
           .reverse()

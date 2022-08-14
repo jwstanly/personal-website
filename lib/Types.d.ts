@@ -8,6 +8,7 @@ interface BlogArticleCore {
   image: string;
   tags: string[];
   content: string;
+  draft?: boolean;
   votes?: BlogVote[];
   comments?: BlogComment[];
 }

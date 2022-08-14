@@ -110,6 +110,9 @@
                 "createdAt": {
                     "type": "number"
                 },
+                "draft": {
+                    "type": "boolean"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -282,6 +285,9 @@
                 "content": {
                     "type": "string"
                 },
+                "draft": {
+                    "type": "boolean"
+                },
                 "image": {
                     "type": "string"
                 },
@@ -447,6 +453,9 @@
                 },
                 "createdAt": {
                     "type": "number"
+                },
+                "draft": {
+                    "type": "boolean"
                 },
                 "id": {
                     "type": "string"
