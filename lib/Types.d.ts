@@ -7,10 +7,17 @@ interface BlogArticleCore {
   subheader: string;
   image: string;
   tags: string[];
+  guestAuthors?: BlogAuthor[];
   content: string;
   draft?: boolean;
   votes?: BlogVote[];
   comments?: BlogComment[];
+}
+
+interface BlogAuthorCore {
+  name: string;
+  image: string;
+  link: string;
 }
 
 interface BlogVoteCore {
@@ -57,7 +64,7 @@ type RecursiveOptional<T> = {
 
 export interface BlogArticle extends BlogArticleCore, Id, Timestamps {}
 
-// export interface BlogAuthor extends BlogAuthorCore, Id {}
+export interface BlogAuthor extends BlogAuthorCore {}
 
 export interface BlogVote extends BlogVoteCore, Timestamps {}
 
