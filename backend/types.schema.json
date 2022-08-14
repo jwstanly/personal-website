@@ -113,6 +113,29 @@
                 "draft": {
                     "type": "boolean"
                 },
+                "guestAuthors": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "image": {
+                                "type": "string"
+                            },
+                            "link": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "image",
+                            "link",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -288,6 +311,29 @@
                 "draft": {
                     "type": "boolean"
                 },
+                "guestAuthors": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "image": {
+                                "type": "string"
+                            },
+                            "link": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "image",
+                            "link",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
                 "image": {
                     "type": "string"
                 },
@@ -457,6 +503,29 @@
                 "draft": {
                     "type": "boolean"
                 },
+                "guestAuthors": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "image": {
+                                "type": "string"
+                            },
+                            "link": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "image",
+                            "link",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -517,6 +586,46 @@
                 "subheader",
                 "tags",
                 "title"
+            ],
+            "type": "object"
+        },
+        "BlogAuthor": {
+            "additionalProperties": false,
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "image",
+                "link",
+                "name"
+            ],
+            "type": "object"
+        },
+        "BlogAuthorCore": {
+            "additionalProperties": false,
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "image",
+                "link",
+                "name"
             ],
             "type": "object"
         },
