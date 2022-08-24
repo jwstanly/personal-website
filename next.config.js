@@ -10,15 +10,6 @@ module.exports = {
       unoptimized: true,
     },
   },
-  async redirects() {
-    return [
-      {
-        source: '/resume',
-        destination: '/resume.pdf',
-        permanent: true,
-      },
-    ];
-  },
   async headers() {
     return [
       {
