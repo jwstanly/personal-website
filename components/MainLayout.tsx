@@ -74,7 +74,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               { label: 'Home', href: '/' },
               { label: 'About', href: '/#about' },
               { label: 'Experience', href: '/#experience' },
-              { label: 'Resume', href: '/resume.pdf' },
+              { label: 'Resume', href: '/resume' },
             ],
           },
           {
