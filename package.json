@@ -11,6 +11,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "aws-amplify": "^3.3.20",
     "next": "12",
+    "next-sitemap": "^3.1.31",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-markdown": "^5.0.3",
@@ -40,7 +41,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "lint": "next lint --fix",
-    "build": "next build && next export",
+    "build": "next build && next-sitemap && next export",
     "index-html": "node ./scripts/index_html",
     "sync-s3": "env-cmd -e production node ./scripts/upload_bucket",
     "compile-lambdas": "tsc -p backend/tsconfig.sam.json",
