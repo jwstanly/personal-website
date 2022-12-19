@@ -6,6 +6,7 @@ import HeadTags from '../components/HeadTags';
 import HomeHeader from '../components/HomeHeader';
 import { H1 } from '../components/Titles';
 import Spacer from '../components/Spacer';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -27,18 +28,39 @@ export default function Home() {
 
       <CenteredContainer>
         <p className={styles.headerContentText}>
-          I'm John Wright Stanly, a student at Georgia Tech. I'm from
-          Jacksonville, Florida.
+          I'm John Wright Stanly, a Georgia Tech student from Jacksonville,
+          Florida.
         </p>
         <p className={styles.headerContentText}>
-          I deferred my admission last year and worked at a startup. I also
-          worked at a local tech company.
+          I got into tech by accident. After enrolling in 2019 at the{' '}
+          <Link href="https://socalfoodallergy.org/">
+            SOCAL Food Allergy Institute
+          </Link>{' '}
+          to treat my childhood food allergies, I wasn't able to attend college
+          during Covid. Instead, I took a gap year after high school.
         </p>
         <p className={styles.headerContentText}>
-          I'm passionate about startups and software engineering.
+          I always wanted to be an aerospace engineer, but that dream quickly
+          faded when I couldn't find a job in Jacksonville. Despite hating
+          coding, I pivoted to tech. I reluctantly gave it a chance, but I
+          couldn't have been more wrong.
         </p>
         <p className={styles.headerContentText}>
-          In my free time I enjoy running, biking, and golfing.
+          The gap year exposed me to so many wonderful people and projects. I
+          joined an <Link href="https://audiodub.app">early stage startup</Link>{' '}
+          and a <Link href="https://synergytechs.net">local tech firm</Link>. I
+          then met my founding team, and we broke off to build{' '}
+          <Link href="https://getwinsight.com">our own startup</Link>. I learned
+          coding is awesome, and so is building a company.
+        </p>
+        <p className={styles.headerContentText}>
+          Come 2022, and I've made it to college, my food allergies are gone, we
+          exited our startup, and I've interned at Google and Cloudflare.
+        </p>
+        <p className={styles.headerContentText}>
+          My life predictions were totally incorrect. The last three years have
+          been a wonderful accident, and I'm now even more excited for the
+          future, as unpredictable as it might be.
         </p>
       </CenteredContainer>
 
