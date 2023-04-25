@@ -4,12 +4,12 @@
   "description": "",
   "dependencies": {
     "ajv": "^8.6.1",
-    "aws-sdk": "^2.437.0",
     "typescript-is": "^0.18.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.51",
     "@types/node": "^13.13.5",
+    "aws-sdk": "^2.437.0",
     "typescript": "^3.8.3"
   },
   "scripts": {
