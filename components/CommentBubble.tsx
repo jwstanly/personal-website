@@ -42,7 +42,7 @@ export default function CommentBubble({
             {commentObj.user.name || 'Anonymous User'}
           </div>
           <div className={styles.commentDate}>
-            {DateUtil.getFormattedDateTime(commentObj.lastModifiedAt)}
+            {DateUtil.getFormattedDate(commentObj.lastModifiedAt)}
           </div>
         </div>
 
