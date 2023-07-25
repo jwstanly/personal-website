@@ -71,8 +71,11 @@ export default function Home() {
       <ExperienceCard
         header="Google"
         subheader="Software Engineer Intern"
-        codeTags={['Android', 'SQL', 'Protobuf', 'Java']}
-        content={['Joining Google Maps. Starting August 2022.']}
+        codeTags={['Android', 'Java', 'Protobuf', 'SQL']}
+        content={[
+          'Interned at Google Maps.',
+          'I helped create features for users to better understand their current location while using Google Maps for Android.',
+        ]}
         imageUrl="/images/google.png"
         imageAlt="Google logo"
       />
