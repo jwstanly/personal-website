@@ -1,7 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import env from '../.env-cmdrc.js';
 
-const { GOOGLE_ANALYTICS_MEASUREMENT_ID } = env.production;
+const { GOOGLE_ANALYTICS_MEASUREMENT_ID, GOOGLE_ADSENSE_CLIENT_ID } =
+  env.production;
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -30,6 +31,13 @@ class MyDocument extends Document {
           `,
             }}
           />
+          {GOOGLE_ADSENSE_CLIENT_ID && (
+            <script
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_CLIENT_ID}`}
+              crossOrigin="anonymous"
+              async
+            />
+          )}
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800"

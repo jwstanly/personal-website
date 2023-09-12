@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://jwstanly.com</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/unsubscribe</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/contact</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/privacy-policy</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/resume</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/How+to+Track+Airplanes+with+your+own+ADS-B+Receiver</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/A+Guide+to+Next.js+and+Serverless+on+AWS</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/Port+Forwarding+WSL+2+to+Your+LAN</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/Verifying+SES+Email+Domain+and+DKIM+Tokens+in+CloudFormation</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/Automating+Lambda+Schema+Validation+with+TypeScript</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/How+to+solve+SAM+403+Errors+on+CORS+Preflight</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/A+Faster+Approach+to+Enum+Props+in+React</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://jwstanly.com/blog/article/Handling+Stale+State+from+Scheduled+Functions+in+React</loc><lastmod>2022-11-14T04:38:11.294Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/unsubscribe</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/contact</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/privacy-policy</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/resume</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/How+to+Track+Airplanes+with+your+own+ADS-B+Receiver</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/Control+EC2+GUI+Desktop+from+Web+Browser</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/A+Guide+to+Next.js+and+Serverless+on+AWS</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/Draft+Article</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/Port+Forwarding+WSL+2+to+Your+LAN</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/Verifying+SES+Email+Domain+and+DKIM+Tokens+in+CloudFormation</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/Automating+Lambda+Schema+Validation+with+TypeScript</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/How+My+Double+Name+Made+Me+a+Better+SWE</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/How+to+solve+SAM+403+Errors+on+CORS+Preflight</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/A+Faster+Approach+to+Enum+Props+in+React</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://jwstanly.com/blog/article/Handling+Stale+State+from+Scheduled+Functions+in+React</loc><lastmod>2023-09-12T00:49:40.835Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

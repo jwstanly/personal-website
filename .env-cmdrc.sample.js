@@ -8,6 +8,7 @@ const env = {
     CF_DISTRIBUTION_ID: 'YourCloudFrontDistributionID',
     API_KEY: 'YourAPIKey',
     GOOGLE_ANALYTICS_MEASUREMENT_ID: 'YourGaIdHere',
+    GOOGLE_ADSENSE_CLIENT_ID: 'YourAdsenseClientIdHere',
     DEBUG_MODE: false,
   },
   local: {
